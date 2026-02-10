@@ -1,103 +1,662 @@
-import Image from "next/image";
+import financeData from "@/data/finances-publiques-2026.json";
+import evolutionData from "@/data/evolution-finances.json";
+import { PublicSpendingChart } from "@/components/charts/public-spending-chart";
+import { SecuBranchesChart } from "@/components/charts/secu-branches-chart";
+import { DebtEvolutionChart } from "@/components/charts/debt-evolution-chart";
+import { PrelevementsChart } from "@/components/charts/prelevements-chart";
+import { EvolutionChart, DeficitChart } from "@/components/charts/evolution-chart";
+import { TopMissionsChart } from "@/components/charts/top-missions-chart";
+import { SalarySimulator } from "@/components/salary-simulator";
+import { FlowDiagram } from "@/components/flow-diagram";
+import { ThousandEuroBreakdown } from "@/components/thousand-euro-breakdown";
+import { CitizenReturn } from "@/components/citizen-return";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const formatMd = (value: number) => {
+  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} Md€`;
+};
+
+const formatPct = (value: number) => {
+  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}%`;
+};
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { context, vueGlobale, budgetEtat, securiteSociale, collectivitesLocales, prelevementsObligatoires, dette, destinationDepenses, retourCitoyen, pedagogie } = financeData;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+  const population = context.population;
+  const formatPerHab = (milliards: number) =>
+    Math.round((milliards * 1_000_000_000) / population).toLocaleString("fr-FR") + " €/hab";
+
+  // Prepare data for charts
+  const spendingData = vueGlobale.repartition;
+  const secuBranches = securiteSociale.branches;
+  const debtEvolution = dette.evolution;
+  const prelevements = prelevementsObligatoires.repartition;
+
+  // Missions for state budget chart
+  const missionsData = budgetEtat.principalesMissions.map((m) => ({
+    mission: m.mission,
+    ministry: m.ministere,
+    amount_eur: m.montant_milliards_eur * 1_000_000_000,
+  }));
+
+  // Evolution data
+  const evolutionHistory = evolutionData.annees;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 pb-16">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pt-16 sm:px-6 lg:px-8">
+        {/* Header */}
+        <section className="space-y-6">
+          <div className="flex flex-wrap gap-2">
+            <Badge className="text-xs font-medium uppercase tracking-wider">
+              Finances publiques 2026
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Mis à jour le {financeData.lastUpdate}
+            </Badge>
+          </div>
+          <div className="space-y-4">
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Comprendre les finances publiques françaises
+            </h1>
+            <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
+              {vueGlobale.description}. Cette page présente une vue d&apos;ensemble des recettes,
+              dépenses et de la dette de l&apos;État, de la Sécurité Sociale et des collectivités locales.
+            </p>
+            {context.note && (
+              <p className="text-xs text-amber-600 dark:text-amber-400">
+                Note : {context.note}
+              </p>
+            )}
+          </div>
+
+          {/* Key metrics */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader>
+                <CardDescription>Dépenses publiques totales</CardDescription>
+                <CardTitle className="font-mono text-2xl tracking-tight">
+                  {formatMd(vueGlobale.depenses_totales_milliards_eur)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">
+                  soit {formatPct(vueGlobale.depenses_pib_pct)} du PIB
+                </p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  {formatPerHab(vueGlobale.depenses_totales_milliards_eur)}
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardDescription>Prélèvements obligatoires</CardDescription>
+                <CardTitle className="font-mono text-2xl tracking-tight">
+                  {formatMd(prelevementsObligatoires.total_milliards_eur)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">
+                  soit {formatPct(prelevementsObligatoires.pib_pct)} du PIB
+                </p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  {formatPerHab(prelevementsObligatoires.total_milliards_eur)}
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardDescription>Déficit public</CardDescription>
+                <CardTitle className="font-mono text-2xl tracking-tight text-destructive">
+                  -{formatMd(Math.round(context.deficit_public_pib_pct / 100 * context.pib_milliards_eur * 10) / 10)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">
+                  soit {formatPct(context.deficit_public_pib_pct)} du PIB — objectif &lt;3% en 2029
+                </p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  {formatPerHab(context.deficit_public_pib_pct / 100 * context.pib_milliards_eur)}
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardDescription>Dette publique</CardDescription>
+                <CardTitle className="font-mono text-2xl tracking-tight text-destructive">
+                  {formatMd(context.dette_publique_milliards_eur)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">
+                  soit {formatPct(context.dette_pib_pct)} du PIB (3e UE)
+                </p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  {formatPerHab(context.dette_publique_milliards_eur)}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Pour 1 000€ de dépenses publiques */}
+        <section className="space-y-6">
+          <ThousandEuroBreakdown postes={destinationDepenses.postes} />
+        </section>
+
+        {/* Ce que vous recevez en retour */}
+        <section className="space-y-6">
+          <CitizenReturn services={retourCitoyen.services} />
+        </section>
+
+        {/* Vue globale */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold">Vue d&apos;ensemble des dépenses publiques</h2>
+            <p className="text-sm text-muted-foreground">
+              Répartition entre les trois catégories d&apos;administrations publiques (APU)
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+            <PublicSpendingChart data={spendingData} />
+            <Card>
+              <CardHeader>
+                <CardTitle>Qui dépense quoi ?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {spendingData.map((item, i) => (
+                  <div key={i} className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="font-medium">{item.categorie}</span>
+                      <span className="font-mono">{formatMd(item.depenses_milliards_eur)}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Tabs: État / Sécu / Collectivités */}
+        <section className="space-y-6">
+          <Tabs defaultValue="etat" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="etat">Budget de l&apos;État</TabsTrigger>
+              <TabsTrigger value="secu">Sécurité Sociale</TabsTrigger>
+              <TabsTrigger value="collectivites">Collectivités</TabsTrigger>
+            </TabsList>
+
+            {/* Budget de l'État */}
+            <TabsContent value="etat" className="space-y-6 pt-4">
+              <Card className="bg-muted/30">
+                <CardContent className="pt-6">
+                  <p className="text-sm">{budgetEtat.description}. Les chiffres ci-dessous portent sur le budget de l&apos;État stricto sensu (526 Md€), qui est une composante des 585 Md€ de dépenses des administrations centrales.</p>
+                </CardContent>
+              </Card>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Recettes nettes</CardDescription>
+                    <CardTitle className="font-mono text-xl">
+                      {formatMd(budgetEtat.recettes_nettes_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Dépenses</CardDescription>
+                    <CardTitle className="font-mono text-xl">
+                      {formatMd(budgetEtat.depenses_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Déficit État</CardDescription>
+                    <CardTitle className="font-mono text-xl text-destructive">
+                      -{formatMd(budgetEtat.deficit_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">Principales missions budgétaires</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Crédits alloués par mission (hors remboursements/dégrèvements)
+                    </p>
+                  </div>
+                  <TopMissionsChart data={missionsData} />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">Principaux impôts d&apos;État</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Les grandes recettes fiscales de l&apos;État
+                    </p>
+                  </div>
+                  <Card>
+                    <CardContent className="pt-6 space-y-3">
+                      {budgetEtat.recettesFiscales.principaux_impots.map((impot, i) => (
+                        <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
+                          <div className="flex justify-between items-baseline">
+                            <span className="font-medium">{impot.label}</span>
+                            <span className="font-mono text-sm">
+                              {formatMd("montant_milliards_eur" in impot ? (impot.montant_milliards_eur ?? 0) : (impot.montant_brut_milliards_eur ?? 0))}
+                            </span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{impot.description}</p>
+                          <p className="text-xs text-primary/70">Qui paye : {impot.qui_paye}</p>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Sécurité Sociale */}
+            <TabsContent value="secu" className="space-y-6 pt-4">
+              <Card className="bg-muted/30">
+                <CardContent className="pt-6">
+                  <p className="text-sm">{securiteSociale.description}</p>
+                </CardContent>
+              </Card>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Recettes</CardDescription>
+                    <CardTitle className="font-mono text-xl">
+                      {formatMd(securiteSociale.recettes_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Dépenses</CardDescription>
+                    <CardTitle className="font-mono text-xl">
+                      {formatMd(securiteSociale.depenses_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Déficit Sécu</CardDescription>
+                    <CardTitle className="font-mono text-xl text-destructive">
+                      -{formatMd(securiteSociale.deficit_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">Dépenses par branche</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Les cinq branches de la Sécurité Sociale
+                    </p>
+                  </div>
+                  <SecuBranchesChart data={secuBranches} />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">Financement de la Sécu</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {securiteSociale.financement.description}
+                    </p>
+                  </div>
+                  <Card>
+                    <CardContent className="pt-6 space-y-3">
+                      {securiteSociale.financement.sources.map((source, i) => (
+                        <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
+                          <div className="flex justify-between items-baseline">
+                            <span className="font-medium">{source.source}</span>
+                            <span className="font-mono text-sm">{formatMd(source.montant_milliards_eur)}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{source.description}</p>
+                          <p className="text-xs text-primary/70">Qui paye : {source.qui_paye}</p>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Cotisations */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Taux de cotisations sociales</CardTitle>
+                  <CardDescription>{securiteSociale.tauxCotisations.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div>
+                      <h4 className="font-medium mb-3">Part salariale ({formatPct(securiteSociale.tauxCotisations.total_salarie_pct)})</h4>
+                      <div className="space-y-2 text-sm">
+                        {securiteSociale.tauxCotisations.salariales.map((c, i) => (
+                          <div key={i} className="flex justify-between">
+                            <span className="text-muted-foreground">{c.cotisation}</span>
+                            <span className="font-mono">{formatPct(c.taux_pct)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-3">Part patronale ({formatPct(securiteSociale.tauxCotisations.total_employeur_pct)})</h4>
+                      <div className="space-y-2 text-sm">
+                        {securiteSociale.tauxCotisations.patronales.map((c, i) => (
+                          <div key={i} className="flex justify-between">
+                            <span className="text-muted-foreground">{c.cotisation}</span>
+                            <span className="font-mono">{formatPct(c.taux_pct)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm text-amber-600 dark:text-amber-400">
+                    Total : {formatPct(securiteSociale.tauxCotisations.total_pct)} du salaire brut.{" "}
+                    {securiteSociale.tauxCotisations.note}
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Collectivités locales */}
+            <TabsContent value="collectivites" className="space-y-6 pt-4">
+              <Card className="bg-muted/30">
+                <CardContent className="pt-6">
+                  <p className="text-sm">{collectivitesLocales.description}</p>
+                </CardContent>
+              </Card>
+
+              <div className="grid gap-4 sm:grid-cols-4">
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Recettes fonctionnement</CardDescription>
+                    <CardTitle className="font-mono text-lg">
+                      {formatMd(collectivitesLocales.recettes_fonctionnement_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Dépenses fonctionnement</CardDescription>
+                    <CardTitle className="font-mono text-lg">
+                      {formatMd(collectivitesLocales.depenses_fonctionnement_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Investissement</CardDescription>
+                    <CardTitle className="font-mono text-lg">
+                      {formatMd(collectivitesLocales.investissement_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardDescription>Déficit</CardDescription>
+                    <CardTitle className="font-mono text-lg text-destructive">
+                      -{formatMd(collectivitesLocales.deficit_milliards_eur)}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Types de collectivités</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {collectivitesLocales.types.map((type, i) => (
+                      <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
+                        <div className="flex justify-between items-baseline">
+                          <span className="font-medium">{type.type}</span>
+                          <span className="text-sm text-muted-foreground">{type.nombre.toLocaleString("fr-FR")} entités</span>
+                        </div>
+                        <div className="flex justify-between items-baseline">
+                          <span className="text-xs text-muted-foreground">Dépenses</span>
+                          <span className="font-mono text-sm">{formatMd(type.depenses_milliards_eur)}</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{type.competences}</p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Sources de financement</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {collectivitesLocales.recettes.map((r, i) => (
+                      <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
+                        <div className="flex justify-between items-baseline">
+                          <span className="font-medium">{r.source}</span>
+                          <span className="font-mono text-sm">{formatMd(r.montant_milliards_eur)}</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{r.description}</p>
+                        {"note" in r && r.note && (
+                          <p className="text-xs text-amber-600 dark:text-amber-400">{r.note}</p>
+                        )}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </section>
+
+        {/* Prélèvements obligatoires */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold">Prélèvements obligatoires</h2>
+            <p className="text-sm text-muted-foreground">
+              {prelevementsObligatoires.description} - Total : {formatMd(prelevementsObligatoires.total_milliards_eur)} ({formatPct(prelevementsObligatoires.pib_pct)} du PIB)
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+            <PrelevementsChart data={prelevements} />
+            <Card>
+              <CardHeader>
+                <CardTitle>Comparaison européenne</CardTitle>
+                <CardDescription>Taux de prélèvements obligatoires (% du PIB)</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {Object.entries(prelevementsObligatoires.comparaisonEuropeenne)
+                  .filter(([key]) => key !== "note")
+                  .sort(([, a], [, b]) => (b as number) - (a as number))
+                  .map(([key, value]) => {
+                    const label = key.replace("_pct", "").replace(/_/g, " ");
+                    const isFrance = key === "france_pct";
+                    return (
+                      <div key={key} className="flex justify-between items-center">
+                        <span className={`capitalize ${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
+                          {label}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <div
+                            className={`h-2 rounded ${isFrance ? "bg-primary" : "bg-muted-foreground/30"}`}
+                            style={{ width: `${(value as number) * 2}px` }}
+                          />
+                          <span className={`font-mono text-sm ${isFrance ? "font-semibold" : ""}`}>
+                            {formatPct(value as number)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                <p className="text-xs text-muted-foreground pt-2">
+                  {prelevementsObligatoires.comparaisonEuropeenne.note}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Diagramme de flux */}
+        <section className="space-y-6">
+          <FlowDiagram />
+        </section>
+
+        {/* Dette publique */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold">Évolution de la dette publique</h2>
+            <p className="text-sm text-muted-foreground">
+              La dette publique atteint {formatMd(dette.montant_milliards_eur)} soit {formatPct(dette.pib_pct)} du PIB.
+              La charge des intérêts représente {formatMd(dette.charge_interets_milliards_eur)}/an.
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+            <DebtEvolutionChart data={debtEvolution} />
+            <Card>
+              <CardHeader>
+                <CardTitle>Comparaison européenne</CardTitle>
+                <CardDescription>Dette publique (% du PIB)</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {Object.entries(dette.comparaisonEuropeenne)
+                  .filter(([key]) => key !== "note")
+                  .sort(([, a], [, b]) => (b as number) - (a as number))
+                  .map(([key, value]) => {
+                    const label = key.replace("_pct", "").replace(/_/g, " ");
+                    const isFrance = key === "france_pct";
+                    return (
+                      <div key={key} className="flex justify-between items-center">
+                        <span className={`capitalize ${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
+                          {label}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <div
+                            className={`h-2 rounded ${isFrance ? "bg-destructive" : "bg-muted-foreground/30"}`}
+                            style={{ width: `${(value as number) / 2}px` }}
+                          />
+                          <span className={`font-mono text-sm ${isFrance ? "font-semibold" : ""}`}>
+                            {formatPct(value as number)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                <p className="text-xs text-muted-foreground pt-2">{dette.comparaisonEuropeenne.note}</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Évolution historique */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold">Évolution des finances publiques</h2>
+            <p className="text-sm text-muted-foreground">
+              Recettes et dépenses des administrations publiques depuis 2015
+            </p>
+          </div>
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recettes vs Dépenses</CardTitle>
+                <CardDescription>L&apos;écart entre les deux courbes représente le déficit</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <EvolutionChart data={evolutionHistory} />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Déficit public (% du PIB)</CardTitle>
+                <CardDescription>La limite européenne est de 3% du PIB</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DeficitChart data={evolutionHistory} />
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Simulateur */}
+        <section className="space-y-6">
+          <SalarySimulator />
+        </section>
+
+        {/* Pédagogie */}
+        <section className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-semibold">Comprendre les finances publiques</h2>
+            <p className="text-sm text-muted-foreground">
+              Questions fréquentes et glossaire pour mieux comprendre
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Questions fréquentes</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {pedagogie.questionsFrequentes.map((qa, i) => (
+                  <div key={i} className="space-y-2">
+                    <h4 className="font-medium text-sm">{qa.question}</h4>
+                    <p className="text-sm text-muted-foreground">{qa.reponse}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Glossaire</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <dl className="space-y-3">
+                  {pedagogie.glossaire.map((item, i) => (
+                    <div key={i}>
+                      <dt className="font-mono text-sm font-semibold text-primary">{item.terme}</dt>
+                      <dd className="text-sm text-muted-foreground">{item.definition}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Sources */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">Sources des données</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {Object.entries(financeData.sources).map(([key, url]) => (
+              <a
+                key={key}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-lg border border-border p-4 text-sm hover:bg-muted/50 transition-colors"
+              >
+                <span className="font-medium capitalize">{key.replace(/_/g, " ")}</span>
+                <span className="block text-xs text-muted-foreground truncate mt-1">{url}</span>
+              </a>
+            ))}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

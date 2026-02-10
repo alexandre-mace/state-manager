@@ -1,0 +1,108 @@
+{
+  "description": "Évolution des finances publiques françaises (APU)",
+  "source": "INSEE - Comptes nationaux",
+  "sourceUrl": "https://www.insee.fr/fr/statistiques/2381414",
+  "annees": [
+    {
+      "annee": 2015,
+      "recettes_milliards_eur": 1190,
+      "depenses_milliards_eur": 1270,
+      "deficit_milliards_eur": -80,
+      "deficit_pib_pct": -3.6,
+      "depenses_pib_pct": 56.8
+    },
+    {
+      "annee": 2016,
+      "recettes_milliards_eur": 1210,
+      "depenses_milliards_eur": 1290,
+      "deficit_milliards_eur": -80,
+      "deficit_pib_pct": -3.6,
+      "depenses_pib_pct": 56.6
+    },
+    {
+      "annee": 2017,
+      "recettes_milliards_eur": 1260,
+      "depenses_milliards_eur": 1320,
+      "deficit_milliards_eur": -60,
+      "deficit_pib_pct": -2.9,
+      "depenses_pib_pct": 56.5
+    },
+    {
+      "annee": 2018,
+      "recettes_milliards_eur": 1300,
+      "depenses_milliards_eur": 1350,
+      "deficit_milliards_eur": -50,
+      "deficit_pib_pct": -2.3,
+      "depenses_pib_pct": 55.7
+    },
+    {
+      "annee": 2019,
+      "recettes_milliards_eur": 1340,
+      "depenses_milliards_eur": 1390,
+      "deficit_milliards_eur": -50,
+      "deficit_pib_pct": -2.4,
+      "depenses_pib_pct": 55.3,
+      "note": "Avant COVID"
+    },
+    {
+      "annee": 2020,
+      "recettes_milliards_eur": 1280,
+      "depenses_milliards_eur": 1500,
+      "deficit_milliards_eur": -220,
+      "deficit_pib_pct": -9.0,
+      "depenses_pib_pct": 61.7,
+      "note": "Crise COVID-19"
+    },
+    {
+      "annee": 2021,
+      "recettes_milliards_eur": 1380,
+      "depenses_milliards_eur": 1540,
+      "deficit_milliards_eur": -160,
+      "deficit_pib_pct": -6.5,
+      "depenses_pib_pct": 59.6
+    },
+    {
+      "annee": 2022,
+      "recettes_milliards_eur": 1460,
+      "depenses_milliards_eur": 1570,
+      "deficit_milliards_eur": -110,
+      "deficit_pib_pct": -4.7,
+      "depenses_pib_pct": 58.4,
+      "note": "Crise énergie"
+    },
+    {
+      "annee": 2023,
+      "recettes_milliards_eur": 1490,
+      "depenses_milliards_eur": 1640,
+      "deficit_milliards_eur": -152,
+      "deficit_pib_pct": -5.4,
+      "depenses_pib_pct": 56.9
+    },
+    {
+      "annee": 2024,
+      "recettes_milliards_eur": 1502,
+      "depenses_milliards_eur": 1670,
+      "deficit_milliards_eur": -169,
+      "deficit_pib_pct": -5.8,
+      "depenses_pib_pct": 57.3
+    },
+    {
+      "annee": 2025,
+      "recettes_milliards_eur": 1550,
+      "depenses_milliards_eur": 1700,
+      "deficit_milliards_eur": -150,
+      "deficit_pib_pct": -5.4,
+      "depenses_pib_pct": 57.1,
+      "note": "Estimation"
+    },
+    {
+      "annee": 2026,
+      "recettes_milliards_eur": 1580,
+      "depenses_milliards_eur": 1722,
+      "deficit_milliards_eur": -140,
+      "deficit_pib_pct": -4.7,
+      "depenses_pib_pct": 57.1,
+      "note": "Objectif PLF 2026"
+    }
+  ]
+}

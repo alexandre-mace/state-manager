@@ -1,0 +1,440 @@
+{
+  "year": 2026,
+  "lastUpdate": "2026-01-04",
+  "context": {
+    "pib_milliards_eur": 2965,
+    "dette_publique_milliards_eur": 3482,
+    "dette_pib_pct": 117.4,
+    "deficit_public_pib_pct": 4.7,
+    "population": 68400000,
+    "note": "Données basées sur PLF 2026, LFSS 2026 et estimations. Le PLF 2026 n'a pas été adopté, une loi spéciale a été votée le 23 décembre 2025."
+  },
+  "sources": {
+    "budget_etat": "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026",
+    "securite_sociale": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
+    "collectivites": "https://www.ccomptes.fr/fr/publications/les-finances-publiques-locales-2025-fascicule-1",
+    "dette": "https://www.insee.fr/fr/statistiques/8686951"
+  },
+  "vueGlobale": {
+    "description": "Les finances publiques françaises sont gérées par trois grandes catégories d'administrations publiques (APU)",
+    "depenses_totales_milliards_eur": 1722,
+    "depenses_pib_pct": 57.1,
+    "repartition": [
+      {
+        "categorie": "Sécurité Sociale",
+        "part_pct": 39,
+        "depenses_milliards_eur": 677,
+        "description": "Santé, retraites, famille, chômage"
+      },
+      {
+        "categorie": "État",
+        "part_pct": 34,
+        "depenses_milliards_eur": 585,
+        "description": "Défense, éducation, justice, sécurité"
+      },
+      {
+        "categorie": "Collectivités locales",
+        "part_pct": 17,
+        "depenses_milliards_eur": 298,
+        "description": "Régions, départements, communes, intercommunalités"
+      },
+      {
+        "categorie": "Autres organismes publics",
+        "part_pct": 10,
+        "depenses_milliards_eur": 162,
+        "description": "Universités, hôpitaux publics, agences, caisses de retraite complémentaire (ODAC)"
+      }
+    ]
+  },
+  "budgetEtat": {
+    "description": "Le budget de l'État finance les missions régaliennes et les politiques publiques nationales",
+    "recettes_nettes_milliards_eur": 401.6,
+    "depenses_milliards_eur": 526,
+    "deficit_milliards_eur": 124.4,
+    "recettesFiscales": {
+      "total_brut_milliards_eur": 513.8,
+      "total_net_milliards_eur": 372.9,
+      "principaux_impots": [
+        {
+          "code": "TVA",
+          "label": "Taxe sur la valeur ajoutée",
+          "montant_brut_milliards_eur": 175.1,
+          "montant_net_etat_milliards_eur": 109.1,
+          "description": "Impôt indirect sur la consommation (taux normal 20%, réduit 10%, 5.5%, 2.1%)",
+          "qui_paye": "Consommateurs (via les entreprises)"
+        },
+        {
+          "code": "IR",
+          "label": "Impôt sur le revenu",
+          "montant_milliards_eur": 104.0,
+          "description": "Impôt progressif sur les revenus des ménages (barème de 0% à 45%)",
+          "qui_paye": "Ménages (environ 44% des foyers fiscaux)"
+        },
+        {
+          "code": "IS",
+          "label": "Impôt sur les sociétés",
+          "montant_milliards_eur": 59.0,
+          "description": "Impôt sur les bénéfices des entreprises (taux normal 25%)",
+          "qui_paye": "Entreprises"
+        },
+        {
+          "code": "TICPE",
+          "label": "Taxe intérieure de consommation sur les produits énergétiques",
+          "montant_milliards_eur": 18.5,
+          "description": "Taxe sur les carburants et combustibles",
+          "qui_paye": "Consommateurs de carburants"
+        },
+        {
+          "code": "DMTG",
+          "label": "Droits de mutation à titre gratuit",
+          "montant_milliards_eur": 16.0,
+          "description": "Droits de succession et donations",
+          "qui_paye": "Héritiers et donataires"
+        }
+      ]
+    },
+    "principalesMissions": [
+      {
+        "mission": "Enseignement scolaire",
+        "ministere": "Éducation nationale",
+        "montant_milliards_eur": 89.2,
+        "description": "Écoles, collèges, lycées publics et privés"
+      },
+      {
+        "mission": "Défense",
+        "ministere": "Armées",
+        "montant_milliards_eur": 63.5,
+        "description": "Forces armées, équipements militaires (+6,7 Md€ vs 2025)"
+      },
+      {
+        "mission": "Engagements financiers de l'État",
+        "ministere": "Économie et Finances",
+        "montant_milliards_eur": 55.0,
+        "description": "Charge de la dette (intérêts)"
+      },
+      {
+        "mission": "Recherche et enseignement supérieur",
+        "ministere": "Enseignement supérieur",
+        "montant_milliards_eur": 32.5,
+        "description": "Universités, recherche publique"
+      },
+      {
+        "mission": "Solidarité, insertion et égalité des chances",
+        "ministere": "Solidarités",
+        "montant_milliards_eur": 31.0,
+        "description": "AAH, RSA, aide sociale"
+      },
+      {
+        "mission": "Sécurités",
+        "ministere": "Intérieur",
+        "montant_milliards_eur": 25.5,
+        "description": "Police nationale, gendarmerie, sécurité civile"
+      },
+      {
+        "mission": "Travail et emploi",
+        "ministere": "Travail",
+        "montant_milliards_eur": 22.0,
+        "description": "France Travail, formation professionnelle, apprentissage"
+      },
+      {
+        "mission": "Écologie et mobilités",
+        "ministere": "Transition écologique",
+        "montant_milliards_eur": 20.5,
+        "description": "Transports, environnement, énergie"
+      },
+      {
+        "mission": "Justice",
+        "ministere": "Justice",
+        "montant_milliards_eur": 10.8,
+        "description": "Tribunaux, prisons, aide juridictionnelle"
+      },
+      {
+        "mission": "Culture",
+        "ministere": "Culture",
+        "montant_milliards_eur": 4.5,
+        "description": "Patrimoine, création, médias"
+      }
+    ]
+  },
+  "securiteSociale": {
+    "description": "La Sécurité Sociale couvre les risques sociaux : maladie, vieillesse, famille, accidents du travail",
+    "recettes_milliards_eur": 659.4,
+    "depenses_milliards_eur": 676.9,
+    "deficit_milliards_eur": 17.5,
+    "branches": [
+      {
+        "branche": "Maladie",
+        "depenses_milliards_eur": 274.4,
+        "description": "ONDAM : hôpitaux, médecine de ville, médicaments",
+        "evolution": "+3.1% vs 2025"
+      },
+      {
+        "branche": "Vieillesse",
+        "depenses_milliards_eur": 285.0,
+        "description": "Pensions de retraite (CNAV, MSA, régimes spéciaux)"
+      },
+      {
+        "branche": "Famille",
+        "depenses_milliards_eur": 55.0,
+        "description": "Allocations familiales, APL, garde d'enfants"
+      },
+      {
+        "branche": "Accidents du travail",
+        "depenses_milliards_eur": 15.0,
+        "description": "Indemnisation des accidents et maladies professionnelles"
+      },
+      {
+        "branche": "Autonomie",
+        "depenses_milliards_eur": 40.0,
+        "description": "Dépendance, APA, aide aux personnes âgées/handicapées"
+      }
+    ],
+    "financement": {
+      "description": "La Sécu est financée par les cotisations sociales et la CSG",
+      "sources": [
+        {
+          "source": "Cotisations sociales",
+          "montant_milliards_eur": 420,
+          "description": "Part salariale + part patronale sur les salaires",
+          "qui_paye": "Employeurs et salariés"
+        },
+        {
+          "source": "CSG",
+          "montant_milliards_eur": 157,
+          "description": "Contribution Sociale Généralisée (9.2% sur revenus d'activité)",
+          "qui_paye": "Tous les revenus (travail, capital, remplacement)"
+        },
+        {
+          "source": "Impôts et taxes affectés",
+          "montant_milliards_eur": 82,
+          "description": "TVA sociale, taxes tabac/alcool, etc.",
+          "qui_paye": "Consommateurs"
+        }
+      ]
+    },
+    "tauxCotisations": {
+      "description": "Taux de cotisations sur le salaire brut (2026)",
+      "salariales": [
+        { "cotisation": "Assurance vieillesse plafonnée", "taux_pct": 6.90 },
+        { "cotisation": "Assurance vieillesse déplafonnée", "taux_pct": 0.40 },
+        { "cotisation": "CSG déductible", "taux_pct": 6.80 },
+        { "cotisation": "CSG non déductible + CRDS", "taux_pct": 2.90 },
+        { "cotisation": "Retraite complémentaire AGIRC-ARRCO", "taux_pct": 3.15 }
+      ],
+      "patronales": [
+        { "cotisation": "Assurance maladie", "taux_pct": 7.00 },
+        { "cotisation": "Assurance vieillesse plafonnée", "taux_pct": 8.55 },
+        { "cotisation": "Assurance vieillesse déplafonnée", "taux_pct": 1.90 },
+        { "cotisation": "Allocations familiales", "taux_pct": 3.45 },
+        { "cotisation": "Accidents du travail", "taux_pct": 2.20 },
+        { "cotisation": "Chômage", "taux_pct": 4.05 },
+        { "cotisation": "Retraite complémentaire AGIRC-ARRCO", "taux_pct": 4.72 },
+        { "cotisation": "FNAL + Autonomie", "taux_pct": 0.60 }
+      ],
+      "total_salarie_pct": 20.15,
+      "total_employeur_pct": 32.47,
+      "total_pct": 52.62,
+      "note": "Un salarié au SMIC coûte environ 1.3x son salaire brut à l'employeur avec ces cotisations (avant allègements Fillon). Charges réelles plus élevées avec mutuelle, prévoyance et taxes additionnelles."
+    }
+  },
+  "collectivitesLocales": {
+    "description": "Les collectivités territoriales gèrent les services publics locaux",
+    "recettes_fonctionnement_milliards_eur": 260,
+    "depenses_fonctionnement_milliards_eur": 225,
+    "investissement_milliards_eur": 75,
+    "deficit_milliards_eur": 11.4,
+    "dgf_milliards_eur": 27.4,
+    "types": [
+      {
+        "type": "Communes",
+        "nombre": 34945,
+        "depenses_milliards_eur": 105,
+        "competences": "Urbanisme, écoles primaires, voirie communale, état civil"
+      },
+      {
+        "type": "Intercommunalités (EPCI)",
+        "nombre": 1254,
+        "depenses_milliards_eur": 65,
+        "competences": "Transports, déchets, eau, développement économique"
+      },
+      {
+        "type": "Départements",
+        "nombre": 101,
+        "depenses_milliards_eur": 85,
+        "competences": "RSA, APA, collèges, routes départementales, protection de l'enfance"
+      },
+      {
+        "type": "Régions",
+        "nombre": 18,
+        "depenses_milliards_eur": 43,
+        "competences": "Lycées, TER, formation professionnelle, développement économique"
+      }
+    ],
+    "recettes": [
+      {
+        "source": "Impôts locaux",
+        "montant_milliards_eur": 90,
+        "description": "Taxe foncière, CFE, CVAE (ex taxe d'habitation)",
+        "note": "La taxe d'habitation sur résidences principales a été supprimée en 2023"
+      },
+      {
+        "source": "Dotations de l'État",
+        "montant_milliards_eur": 55,
+        "description": "DGF et autres concours"
+      },
+      {
+        "source": "Fiscalité transférée",
+        "montant_milliards_eur": 60,
+        "description": "Part de TVA, DMTO (droits de mutation)"
+      },
+      {
+        "source": "Autres recettes",
+        "montant_milliards_eur": 55,
+        "description": "Redevances, subventions, emprunts"
+      }
+    ]
+  },
+  "prelevementsObligatoires": {
+    "description": "Ensemble des impôts et cotisations prélevés par les administrations publiques",
+    "total_milliards_eur": 1290,
+    "pib_pct": 43.5,
+    "repartition": [
+      {
+        "type": "Cotisations sociales",
+        "montant_milliards_eur": 420,
+        "pct_total": 32.6,
+        "description": "Cotisations salariales et patronales"
+      },
+      {
+        "type": "TVA",
+        "montant_milliards_eur": 210,
+        "pct_total": 16.3,
+        "description": "Taxe sur la valeur ajoutée"
+      },
+      {
+        "type": "CSG-CRDS",
+        "montant_milliards_eur": 166,
+        "pct_total": 12.9,
+        "description": "Prélèvements sociaux sur tous les revenus"
+      },
+      {
+        "type": "Impôt sur le revenu",
+        "montant_milliards_eur": 104,
+        "pct_total": 8.1,
+        "description": "IR des ménages"
+      },
+      {
+        "type": "Impôt sur les sociétés",
+        "montant_milliards_eur": 59,
+        "pct_total": 4.6,
+        "description": "IS des entreprises"
+      },
+      {
+        "type": "Taxes locales",
+        "montant_milliards_eur": 90,
+        "pct_total": 7.0,
+        "description": "Taxe foncière, CFE, etc."
+      },
+      {
+        "type": "Autres taxes",
+        "montant_milliards_eur": 241,
+        "pct_total": 18.5,
+        "description": "TICPE, droits de succession, taxes sur les assurances, taxes diverses"
+      }
+    ],
+    "comparaisonEuropeenne": {
+      "danemark_pct": 46.0,
+      "france_pct": 43.5,
+      "allemagne_pct": 39.3,
+      "italie_pct": 42.5,
+      "espagne_pct": 37.0,
+      "moyenne_ue_pct": 40.2,
+      "note": "La France a le taux de prélèvements obligatoires le plus élevé de l'UE après le Danemark"
+    }
+  },
+  "dette": {
+    "montant_milliards_eur": 3482,
+    "pib_pct": 117.4,
+    "evolution": [
+      { "annee": 2019, "montant_milliards_eur": 2380, "pib_pct": 97.4 },
+      { "annee": 2020, "montant_milliards_eur": 2650, "pib_pct": 114.6, "note": "COVID-19" },
+      { "annee": 2021, "montant_milliards_eur": 2813, "pib_pct": 112.9 },
+      { "annee": 2022, "montant_milliards_eur": 2950, "pib_pct": 111.9 },
+      { "annee": 2023, "montant_milliards_eur": 3101, "pib_pct": 109.9 },
+      { "annee": 2024, "montant_milliards_eur": 3305, "pib_pct": 113.2 },
+      { "annee": 2025, "montant_milliards_eur": 3482, "pib_pct": 117.4, "note": "T3 2025" }
+    ],
+    "charge_interets_milliards_eur": 55,
+    "comparaisonEuropeenne": {
+      "france_pct": 117.4,
+      "allemagne_pct": 62.5,
+      "italie_pct": 135.3,
+      "espagne_pct": 104.3,
+      "grece_pct": 153.6,
+      "moyenne_ue_pct": 81.0,
+      "note": "France = 3ème pays le plus endetté de l'UE"
+    }
+  },
+  "destinationDepenses": {
+    "description": "Pour 1 000€ de dépenses publiques, voici comment ils sont répartis",
+    "base_milliards_eur": 1722,
+    "postes": [
+      { "label": "Autres (emploi, écologie, culture...)", "montant_eur": 286, "icon": "MoreHorizontal" },
+      { "label": "Collectivités locales", "montant_eur": 173, "icon": "Building2" },
+      { "label": "Retraites", "montant_eur": 166, "icon": "Clock" },
+      { "label": "Santé", "montant_eur": 159, "icon": "Heart" },
+      { "label": "Éducation & recherche", "montant_eur": 71, "icon": "GraduationCap" },
+      { "label": "Famille & autonomie", "montant_eur": 55, "icon": "Users" },
+      { "label": "Défense", "montant_eur": 37, "icon": "Shield" },
+      { "label": "Intérêts de la dette", "montant_eur": 32, "icon": "TrendingDown" },
+      { "label": "Sécurité & justice", "montant_eur": 21, "icon": "Scale" }
+    ]
+  },
+  "retourCitoyen": {
+    "description": "Ce que les dépenses publiques financent concrètement pour chaque citoyen",
+    "services": [
+      { "service": "Éducation", "valeur": "~8 500 €/élève/an", "detail": "De la maternelle au lycée, gratuit", "icon": "GraduationCap" },
+      { "service": "Santé", "valeur": "~4 000 €/personne/an", "detail": "Consultations, hospitalisations, médicaments", "icon": "Heart" },
+      { "service": "Retraite", "valeur": "~1 400 €/mois moyen", "detail": "17M de retraités", "icon": "Clock" },
+      { "service": "Routes", "valeur": "1,1M km", "detail": "Réseau routier public entretenu", "icon": "Map" },
+      { "service": "Sécurité", "valeur": "250 000 policiers/gendarmes", "detail": "+ pompiers, sécurité civile", "icon": "Shield" },
+      { "service": "Justice", "valeur": "9 000 magistrats", "detail": "Tribunaux, aide juridictionnelle", "icon": "Scale" },
+      { "service": "Famille", "valeur": "~2 000 €/an/enfant moyen", "detail": "Allocations familiales, aides garde", "icon": "Users" },
+      { "service": "Chômage", "valeur": "~1 200 €/mois moyen", "detail": "Indemnisation des demandeurs d'emploi", "icon": "Briefcase" }
+    ]
+  },
+  "pedagogie": {
+    "questionsFrequentes": [
+      {
+        "question": "Quelle est la différence entre impôt et cotisation sociale ?",
+        "reponse": "L'impôt finance les dépenses générales de l'État (éducation, défense, justice) sans contrepartie directe. Les cotisations sociales financent la protection sociale (santé, retraite, chômage) et ouvrent des droits pour celui qui cotise."
+      },
+      {
+        "question": "Pourquoi y a-t-il un déficit ?",
+        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2026, le déficit public est de ~140 Md€ (4.7% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
+      },
+      {
+        "question": "Qui paye vraiment les impôts en France ?",
+        "reponse": "Les ménages paient environ 70% des prélèvements (IR, CSG, TVA, cotisations salariales). Les entreprises paient ~30% (IS, cotisations patronales, taxes). Mais in fine, tout est payé par les citoyens (consommateurs, salariés, actionnaires)."
+      },
+      {
+        "question": "Comment fonctionne le financement de la Sécu ?",
+        "reponse": "Sur un salaire brut de 100€, environ 20€ sont prélevés au salarié et 32€ à l'employeur en cotisations. La CSG prélève environ 9% sur tous les revenus. Ces sommes financent santé, retraite, famille, chômage."
+      },
+      {
+        "question": "Pourquoi les cotisations patronales sont si élevées ?",
+        "reponse": "Les cotisations patronales (~32% du brut) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
+      }
+    ],
+    "glossaire": [
+      { "terme": "PIB", "definition": "Produit Intérieur Brut : valeur totale de la production de biens et services en France (~2965 Md€)" },
+      { "terme": "PLF", "definition": "Projet de Loi de Finances : budget annuel de l'État, voté au Parlement" },
+      { "terme": "PLFSS", "definition": "Projet de Loi de Financement de la Sécurité Sociale" },
+      { "terme": "DGF", "definition": "Dotation Globale de Fonctionnement : principale dotation de l'État aux collectivités" },
+      { "terme": "ONDAM", "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé" },
+      { "terme": "CSG", "definition": "Contribution Sociale Généralisée : impôt sur tous les revenus finançant la Sécu" },
+      { "terme": "CRDS", "definition": "Contribution au Remboursement de la Dette Sociale (0.5%)" },
+      { "terme": "APU", "definition": "Administrations Publiques : État + Sécu + Collectivités locales" }
+    ]
+  }
+}

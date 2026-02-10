@@ -1,0 +1,143 @@
+{
+  "year": 2024,
+  "sources": {
+    "revenues": "https://data.economie.gouv.fr/explore/dataset/plf-2024-recettes-du-budget-general/information/",
+    "expenditures": "https://data.economie.gouv.fr/explore/dataset/plf-2024-depenses-2024-selon-nomenclatures-destination-et-nature/information/"
+  },
+  "totals": {
+    "revenues_plf_eur": 574469391617,
+    "expenditures_plf_eur": 812095043818
+  },
+  "revenueAggregates": [
+    {
+      "type": "Recettes fiscales",
+      "amount_eur": 485383817319
+    },
+    {
+      "type": "Recettes non fiscales",
+      "amount_eur": 22633486801
+    },
+    {
+      "type": "Prélèvements sur les recettes de l'État au profit des collectivités territoriales",
+      "amount_eur": 44842463483
+    },
+    {
+      "type": "Prélèvement sur les recettes de l'État au profit de l'Union européenne",
+      "amount_eur": 21609624014
+    }
+  ],
+  "topTaxes": [
+    {
+      "code": "1601",
+      "label": "Taxe sur la valeur ajoutée",
+      "amount_eur": 183857035556
+    },
+    {
+      "code": "1101",
+      "label": "Impôt sur le revenu",
+      "amount_eur": 117616000769
+    },
+    {
+      "code": "1301",
+      "label": "Impôt sur les sociétés",
+      "amount_eur": 91415375411
+    },
+    {
+      "code": "1501",
+      "label": "Taxe intérieure de consommation sur les produits énergétiques",
+      "amount_eur": 18422732922
+    },
+    {
+      "code": "1706",
+      "label": "Mutations à titre gratuit par décès",
+      "amount_eur": 15400000000
+    },
+    {
+      "code": "1427",
+      "label": "Prélèvements de solidarité",
+      "amount_eur": 15210000000
+    },
+    {
+      "code": "1402",
+      "label": "Retenues à la source et prélèvements sur les revenus de capitaux mobiliers",
+      "amount_eur": 4800000000
+    },
+    {
+      "code": "1497",
+      "label": "Cotisation sur la valeur ajoutée des entreprises",
+      "amount_eur": 4160000000
+    },
+    {
+      "code": "1705",
+      "label": "Mutations à titre gratuit entre vifs (donations)",
+      "amount_eur": 3936000000
+    },
+    {
+      "code": "1799",
+      "label": "Autres taxes",
+      "amount_eur": 3258000000
+    }
+  ],
+  "topMissions": [
+    {
+      "mission": "Remboursements et dégrèvements",
+      "ministry": "Économie, finances et souveraineté industrielle et numérique",
+      "amount_eur": 140250561424
+    },
+    {
+      "mission": "Avances aux collectivités territoriales",
+      "ministry": "Économie, finances et souveraineté industrielle et numérique",
+      "amount_eur": 132434502964
+    },
+    {
+      "mission": "Enseignement scolaire",
+      "ministry": "Éducation nationale et jeunesse",
+      "amount_eur": 86833850228
+    },
+    {
+      "mission": "Pensions",
+      "ministry": "Économie, finances et souveraineté industrielle et numérique",
+      "amount_eur": 67583738257
+    },
+    {
+      "mission": "Engagements financiers de l'État",
+      "ministry": "Économie, finances et souveraineté industrielle et numérique",
+      "amount_eur": 60818123694
+    },
+    {
+      "mission": "Défense",
+      "ministry": "Armées",
+      "amount_eur": 56778360430
+    },
+    {
+      "mission": "Recherche et enseignement supérieur",
+      "ministry": "Enseignement supérieur et recherche",
+      "amount_eur": 31819150903
+    },
+    {
+      "mission": "Solidarité, insertion et égalité des chances",
+      "ministry": "Solidarités et des Familles",
+      "amount_eur": 30845369866
+    },
+    {
+      "mission": "Sécurités",
+      "ministry": "Intérieur et outre-mer",
+      "amount_eur": 24169218938
+    },
+    {
+      "mission": "Travail et emploi",
+      "ministry": "Travail, plein emploi et insertion",
+      "amount_eur": 22560984550
+    },
+    {
+      "mission": "Écologie, développement et mobilité durables",
+      "ministry": "Transition écologique et cohésion des territoires",
+      "amount_eur": 21630866316
+    },
+    {
+      "mission": "Cohésion des territoires",
+      "ministry": "Transition écologique et cohésion des territoires",
+      "amount_eur": 19371932077
+    }
+  ]
+}
