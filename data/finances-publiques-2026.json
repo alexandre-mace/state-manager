@@ -5,7 +5,7 @@
     "pib_milliards_eur": 2965,
     "dette_publique_milliards_eur": 3482,
     "dette_pib_pct": 117.4,
-    "deficit_public_pib_pct": 4.7,
+    "deficit_public_pib_pct": 5.0,
     "population": 68400000,
     "note": "Données basées sur PLF 2026, LFSS 2026 et estimations. Le PLF 2026 n'a pas été adopté, une loi spéciale a été votée le 23 décembre 2025."
   },
@@ -16,9 +16,9 @@
     "dette": "https://www.insee.fr/fr/statistiques/8686951"
   },
   "vueGlobale": {
-    "description": "Les finances publiques françaises sont gérées par trois grandes catégories d'administrations publiques (APU)",
+    "description": "Les finances publiques françaises sont gérées par quatre catégories d'administrations publiques (APU)",
     "depenses_totales_milliards_eur": 1722,
-    "depenses_pib_pct": 57.1,
+    "depenses_pib_pct": 58.1,
     "repartition": [
       {
         "categorie": "Sécurité Sociale",
@@ -213,7 +213,7 @@
       ]
     },
     "tauxCotisations": {
-      "description": "Taux de cotisations sur le salaire brut (2026)",
+      "description": "Taux de cotisations et prélèvements sociaux sur le salaire brut (2026)",
       "salariales": [
         { "cotisation": "Assurance vieillesse plafonnée", "taux_pct": 6.90 },
         { "cotisation": "Assurance vieillesse déplafonnée", "taux_pct": 0.40 },
@@ -338,7 +338,7 @@
       {
         "type": "Autres taxes",
         "montant_milliards_eur": 241,
-        "pct_total": 18.5,
+        "pct_total": 18.7,
         "description": "TICPE, droits de succession, taxes sur les assurances, taxes diverses"
       }
     ],
@@ -376,18 +376,23 @@
     }
   },
   "destinationDepenses": {
-    "description": "Pour 1 000€ de dépenses publiques, voici comment ils sont répartis",
+    "description": "Pour 1 000 € de dépenses publiques, voici comment ils sont répartis (ventilation fonctionnelle COFOG)",
     "base_milliards_eur": 1722,
+    "source": "Proportions basées sur la classification COFOG 2024 (FIPECO/INSEE)",
     "postes": [
-      { "label": "Autres (emploi, écologie, culture...)", "montant_eur": 286, "icon": "MoreHorizontal" },
-      { "label": "Collectivités locales", "montant_eur": 173, "icon": "Building2" },
-      { "label": "Retraites", "montant_eur": 166, "icon": "Clock" },
-      { "label": "Santé", "montant_eur": 159, "icon": "Heart" },
-      { "label": "Éducation & recherche", "montant_eur": 71, "icon": "GraduationCap" },
-      { "label": "Famille & autonomie", "montant_eur": 55, "icon": "Users" },
-      { "label": "Défense", "montant_eur": 37, "icon": "Shield" },
-      { "label": "Intérêts de la dette", "montant_eur": 32, "icon": "TrendingDown" },
-      { "label": "Sécurité & justice", "montant_eur": 21, "icon": "Scale" }
+      { "label": "Retraites", "montant_eur": 260, "icon": "Clock", "description": "Pensions, réversion, minimum vieillesse" },
+      { "label": "Santé", "montant_eur": 207, "icon": "Heart", "description": "Hôpitaux, médecine de ville, médicaments" },
+      { "label": "Enseignement & recherche", "montant_eur": 101, "icon": "GraduationCap", "description": "Primaire, secondaire, supérieur, recherche publique" },
+      { "label": "Affaires économiques", "montant_eur": 99, "icon": "Briefcase", "description": "Transports, aides aux entreprises, énergie, agriculture" },
+      { "label": "Administration générale", "montant_eur": 62, "icon": "Building2", "description": "Fonctionnement des administrations centrales et locales" },
+      { "label": "Solidarité & chômage", "montant_eur": 51, "icon": "HandHelping", "description": "Minima sociaux, RSA, indemnisation chômage, insertion" },
+      { "label": "Famille", "montant_eur": 40, "icon": "Baby", "description": "Allocations familiales, garde d'enfants" },
+      { "label": "Logement", "montant_eur": 38, "icon": "Home", "description": "Équipements collectifs, APL, aménagement du territoire" },
+      { "label": "Charge de la dette", "montant_eur": 35, "icon": "TrendingDown", "description": "Intérêts sur la dette publique" },
+      { "label": "Défense", "montant_eur": 32, "icon": "Shield", "description": "Forces armées, équipements militaires" },
+      { "label": "Sécurité & justice", "montant_eur": 31, "icon": "Scale", "description": "Police, gendarmerie, tribunaux, prisons" },
+      { "label": "Culture & loisirs", "montant_eur": 26, "icon": "Palette", "description": "Patrimoine, création, médias, sports" },
+      { "label": "Environnement", "montant_eur": 18, "icon": "Leaf", "description": "Gestion des déchets, eau, biodiversité, pollution" }
     ]
   },
   "retourCitoyen": {
@@ -395,11 +400,11 @@
     "services": [
       { "service": "Éducation", "valeur": "~8 500 €/élève/an", "detail": "De la maternelle au lycée, gratuit", "icon": "GraduationCap" },
       { "service": "Santé", "valeur": "~4 000 €/personne/an", "detail": "Consultations, hospitalisations, médicaments", "icon": "Heart" },
-      { "service": "Retraite", "valeur": "~1 400 €/mois moyen", "detail": "17M de retraités", "icon": "Clock" },
+      { "service": "Retraite", "valeur": "~1 550 €/mois net moyen", "detail": "17,2M de retraités", "icon": "Clock" },
       { "service": "Routes", "valeur": "1,1M km", "detail": "Réseau routier public entretenu", "icon": "Map" },
       { "service": "Sécurité", "valeur": "250 000 policiers/gendarmes", "detail": "+ pompiers, sécurité civile", "icon": "Shield" },
       { "service": "Justice", "valeur": "9 000 magistrats", "detail": "Tribunaux, aide juridictionnelle", "icon": "Scale" },
-      { "service": "Famille", "valeur": "~2 000 €/an/enfant moyen", "detail": "Allocations familiales, aides garde", "icon": "Users" },
+      { "service": "Famille", "valeur": "~2 800 €/an/enfant moyen", "detail": "Allocations familiales, aides garde (branche famille CNAF)", "icon": "Users" },
       { "service": "Chômage", "valeur": "~1 200 €/mois moyen", "detail": "Indemnisation des demandeurs d'emploi", "icon": "Briefcase" }
     ]
   },
@@ -411,7 +416,7 @@
       },
       {
         "question": "Pourquoi y a-t-il un déficit ?",
-        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2026, le déficit public est de ~140 Md€ (4.7% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
+        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2026, le déficit public est estimé à ~150 Md€ (~5% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
       },
       {
         "question": "Qui paye vraiment les impôts en France ?",

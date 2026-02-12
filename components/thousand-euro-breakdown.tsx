@@ -12,9 +12,13 @@ import {
   Building2,
   Shield,
   TrendingDown,
-  Users,
   Scale,
-  MoreHorizontal,
+  Briefcase,
+  HandHelping,
+  Baby,
+  Home,
+  Palette,
+  Leaf,
 } from "lucide-react";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -24,9 +28,13 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Building2,
   Shield,
   TrendingDown,
-  Users,
   Scale,
-  MoreHorizontal,
+  Briefcase,
+  HandHelping,
+  Baby,
+  Home,
+  Palette,
+  Leaf,
 };
 
 interface Poste {
@@ -41,20 +49,20 @@ interface ThousandEuroBreakdownProps {
 
 export function ThousandEuroBreakdown({ postes }: ThousandEuroBreakdownProps) {
   const sorted = [...postes].sort((a, b) => b.montant_eur - a.montant_eur);
-  const max = sorted[0]?.montant_eur ?? 1;
+  const total = sorted.reduce((sum, p) => sum + p.montant_eur, 0) || 1;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Pour 1 000 € de dépenses publiques</CardTitle>
         <CardDescription>
-          Répartition concrète de chaque tranche de 1 000 € dépensés par les administrations publiques
+          Ventilation fonctionnelle (classification COFOG) de chaque tranche de 1 000 € dépensés par les administrations publiques
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {sorted.map((poste) => {
           const Icon = ICONS[poste.icon];
-          const pct = (poste.montant_eur / max) * 100;
+          const pct = (poste.montant_eur / total) * 100;
           return (
             <div key={poste.label} className="space-y-1">
               <div className="flex items-center justify-between text-sm">

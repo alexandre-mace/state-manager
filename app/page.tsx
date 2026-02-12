@@ -20,6 +20,16 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const COUNTRY_LABELS: Record<string, string> = {
+  danemark: "Danemark",
+  france: "France",
+  allemagne: "Allemagne",
+  italie: "Italie",
+  espagne: "Espagne",
+  grece: "Grèce",
+  "moyenne ue": "Moyenne UE",
+};
+
 const formatMd = (value: number) => {
   return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} Md€`;
 };
@@ -138,7 +148,7 @@ export default function Home() {
               </CardHeader>
               <CardContent className="pt-0">
                 <p className="text-xs text-muted-foreground">
-                  soit {formatPct(context.dette_pib_pct)} du PIB (3e UE)
+                  soit {formatPct(context.dette_pib_pct)} du PIB (3e de l&apos;UE)
                 </p>
                 <p className="text-xs font-medium text-muted-foreground">
                   {formatPerHab(context.dette_publique_milliards_eur)}
@@ -163,7 +173,7 @@ export default function Home() {
           <div>
             <h2 className="text-2xl font-semibold">Vue d&apos;ensemble des dépenses publiques</h2>
             <p className="text-sm text-muted-foreground">
-              Répartition entre les trois catégories d&apos;administrations publiques (APU)
+              Répartition entre les quatre catégories d&apos;administrations publiques (APU)
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -340,7 +350,7 @@ export default function Home() {
               {/* Cotisations */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Taux de cotisations sociales</CardTitle>
+                  <CardTitle>Cotisations et prélèvements sociaux</CardTitle>
                   <CardDescription>{securiteSociale.tauxCotisations.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -387,7 +397,7 @@ export default function Home() {
               <div className="grid gap-4 sm:grid-cols-4">
                 <Card>
                   <CardHeader>
-                    <CardDescription>Recettes fonctionnement</CardDescription>
+                    <CardDescription>Recettes de fonctionnement</CardDescription>
                     <CardTitle className="font-mono text-lg">
                       {formatMd(collectivitesLocales.recettes_fonctionnement_milliards_eur)}
                     </CardTitle>
@@ -395,7 +405,7 @@ export default function Home() {
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardDescription>Dépenses fonctionnement</CardDescription>
+                    <CardDescription>Dépenses de fonctionnement</CardDescription>
                     <CardTitle className="font-mono text-lg">
                       {formatMd(collectivitesLocales.depenses_fonctionnement_milliards_eur)}
                     </CardTitle>
@@ -484,11 +494,12 @@ export default function Home() {
                   .filter(([key]) => key !== "note")
                   .sort(([, a], [, b]) => (b as number) - (a as number))
                   .map(([key, value]) => {
-                    const label = key.replace("_pct", "").replace(/_/g, " ");
+                    const rawLabel = key.replace("_pct", "").replace(/_/g, " ");
+                    const label = COUNTRY_LABELS[rawLabel] ?? rawLabel;
                     const isFrance = key === "france_pct";
                     return (
                       <div key={key} className="flex justify-between items-center">
-                        <span className={`capitalize ${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
+                        <span className={`${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
                           {label}
                         </span>
                         <div className="flex items-center gap-2">
@@ -537,11 +548,12 @@ export default function Home() {
                   .filter(([key]) => key !== "note")
                   .sort(([, a], [, b]) => (b as number) - (a as number))
                   .map(([key, value]) => {
-                    const label = key.replace("_pct", "").replace(/_/g, " ");
+                    const rawLabel = key.replace("_pct", "").replace(/_/g, " ");
+                    const label = COUNTRY_LABELS[rawLabel] ?? rawLabel;
                     const isFrance = key === "france_pct";
                     return (
                       <div key={key} className="flex justify-between items-center">
-                        <span className={`capitalize ${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
+                        <span className={`${isFrance ? "font-semibold" : "text-muted-foreground"}`}>
                           {label}
                         </span>
                         <div className="flex items-center gap-2">

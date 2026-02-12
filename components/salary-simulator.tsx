@@ -225,7 +225,7 @@ export function SalarySimulator() {
                 <span>Retraite</span>
                 <span className="font-mono">{formatEur(cotisationsSalariales.vieillesse + cotisationsSalariales.retraiteComplementaire + cotisationsPatronales.vieillesse + cotisationsPatronales.retraiteComplementaire)}</span>
               </div>
-              <p className="text-xs text-muted-foreground">Finance votre future pension. Pour un salaire moyen, pension estimée ~1 400 €/mois</p>
+              <p className="text-xs text-muted-foreground">Finance votre future pension. Pension moyenne actuelle : ~1 550 €/mois net</p>
             </div>
             <div className="rounded-lg bg-muted/50 p-3 space-y-1">
               <div className="flex justify-between font-medium">

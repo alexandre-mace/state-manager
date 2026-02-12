@@ -152,7 +152,7 @@ export function FlowDiagram() {
         <div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm">
           <div className="flex items-center gap-2">
             <span className="font-medium text-destructive">Déficit 2026 :</span>
-            <span className="font-mono">~140 Md€</span>
+            <span className="font-mono">~150 Md€</span>
             <span className="text-muted-foreground">(dépenses &gt; recettes → emprunt → dette)</span>
           </div>
         </div>
