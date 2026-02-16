@@ -45,9 +45,10 @@ interface Poste {
 
 interface ThousandEuroBreakdownProps {
   postes: Poste[];
+  baseMiliardsEur?: number;
 }
 
-export function ThousandEuroBreakdown({ postes }: ThousandEuroBreakdownProps) {
+export function ThousandEuroBreakdown({ postes, baseMiliardsEur }: ThousandEuroBreakdownProps) {
   const sorted = [...postes].sort((a, b) => b.montant_eur - a.montant_eur);
   const total = sorted.reduce((sum, p) => sum + p.montant_eur, 0) || 1;
 
@@ -82,7 +83,7 @@ export function ThousandEuroBreakdown({ postes }: ThousandEuroBreakdownProps) {
           );
         })}
         <p className="pt-2 text-xs text-muted-foreground">
-          Total : {sorted.reduce((sum, p) => sum + p.montant_eur, 0)} € — calculé à partir des dépenses totales de 1 722 Md€
+          Total : {sorted.reduce((sum, p) => sum + p.montant_eur, 0)} €{baseMiliardsEur ? ` — calculé à partir des dépenses totales de ${baseMiliardsEur.toLocaleString("fr-FR")} Md€` : ""}
         </p>
       </CardContent>
     </Card>

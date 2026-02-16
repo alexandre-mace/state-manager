@@ -274,8 +274,8 @@
       {
         "source": "Impôts locaux",
         "montant_milliards_eur": 90,
-        "description": "Taxe foncière, CFE, CVAE (ex taxe d'habitation)",
-        "note": "La taxe d'habitation sur résidences principales a été supprimée en 2023"
+        "description": "Taxe foncière, CFE, CVAE",
+        "note": "La taxe d'habitation sur les résidences principales a été progressivement supprimée entre 2018 et 2023"
       },
       {
         "source": "Dotations de l'État",
@@ -429,6 +429,14 @@
       {
         "question": "Pourquoi les cotisations patronales sont si élevées ?",
         "reponse": "Les cotisations patronales (~32% du brut) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
+      },
+      {
+        "question": "Pourquoi les dépenses (1 722 Md€) sont très supérieures aux prélèvements (1 290 Md€) ?",
+        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (~280 Md€). Les recettes totales sont donc d'environ 1 574 Md€. Le déficit (148 Md€) est la différence entre ces recettes totales et les dépenses."
+      },
+      {
+        "question": "Pourquoi la France dépense-t-elle plus que ses voisins européens ?",
+        "reponse": "La France consacre ~58% de son PIB aux dépenses publiques, contre ~50% en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges."
       }
     ],
     "glossaire": [

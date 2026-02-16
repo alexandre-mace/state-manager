@@ -7,7 +7,7 @@ import { PrelevementsChart } from "@/components/charts/prelevements-chart";
 import { EvolutionChart, DeficitChart } from "@/components/charts/evolution-chart";
 import { TopMissionsChart } from "@/components/charts/top-missions-chart";
 import { SalarySimulator } from "@/components/salary-simulator";
-import { FlowDiagram } from "@/components/flow-diagram";
+import { FlowDiagram, type FlowDiagramData } from "@/components/flow-diagram";
 import { ThousandEuroBreakdown } from "@/components/thousand-euro-breakdown";
 import { CitizenReturn } from "@/components/citizen-return";
 import {
@@ -60,6 +60,66 @@ export default function Home() {
 
   // Evolution data
   const evolutionHistory = evolutionData.annees;
+
+  // Flow diagram data (derived from JSON)
+  const cotisationsMontant = prelevementsObligatoires.repartition.find(r => r.type === "Cotisations sociales")?.montant_milliards_eur ?? 0;
+  const csgMontant = prelevementsObligatoires.repartition.find(r => r.type === "CSG-CRDS")?.montant_milliards_eur ?? 0;
+
+  const MISSION_LABELS: Record<string, string> = {
+    "Enseignement scolaire": "Éducation",
+    "Engagements financiers de l'État": "Intérêts dette",
+    "Recherche et enseignement supérieur": "Recherche",
+    "Solidarité, insertion et égalité des chances": "Solidarité",
+    "Sécurités": "Sécurité",
+    "Travail et emploi": "Emploi",
+    "Écologie et mobilités": "Écologie",
+  };
+
+  const BRANCHE_LABELS: Record<string, string> = {
+    "Vieillesse": "Retraites",
+    "Maladie": "Santé",
+  };
+
+  const flowData: FlowDiagramData = {
+    prelevements: {
+      impots: prelevementsObligatoires.total_milliards_eur - cotisationsMontant - csgMontant,
+      cotisations: cotisationsMontant,
+      csgCrds: csgMontant,
+    },
+    etat: {
+      total: vueGlobale.repartition.find(r => r.categorie === "État")?.depenses_milliards_eur ?? 0,
+      depenses: budgetEtat.principalesMissions.slice(0, 4).map(m => ({
+        label: MISSION_LABELS[m.mission] ?? m.mission,
+        amount: m.montant_milliards_eur,
+      })),
+    },
+    secu: {
+      total: vueGlobale.repartition.find(r => r.categorie === "Sécurité Sociale")?.depenses_milliards_eur ?? 0,
+      depenses: [...securiteSociale.branches]
+        .sort((a, b) => b.depenses_milliards_eur - a.depenses_milliards_eur)
+        .slice(0, 4)
+        .map(b => ({
+          label: BRANCHE_LABELS[b.branche] ?? b.branche,
+          amount: b.depenses_milliards_eur,
+        })),
+    },
+    collectivites: {
+      total: vueGlobale.repartition.find(r => r.categorie === "Collectivités locales")?.depenses_milliards_eur ?? 0,
+      depenses: collectivitesLocales.types.map(t => ({
+        label: t.type.includes("EPCI") ? "Interco" : t.type,
+        amount: t.depenses_milliards_eur,
+      })),
+    },
+    autresOrganismes: {
+      total: vueGlobale.repartition.find(r => r.categorie === "Autres organismes publics")?.depenses_milliards_eur ?? 0,
+      description: vueGlobale.repartition.find(r => r.categorie === "Autres organismes publics")?.description ?? "",
+    },
+    transferts: {
+      etatCollectivites: collectivitesLocales.recettes.find(r => r.source === "Dotations de l'État")?.montant_milliards_eur ?? 55,
+      taxesAffecteesSecu: securiteSociale.financement.sources.find(s => s.source === "Impôts et taxes affectés")?.montant_milliards_eur ?? 82,
+    },
+    deficit: Math.round(context.deficit_public_pib_pct / 100 * context.pib_milliards_eur),
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 pb-16">
@@ -160,7 +220,7 @@ export default function Home() {
 
         {/* Pour 1 000€ de dépenses publiques */}
         <section className="space-y-6">
-          <ThousandEuroBreakdown postes={destinationDepenses.postes} />
+          <ThousandEuroBreakdown postes={destinationDepenses.postes} baseMiliardsEur={destinationDepenses.base_milliards_eur} />
         </section>
 
         {/* Ce que vous recevez en retour */}
@@ -171,9 +231,11 @@ export default function Home() {
         {/* Vue globale */}
         <section className="space-y-6">
           <div>
-            <h2 className="text-2xl font-semibold">Vue d&apos;ensemble des dépenses publiques</h2>
+            <h2 className="text-2xl font-semibold">Qui gère les dépenses publiques ?</h2>
             <p className="text-sm text-muted-foreground">
-              Répartition entre les quatre catégories d&apos;administrations publiques (APU)
+              La section précédente montrait <strong>à quoi</strong> sert l&apos;argent public (retraites, santé, éducation...).
+              Ici, on regarde <strong>qui</strong> le dépense : les quatre catégories d&apos;administrations publiques (APU).
+              Les chiffres diffèrent car une même fonction (ex : l&apos;éducation) est financée par plusieurs administrations à la fois.
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -210,7 +272,7 @@ export default function Home() {
             <TabsContent value="etat" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
                 <CardContent className="pt-6">
-                  <p className="text-sm">{budgetEtat.description}. Les chiffres ci-dessous portent sur le budget de l&apos;État stricto sensu (526 Md€), qui est une composante des 585 Md€ de dépenses des administrations centrales.</p>
+                  <p className="text-sm">{budgetEtat.description}. Les chiffres ci-dessous portent sur le budget de l&apos;État stricto sensu ({formatMd(budgetEtat.depenses_milliards_eur)}), qui est une composante des {formatMd(vueGlobale.repartition.find(r => r.categorie === "État")?.depenses_milliards_eur ?? 0)} de dépenses des administrations centrales.</p>
                 </CardContent>
               </Card>
 
@@ -524,7 +586,7 @@ export default function Home() {
 
         {/* Diagramme de flux */}
         <section className="space-y-6">
-          <FlowDiagram />
+          <FlowDiagram data={flowData} />
         </section>
 
         {/* Dette publique */}

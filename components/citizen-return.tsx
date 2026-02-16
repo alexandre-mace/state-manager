@@ -42,9 +42,9 @@ export function CitizenReturn({ services }: CitizenReturnProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Ce que vous recevez en retour</CardTitle>
+        <CardTitle>Ce que financent les dépenses publiques</CardTitle>
         <CardDescription>
-          La valeur concrète des services publics financés par vos impôts et cotisations
+          Les services et prestations concrets dont bénéficient les citoyens
         </CardDescription>
       </CardHeader>
       <CardContent>
