@@ -21,7 +21,7 @@ interface DebtEvolutionChartProps {
 }
 
 const chartConfig = {
-  montant_milliards_eur: {
+  pib_pct: {
     label: "Dette publique",
     color: "var(--chart-4)",
   },
@@ -37,8 +37,8 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
       <AreaChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
         <defs>
           <linearGradient id="debtGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--color-montant_milliards_eur)" stopOpacity={0.3} />
-            <stop offset="95%" stopColor="var(--color-montant_milliards_eur)" stopOpacity={0} />
+            <stop offset="5%" stopColor="var(--color-pib_pct)" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="var(--color-pib_pct)" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -47,21 +47,36 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
           tick={{ fontSize: 12 }}
           tickLine={false}
           axisLine={false}
+          minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value) => `${currencyFormatter.format(value)} Md€`}
+          tickFormatter={(value) => `${value} %`}
           tick={{ fontSize: 11 }}
-          domain={[2000, "auto"]}
+          domain={[0, "auto"]}
           tickLine={false}
           axisLine={false}
         />
         <ChartTooltip
-          content={<ChartTooltipContent />}
+          content={
+            <ChartTooltipContent
+              formatter={(value, _name, item) => (
+                <div className="flex justify-between gap-4">
+                  <span>Dette publique</span>
+                  <span className="font-mono">
+                    {`${Number(value).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} % du PIB`}
+                    {item?.payload?.montant_milliards_eur != null
+                      ? ` (${currencyFormatter.format(item.payload.montant_milliards_eur)} Md€)`
+                      : ""}
+                  </span>
+                </div>
+              )}
+            />
+          }
         />
         <Area
           type="monotone"
-          dataKey="montant_milliards_eur"
-          stroke="var(--color-montant_milliards_eur)"
+          dataKey="pib_pct"
+          stroke="var(--color-pib_pct)"
           fill="url(#debtGradient)"
           strokeWidth={2}
         />

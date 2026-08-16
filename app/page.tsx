@@ -605,6 +605,7 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">
               La dette publique atteint {formatMd(dette.montant_milliards_eur)} soit {formatPct(dette.pib_pct)} du PIB.
               La charge des intérêts représente {formatMd(dette.charge_interets_milliards_eur)}/an.
+              Le graphique retrace la dette au sens de Maastricht depuis {debtEvolution[0]?.annee} (en % du PIB, montants en Md€ au survol).
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -650,7 +651,7 @@ export default function Home() {
           <div>
             <h2 className="text-2xl font-semibold">Évolution des finances publiques</h2>
             <p className="text-sm text-muted-foreground">
-              Recettes et dépenses des administrations publiques depuis 2015
+              Recettes et dépenses des administrations publiques en % du PIB depuis {evolutionHistory[0]?.annee} (comptes nationaux INSEE/Eurostat)
             </p>
           </div>
           <div className="space-y-4">
@@ -665,8 +666,8 @@ export default function Home() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Déficit public (% du PIB)</CardTitle>
-                <CardDescription>La limite européenne est de 3% du PIB</CardDescription>
+                <CardTitle>Solde public (% du PIB)</CardTitle>
+                <CardDescription>La limite européenne est de 3% de déficit — dernier excédent : 1974</CardDescription>
               </CardHeader>
               <CardContent>
                 <DeficitChart data={evolutionHistory} />
