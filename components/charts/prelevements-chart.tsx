@@ -62,7 +62,7 @@ export function PrelevementsChart({ data }: PrelevementsChartProps) {
           axisLine={false}
         />
         <ChartTooltip
-          cursor={{ fill: "hsl(var(--muted) / 0.2)" }}
+          cursor={{ fill: "var(--muted)", fillOpacity: 0.5 }}
           content={<ChartTooltipContent />}
         />
         <Bar dataKey="montant_milliards_eur" radius={[0, 6, 6, 0]}>

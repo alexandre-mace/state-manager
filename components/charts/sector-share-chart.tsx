@@ -58,8 +58,8 @@ export function SectorShareChart({ data, sectors }: SectorShareChartProps) {
             <Tooltip
               contentStyle={{
                 borderRadius: 12,
-                border: "1px solid hsl(var(--border))",
-                backgroundColor: "hsl(var(--background))",
+                border: "1px solid var(--border)",
+                backgroundColor: "var(--background)",
               }}
               formatter={(value, key) => [
                 formatPercent(Number(value ?? 0) / 100),

@@ -49,7 +49,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
           axisLine={false}
         />
         <ChartTooltip
-          cursor={{ fill: "hsl(var(--muted) / 0.2)" }}
+          cursor={{ fill: "var(--muted)", fillOpacity: 0.5 }}
           content={<ChartTooltipContent />}
         />
         <Bar

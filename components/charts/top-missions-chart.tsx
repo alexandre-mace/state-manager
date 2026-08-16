@@ -55,11 +55,11 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
               tick={{ fontSize: 12 }}
             />
             <Tooltip
-              cursor={{ fill: "hsl(var(--muted) / 0.2)" }}
+              cursor={{ fill: "var(--muted)", fillOpacity: 0.5 }}
               contentStyle={{
                 borderRadius: 12,
-                border: "1px solid hsl(var(--border))",
-                backgroundColor: "hsl(var(--background))",
+                border: "1px solid var(--border)",
+                backgroundColor: "var(--background)",
               }}
               formatter={(value, _name, item) => [
                 currencyFormatter.format(Number(value)),
