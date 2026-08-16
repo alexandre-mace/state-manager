@@ -261,7 +261,15 @@ export default function Home() {
 
         {/* Tabs: État / Sécu / Collectivités */}
         <section className="space-y-6">
-          <Tabs defaultValue="etat" className="w-full">
+          <div>
+            <h2 className="text-2xl font-semibold">Zoom sur chaque administration</h2>
+            <p className="text-sm text-muted-foreground">
+              Chaque onglet détaille les recettes et dépenses d&apos;une catégorie d&apos;administration.
+              Tout ce qui se trouve dans le cadre ci-dessous se rapporte à l&apos;onglet sélectionné.
+            </p>
+          </div>
+          <div className="rounded-2xl border bg-muted/20 p-4 sm:p-6">
+            <Tabs defaultValue="etat" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="etat">Budget de l&apos;État</TabsTrigger>
               <TabsTrigger value="secu">Sécurité Sociale</TabsTrigger>
@@ -533,7 +541,8 @@ export default function Home() {
                 </Card>
               </div>
             </TabsContent>
-          </Tabs>
+            </Tabs>
+          </div>
         </section>
 
         {/* Prélèvements obligatoires */}
