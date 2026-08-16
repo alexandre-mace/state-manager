@@ -34,7 +34,7 @@ const billionsFormatter = new Intl.NumberFormat("de-DE", {
 export function TopTaxesChart({ data }: TopTaxesChartProps) {
   return (
     <Card className="h-full">
-      <CardContent className="h-[420px] p-6">
+      <CardContent className="h-[420px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"

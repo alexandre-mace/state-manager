@@ -271,7 +271,7 @@ export default function Home() {
             {/* Budget de l'État */}
             <TabsContent value="etat" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
-                <CardContent className="pt-6">
+                <CardContent>
                   <p className="text-sm">{budgetEtat.description}. Les chiffres ci-dessous portent sur le budget de l&apos;État stricto sensu ({formatMd(budgetEtat.depenses_milliards_eur)}), qui est une composante des {formatMd(vueGlobale.repartition.find(r => r.categorie === "État")?.depenses_milliards_eur ?? 0)} de dépenses des administrations centrales.</p>
                 </CardContent>
               </Card>
@@ -321,7 +321,7 @@ export default function Home() {
                     </p>
                   </div>
                   <Card>
-                    <CardContent className="pt-6 space-y-3">
+                    <CardContent className="space-y-3">
                       {budgetEtat.recettesFiscales.principaux_impots.map((impot, i) => (
                         <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
                           <div className="flex justify-between items-baseline">
@@ -343,7 +343,7 @@ export default function Home() {
             {/* Sécurité Sociale */}
             <TabsContent value="secu" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
-                <CardContent className="pt-6">
+                <CardContent>
                   <p className="text-sm">{securiteSociale.description}</p>
                 </CardContent>
               </Card>
@@ -393,7 +393,7 @@ export default function Home() {
                     </p>
                   </div>
                   <Card>
-                    <CardContent className="pt-6 space-y-3">
+                    <CardContent className="space-y-3">
                       {securiteSociale.financement.sources.map((source, i) => (
                         <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
                           <div className="flex justify-between items-baseline">
@@ -451,7 +451,7 @@ export default function Home() {
             {/* Collectivités locales */}
             <TabsContent value="collectivites" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
-                <CardContent className="pt-6">
+                <CardContent>
                   <p className="text-sm">{collectivitesLocales.description}</p>
                 </CardContent>
               </Card>

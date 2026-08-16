@@ -45,7 +45,7 @@ const formatPercent = (value: number) => withSpaces(percentFormatter.format(valu
 export function SectorShareChart({ data, sectors }: SectorShareChartProps) {
   return (
     <Card className="h-full">
-      <CardContent className="h-[400px] p-6">
+      <CardContent className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 12, right: 24, left: 0, bottom: 12 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />

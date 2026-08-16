@@ -35,7 +35,7 @@ const billionsFormatter = new Intl.NumberFormat("de-DE", {
 export function TopMissionsChart({ data }: TopMissionsChartProps) {
   return (
     <Card className="h-full">
-      <CardContent className="h-[480px] p-6">
+      <CardContent className="h-[480px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"

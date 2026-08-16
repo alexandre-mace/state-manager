@@ -34,7 +34,7 @@ const billionsFormatter = new Intl.NumberFormat("de-DE", {
 export function RevenueBreakdownChart({ data }: RevenueBreakdownChartProps) {
   return (
     <Card className="h-full">
-      <CardContent className="h-[360px] p-6">
+      <CardContent className="h-[360px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
