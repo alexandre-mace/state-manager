@@ -88,21 +88,21 @@
     },
     {
       "annee": 2025,
-      "recettes_milliards_eur": 1550,
-      "depenses_milliards_eur": 1700,
-      "deficit_milliards_eur": -150,
-      "deficit_pib_pct": -5.4,
-      "depenses_pib_pct": 57.1,
-      "note": "Estimation"
+      "recettes_milliards_eur": 1560,
+      "depenses_milliards_eur": 1713,
+      "deficit_milliards_eur": -152.5,
+      "deficit_pib_pct": -5.1,
+      "depenses_pib_pct": 57.2,
+      "note": "Réel (INSEE, mars 2026)"
     },
     {
       "annee": 2026,
-      "recettes_milliards_eur": 1580,
+      "recettes_milliards_eur": 1572,
       "depenses_milliards_eur": 1722,
-      "deficit_milliards_eur": -140,
-      "deficit_pib_pct": -4.7,
-      "depenses_pib_pct": 57.1,
-      "note": "Objectif PLF 2026"
+      "deficit_milliards_eur": -150,
+      "deficit_pib_pct": -5.0,
+      "depenses_pib_pct": 57.2,
+      "note": "Objectif LF 2026 (promulguée en février 2026)"
     }
   ]
 }

@@ -61,8 +61,8 @@ export function SectorShareChart({ data, sectors }: SectorShareChartProps) {
                 border: "1px solid hsl(var(--border))",
                 backgroundColor: "hsl(var(--background))",
               }}
-              formatter={(value: number, key: string) => [
-                formatPercent((value ?? 0) / 100),
+              formatter={(value, key) => [
+                formatPercent(Number(value ?? 0) / 100),
                 key,
               ]}
               labelFormatter={(label) => `Année ${label}`}

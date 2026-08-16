@@ -60,7 +60,7 @@ export function TopTaxesChart({ data }: TopTaxesChartProps) {
                 border: "1px solid hsl(var(--border))",
                 backgroundColor: "hsl(var(--background))",
               }}
-              formatter={(value: number) => [currencyFormatter.format(value), "Recette"]}
+              formatter={(value) => [currencyFormatter.format(Number(value)), "Recette"]}
             />
             <Bar dataKey="amount_eur" fill="var(--chart-1)" radius={[0, 6, 6, 0]} />
           </BarChart>

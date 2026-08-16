@@ -61,9 +61,9 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
                 border: "1px solid hsl(var(--border))",
                 backgroundColor: "hsl(var(--background))",
               }}
-              formatter={(value: number, _name, payload) => [
-                currencyFormatter.format(value),
-                payload?.payload?.ministry ?? "Mission",
+              formatter={(value, _name, item) => [
+                currencyFormatter.format(Number(value)),
+                item?.payload?.ministry ?? "Mission",
               ]}
             />
             <Bar dataKey="amount_eur" fill="var(--chart-2)" radius={[0, 6, 6, 0]} />

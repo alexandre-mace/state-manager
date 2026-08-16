@@ -58,7 +58,7 @@ export function RevenueBreakdownChart({ data }: RevenueBreakdownChartProps) {
                 border: "1px solid hsl(var(--border))",
                 backgroundColor: "hsl(var(--background))",
               }}
-              formatter={(value: number) => [currencyFormatter.format(value), "Montant"]}
+              formatter={(value) => [currencyFormatter.format(Number(value)), "Montant"]}
               labelFormatter={(label) => label}
             />
             <Bar dataKey="amount_eur" fill="var(--primary)" radius={[6, 6, 0, 0]} />
