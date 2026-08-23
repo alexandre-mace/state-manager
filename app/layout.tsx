@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
+import { MadeWithLove } from "@/components/made-with-love";
 
 export const metadata: Metadata = {
   title: "Finances Publiques Françaises 2026",
@@ -19,6 +20,7 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
         {children}
+        <MadeWithLove className="pb-8" />
       </body>
     </html>
   );
