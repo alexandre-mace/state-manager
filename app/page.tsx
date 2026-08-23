@@ -143,7 +143,7 @@ export default function Home() {
               dépenses et de la dette de l&apos;État, de la Sécurité Sociale et des collectivités locales.
             </p>
             {context.note && (
-              <p className="text-xs text-amber-600 dark:text-amber-400">
+              <p className="text-xs text-muted-foreground">
                 Note : {context.note}
               </p>
             )}
@@ -270,7 +270,7 @@ export default function Home() {
           </div>
           <div className="rounded-2xl border bg-muted/20 p-4 sm:p-6">
             <Tabs defaultSelectedKey="etat" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList>
               <TabsTrigger id="etat">Budget de l&apos;État</TabsTrigger>
               <TabsTrigger id="secu">Sécurité Sociale</TabsTrigger>
               <TabsTrigger id="collectivites">Collectivités</TabsTrigger>
@@ -448,7 +448,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <p className="mt-4 text-sm text-amber-600 dark:text-amber-400">
+                  <p className="mt-4 text-sm text-muted-foreground">
                     Total : {formatPct(securiteSociale.tauxCotisations.total_pct)} du salaire brut.{" "}
                     {securiteSociale.tauxCotisations.note}
                   </p>
@@ -533,7 +533,7 @@ export default function Home() {
                         </div>
                         <p className="text-xs text-muted-foreground">{r.description}</p>
                         {"note" in r && r.note && (
-                          <p className="text-xs text-amber-600 dark:text-amber-400">{r.note}</p>
+                          <p className="text-xs text-muted-foreground">{r.note}</p>
                         )}
                       </div>
                     ))}
@@ -732,7 +732,7 @@ export default function Home() {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="block rounded-lg border border-border p-4 text-sm hover:bg-muted/50 transition-colors"
+                className="block rounded-lg border border-border bg-card p-4 text-sm transition-colors hover:border-primary/40"
               >
                 <span className="font-medium capitalize">{key.replace(/_/g, " ")}</span>
                 <span className="block text-xs text-muted-foreground truncate mt-1">{url}</span>
