@@ -7,6 +7,9 @@ import { MadeWithLove } from "@/components/made-with-love";
 export const metadata: Metadata = {
   title: "Finances Publiques Françaises 2026",
   description: "Comprendre les finances de l'État, de la Sécurité Sociale et des collectivités locales en France",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;text-anchor:middle;font-size:90px;'>🏛️</text></svg>",
+  },
 };
 
 export default function RootLayout({
