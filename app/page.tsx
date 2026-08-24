@@ -269,15 +269,15 @@ export default function Home() {
             </p>
           </div>
           <div className="rounded-2xl border bg-muted/20 p-4 sm:p-6">
-            <Tabs defaultSelectedKey="etat" className="w-full">
+            <Tabs defaultValue="etat" className="w-full">
             <TabsList>
-              <TabsTrigger id="etat">Budget de l&apos;État</TabsTrigger>
-              <TabsTrigger id="secu">Sécurité Sociale</TabsTrigger>
-              <TabsTrigger id="collectivites">Collectivités</TabsTrigger>
+              <TabsTrigger value="etat">Budget de l&apos;État</TabsTrigger>
+              <TabsTrigger value="secu">Sécurité Sociale</TabsTrigger>
+              <TabsTrigger value="collectivites">Collectivités</TabsTrigger>
             </TabsList>
 
             {/* Budget de l'État */}
-            <TabsContent id="etat" className="space-y-6 pt-4">
+            <TabsContent value="etat" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
                 <CardContent>
                   <p className="text-sm">{budgetEtat.description}. Les chiffres ci-dessous portent sur le budget de l&apos;État stricto sensu ({formatMd(budgetEtat.depenses_milliards_eur)}), qui est une composante des {formatMd(vueGlobale.repartition.find(r => r.categorie === "État")?.depenses_milliards_eur ?? 0)} de dépenses des administrations centrales.</p>
@@ -349,7 +349,7 @@ export default function Home() {
             </TabsContent>
 
             {/* Sécurité Sociale */}
-            <TabsContent id="secu" className="space-y-6 pt-4">
+            <TabsContent value="secu" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
                 <CardContent>
                   <p className="text-sm">{securiteSociale.description}</p>
@@ -457,7 +457,7 @@ export default function Home() {
             </TabsContent>
 
             {/* Collectivités locales */}
-            <TabsContent id="collectivites" className="space-y-6 pt-4">
+            <TabsContent value="collectivites" className="space-y-6 pt-4">
               <Card className="bg-muted/30">
                 <CardContent>
                   <p className="text-sm">{collectivitesLocales.description}</p>
