@@ -17,3 +17,10 @@ Automated tests are not scaffolded yet, so add a `tests/` or colocated `*.test.t
 
 ## Commit & Pull Request Guidelines
 Follow the existing Git history by writing short, imperative commit subjects (e.g., `Add state panel layout`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm lint`, manual checks), and links to related issues; include before/after screenshots for UI changes.
+
+## Conventions de la stack
+
+Les conventions communes à mes projets Next vivent dans `docs/next-guidelines.md`,
+un lien vers le dépôt partagé [dev-standards](https://github.com/alexandre-mace/dev-standards)
+(fichier `next/next-guidelines.md`). Si ce lien est cassé, c'est que le dépôt n'est
+pas cloné à côté de celui-ci : lire la version en ligne.
