@@ -50,3 +50,13 @@ Automated tests are not scaffolded yet, so add a `tests/` or colocated `*.test.t
 Follow the existing Git history by writing short, imperative commit subjects (e.g., `Add state panel layout`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm lint`, manual checks), and links to related issues; include before/after screenshots for UI changes.
 
 Conventions de la stack : `docs/next-guidelines.md`, lien vers [dev-standards](https://github.com/alexandre-mace/dev-standards).
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
