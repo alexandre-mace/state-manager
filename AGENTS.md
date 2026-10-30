@@ -1,6 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
+
 This Next.js App Router project keeps user-facing routes in `app/`, with `layout.tsx` providing shared chrome and `page.tsx` as the default screen. Global styles live in `app/globals.css`, which imports Tailwind CSS v4 tokens and animation utilities. Shared logic belongs in `lib/`, starting with `utils.ts` for helpers such as `cn`. Static assets, including favicons and any marketing imagery, should be stored under `public/` and referenced via absolute paths. Path aliases are defined in `tsconfig.json` (e.g., `@/lib`), so prefer those imports when reorganizing modules.
 
 ## Les données, qui sont tout le produit
@@ -38,19 +39,24 @@ notification Eurostat PDE (avril et octobre), textes de loi de finances. Les sé
 des xlsx INSEE base 2020, parsables en python avec openpyxl.
 
 ## Build, Test, and Development Commands
+
 - `pnpm dev`: launches the dev server with Turbopack at http://localhost:3000.
 - `pnpm build`: produces an optimized production build.
 - `pnpm start`: runs the compiled app locally.
-- `pnpm lint`: executes ESLint with the Next.js config; pair with `--fix` when safe.
+- `pnpm check`: Biome lint and format check; `pnpm format` rewrites, `components/ui/` (the kit) is left out.
+- `pnpm test`: Vitest, on the pure calculations in `lib/`.
 
 ## Coding Style & Naming Conventions
-TypeScript is strict-mode by default; minimize `any` and keep components typed via explicit props. Components and files that render JSX should use PascalCase (e.g., `StatePanel.tsx`), while reusable hooks can live in a future `hooks/` folder and start with `use`. Utility functions belong in `lib/` and use camelCase. Tailwind classes should favor the semantic tokens declared in `globals.css`; keep overrides localized with `@layer`. Run `pnpm lint` before pushing to catch import ordering and accessibility rules.
+
+TypeScript is strict-mode by default; minimize `any` and keep components typed via explicit props. Components and files that render JSX should use PascalCase (e.g., `StatePanel.tsx`), while reusable hooks can live in a future `hooks/` folder and start with `use`. Utility functions belong in `lib/` and use camelCase. Tailwind classes should favor the semantic tokens declared in `globals.css`; keep overrides localized with `@layer`. Run `pnpm check` before pushing to catch import ordering and accessibility rules.
 
 ## Testing Guidelines
-Automated tests are not scaffolded yet, so add a `tests/` or colocated `*.test.tsx` directory when introducing coverage. Prefer React Testing Library for component behavior and consider Playwright for end-to-end flows once UI stabilizes. Keep test names descriptive (`it("renders empty state")`) and group by component. Document any required mocks in the test file for future contributors.
+
+A static site with no backend owes no test suite (`docs/next-guidelines.md`). The exception is a calculation the page shows as a result: it lives in `lib/` as a pure function with a colocated `*.test.ts`, like the salary simulator in `lib/simulateur.ts`.
 
 ## Commit & Pull Request Guidelines
-Follow the existing Git history by writing short, imperative commit subjects (e.g., `Add state panel layout`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm lint`, manual checks), and links to related issues; include before/after screenshots for UI changes.
+
+Follow the existing Git history by writing short, imperative commit subjects (e.g., `Add state panel layout`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm check`, `pnpm test`, manual checks), and links to related issues; include before/after screenshots for UI changes.
 
 Conventions de la stack : `docs/next-guidelines.md`, lien vers [dev-standards](https://github.com/alexandre-mace/dev-standards).
 
