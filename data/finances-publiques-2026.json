@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "lastUpdate": "2026-08-16",
+  "lastUpdate": "2026-10-30",
   "context": {
-    "pib_milliards_eur": 3010,
-    "dette_publique_milliards_eur": 3536,
-    "dette_pib_pct": 117.5,
+    "pib_milliards_eur": 3021,
+    "dette_publique_milliards_eur": 3595.5,
+    "dette_pib_pct": 119.0,
     "deficit_public_pib_pct": 5,
     "deficit_periode": "2026, objectif de la loi de finances",
     "deficit_objectif": "objectif sous 3 % en 2029",
@@ -30,7 +30,7 @@
     },
     "dette": {
       "libelle": "Dette trimestrielle des administrations publiques (INSEE)",
-      "url": "https://www.insee.fr/fr/statistiques/9010340"
+      "url": "https://www.insee.fr/fr/statistiques/9053525"
     },
     "comptes_2025": {
       "libelle": "Comptes des administrations publiques 2025 (INSEE)",
@@ -446,9 +446,9 @@
     }
   },
   "dette": {
-    "montant_milliards_eur": 3536,
-    "pib_pct": 117.5,
-    "periode": "Fin du 1er trimestre 2026 (INSEE)",
+    "montant_milliards_eur": 3595.5,
+    "pib_pct": 119.0,
+    "periode": "Fin du 2e trimestre 2026 (INSEE)",
     "rang_ue": "3e de l'UE fin 2025",
     "evolution": [
       {
@@ -698,9 +698,9 @@
       },
       {
         "annee": 2026,
-        "montant_milliards_eur": 3536.1,
-        "pib_pct": 117.5,
-        "note": "T1 2026"
+        "montant_milliards_eur": 3595.5,
+        "pib_pct": 119.0,
+        "note": "T2 2026"
       }
     ],
     "charge_interets_milliards_eur": 59.3,
