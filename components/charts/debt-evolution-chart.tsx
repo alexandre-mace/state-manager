@@ -8,6 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatMd, formatPct } from "@/lib/format";
 
 type DebtDatum = {
   annee: number;
@@ -26,10 +27,6 @@ const chartConfig = {
     color: "var(--chart-4)",
   },
 } satisfies ChartConfig;
-
-const currencyFormatter = new Intl.NumberFormat("fr-FR", {
-  maximumFractionDigits: 0,
-});
 
 export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
   return (
@@ -54,7 +51,7 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
           minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value) => `${value} %`}
+          tickFormatter={(value: number) => formatPct(value, 0)}
           tick={{ fontSize: 11 }}
           domain={[0, "auto"]}
           tickLine={false}
@@ -67,9 +64,9 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
                 <div className="flex justify-between gap-4">
                   <span>Dette publique</span>
                   <span className="font-mono">
-                    {`${Number(value).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} % du PIB`}
+                    {`${formatPct(Number(value))} du PIB`}
                     {item?.payload?.montant_milliards_eur != null
-                      ? ` (${currencyFormatter.format(item.payload.montant_milliards_eur)} Md€)`
+                      ? ` (${formatMd(item.payload.montant_milliards_eur, 0)})`
                       : ""}
                   </span>
                 </div>

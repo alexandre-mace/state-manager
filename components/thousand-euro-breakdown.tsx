@@ -20,6 +20,7 @@ import {
   Palette,
   Leaf,
 } from "lucide-react";
+import { formatEur, formatMd } from "@/lib/format";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Clock,
@@ -83,7 +84,7 @@ export function ThousandEuroBreakdown({ postes, baseMiliardsEur }: ThousandEuroB
           );
         })}
         <p className="pt-2 text-xs text-muted-foreground">
-          Total : {sorted.reduce((sum, p) => sum + p.montant_eur, 0)} €{baseMiliardsEur ? `, calculé à partir des dépenses totales de ${baseMiliardsEur.toLocaleString("fr-FR")}\u00a0Md€` : ""}
+          Total : {formatEur(sorted.reduce((sum, p) => sum + p.montant_eur, 0))}{baseMiliardsEur ? `, calculé à partir des dépenses totales de ${formatMd(baseMiliardsEur)}` : ""}
         </p>
       </CardContent>
     </Card>

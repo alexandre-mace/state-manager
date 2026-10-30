@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { formatMd, formatPct } from "@/lib/format";
 
 const COUNTRY_LABELS: Record<string, string> = {
   danemark: "Danemark",
@@ -60,14 +61,6 @@ function SourceNote({ sources }: { sources: Source[] }) {
     </p>
   );
 }
-
-const formatMd = (value: number) => {
-  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}\u00a0Md€`;
-};
-
-const formatPct = (value: number) => {
-  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}\u00a0%`;
-};
 
 export default function Home() {
   const { sources } = financeData;
@@ -258,7 +251,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-          <SourceNote sources={[sources.comptes_2025, sources.dette]} />
+          <SourceNote sources={[sources.budget_etat, sources.comptes_2025, sources.dette]} />
         </section>
 
         <nav
@@ -610,7 +603,7 @@ export default function Home() {
           <div>
             <h2 className="text-2xl font-semibold">Prélèvements obligatoires</h2>
             <p className="text-sm text-muted-foreground">
-              {prelevementsObligatoires.description} - Total : {formatMd(prelevementsObligatoires.total_milliards_eur)} ({formatPct(prelevementsObligatoires.pib_pct)} du PIB)
+              {prelevementsObligatoires.description}. Total : {formatMd(prelevementsObligatoires.total_milliards_eur)} ({formatPct(prelevementsObligatoires.pib_pct)} du PIB)
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -722,7 +715,7 @@ export default function Home() {
                 <CardDescription>L&apos;écart entre les deux courbes représente le déficit</CardDescription>
               </CardHeader>
               <CardContent>
-                <EvolutionChart data={evolutionHistory} />
+                <EvolutionChart data={evolutionHistory} dernierExcedent={dernierExcedent} />
               </CardContent>
             </Card>
             <Card>
@@ -766,8 +759,8 @@ export default function Home() {
               <CardContent className="space-y-3">
                 {pedagogie.questionsFrequentes.map((qa, i) => (
                   <details key={i} className="group border-b border-border pb-3 last:border-0">
-                    <summary className="cursor-pointer list-none text-sm font-medium marker:hidden">
-                      <span className="mr-2 inline-block text-muted-foreground transition-transform group-open:rotate-90">›</span>
+                    <summary className="cursor-pointer list-none text-sm font-medium [&::-webkit-details-marker]:hidden">
+                      <span aria-hidden="true" className="mr-2 inline-block text-muted-foreground transition-transform group-open:rotate-90">›</span>
                       {qa.question}
                     </summary>
                     <p className="mt-2 text-sm text-muted-foreground">{qa.reponse}</p>

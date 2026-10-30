@@ -8,6 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatMd } from "@/lib/format";
 
 type PrelevementDatum = {
   type: string;
@@ -49,7 +50,7 @@ export function PrelevementsChart({ data }: PrelevementsChartProps) {
         <CartesianGrid strokeDasharray="3 3" horizontal={false} />
         <XAxis
           type="number"
-          tickFormatter={(value) => `${value} Md€`}
+          tickFormatter={(value: number) => formatMd(value, 0)}
           tick={{ fontSize: 12 }}
           tickLine={false}
           axisLine={false}

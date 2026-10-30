@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatMd, formatPct } from "@/lib/format";
 
 type EvolutionDatum = {
   annee: number;
@@ -44,9 +45,6 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const formatPct = (value: number) =>
-  `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} %`;
-
 // Graduations à pas régulier : le domaine automatique de Recharts tombait sur 43, 51, 59 %
 const regularTicks = (values: number[], step: number) => {
   const low = Math.floor(Math.min(...values) / step) * step;
@@ -54,7 +52,7 @@ const regularTicks = (values: number[], step: number) => {
   return Array.from({ length: Math.round((high - low) / step) + 1 }, (_, i) => low + i * step);
 };
 
-export function EvolutionChart({ data }: EvolutionChartProps) {
+export function EvolutionChart({ data, dernierExcedent }: EvolutionChartProps & { dernierExcedent?: number }) {
   const ticks = regularTicks(
     data.flatMap((d) => [d.depenses_pib_pct, d.recettes_pib_pct ?? d.depenses_pib_pct]),
     5,
@@ -85,7 +83,7 @@ export function EvolutionChart({ data }: EvolutionChartProps) {
           minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value: number) => `${value.toLocaleString("fr-FR")}\u00a0%`}
+          tickFormatter={(value: number) => formatPct(value)}
           tick={{ fontSize: 11 }}
           tickLine={false}
           axisLine={false}
@@ -106,7 +104,7 @@ export function EvolutionChart({ data }: EvolutionChartProps) {
                     <span>{label}</span>
                     <span className="font-mono">
                       {formatPct(Number(value))}
-                      {milliards != null ? ` (${milliards} Md€)` : ""}
+                      {milliards != null ? ` (${formatMd(milliards, 0)})` : ""}
                     </span>
                   </div>
                 );
@@ -122,7 +120,7 @@ export function EvolutionChart({ data }: EvolutionChartProps) {
             return value;
           }}
         />
-        <ReferenceLine x={1974} stroke="var(--muted-foreground)" strokeDasharray="3 3" label={{ value: "Dernier excédent", fontSize: 10, fill: "var(--muted-foreground)" }} />
+        {dernierExcedent != null && <ReferenceLine x={dernierExcedent} stroke="var(--muted-foreground)" strokeDasharray="3 3" label={{ value: "Dernier excédent", fontSize: 10, fill: "var(--muted-foreground)" }} />}
         <ReferenceLine x={2020} stroke="var(--muted-foreground)" strokeDasharray="3 3" label={{ value: "COVID", fontSize: 10, fill: "var(--muted-foreground)" }} />
         <Area
           type="monotone"
@@ -169,7 +167,7 @@ export function DeficitChart({ data }: EvolutionChartProps) {
           minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value: number) => `${value.toLocaleString("fr-FR")}\u00a0%`}
+          tickFormatter={(value: number) => formatPct(value)}
           tick={{ fontSize: 11 }}
           tickLine={false}
           axisLine={false}

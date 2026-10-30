@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatEur, formatPct } from "@/lib/format";
 
 type Tranche = { limite_eur: number | null; taux_pct: number };
 
@@ -37,7 +38,11 @@ interface SalarySimulatorProps {
 
 export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
   const [salaireBrutAnnuel, setSalaireBrutAnnuel] = useState(35000);
-  const t = (cle: string) => taux[cle] ?? 0;
+  const t = (cle: string) => {
+    const valeur = taux[cle];
+    if (valeur === undefined) throw new Error(`Taux de cotisation absent du JSON : ${cle}`);
+    return valeur;
+  };
 
   const baseCSG = salaireBrutAnnuel * (simulateur.base_csg_pct / 100);
 
@@ -85,15 +90,12 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
   const pctCotisationsSurCout = ((totalCotisationsSalariales + totalCotisationsPatronales) / coutEmployeur) * 100;
   const pctIRSurCout = (irAnnuel / coutEmployeur) * 100;
 
-  const formatEur = (n: number) => n.toLocaleString("fr-FR", { maximumFractionDigits: 0 }) + " €";
-  const formatPct = (n: number) => n.toLocaleString("fr-FR", { maximumFractionDigits: 1 }) + "%";
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Simulateur : Où va mon argent ?</CardTitle>
         <CardDescription>
-          Décomposition d&apos;un salaire brut annuel (célibataire sans enfant, taux 2026)
+          Décomposition d&apos;un salaire brut annuel (célibataire sans enfant, {simulateur.bareme_ir.description.toLowerCase()})
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">

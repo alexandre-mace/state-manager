@@ -8,6 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatMd } from "@/lib/format";
 
 type SecuBranchDatum = {
   branche: string;
@@ -38,7 +39,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
         <CartesianGrid strokeDasharray="3 3" horizontal={false} />
         <XAxis
           type="number"
-          tickFormatter={(value) => `${value} Md€`}
+          tickFormatter={(value: number) => formatMd(value, 0)}
           tick={{ fontSize: 12 }}
         />
         <YAxis

@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { formatMd } from "@/lib/format";
 
 interface MissionDatum {
   mission: string;
@@ -10,9 +11,6 @@ interface MissionDatum {
 interface TopMissionsChartProps {
   data: MissionDatum[];
 }
-
-const formatMd = (value: number) =>
-  `${value.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Md€`;
 
 // Liste en HTML plutôt qu'un graphique : les libellés longs restent lisibles sur mobile
 // et les montants s'affichent sans survol.
@@ -46,9 +44,9 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
                   <div className="bg-chart-2/35" style={{ width: `${(d.pensions_milliards_eur / max) * 100}%` }} />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {d.description}
+                  {d.description}.
                   {d.pensions_milliards_eur > 0 && (
-                    <>. Dont {formatMd(d.pensions_milliards_eur)} de retraites des agents, soit {formatMd(horsPensions)} hors retraites.</>
+                    <> Dont {formatMd(d.pensions_milliards_eur)} de retraites des agents, soit {formatMd(horsPensions)} hors retraites.</>
                   )}
                 </p>
               </li>

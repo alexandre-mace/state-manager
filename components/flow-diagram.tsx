@@ -1,8 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-const formatMd = (n: number) => `${Math.round(n)} Md€`;
+import { formatMd } from "@/lib/format";
 
 type FlowItem = {
   label: string;
@@ -27,7 +26,7 @@ function FlowBox({ label, amount, color, small = false }: FlowItem & { small?: b
       style={{ borderColor: color, backgroundColor: `${color}15` }}
     >
       <div className="font-medium">{label}</div>
-      <div className="font-mono font-semibold" style={{ color }}>{formatMd(amount)}</div>
+      <div className="font-mono font-semibold" style={{ color }}>{formatMd(amount, 0)}</div>
     </div>
   );
 }
@@ -94,7 +93,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 
         {/* Autres organismes */}
         <div className="rounded-lg border border-border bg-muted/30 p-3 text-center text-xs text-muted-foreground">
-          + <strong>Autres organismes publics</strong> (universités, hôpitaux, agences) : <span className="font-mono">{formatMd(data.autresOrganismes.total)}</span>
+          + <strong>Autres organismes publics</strong> (universités, hôpitaux, agences) : <span className="font-mono">{formatMd(data.autresOrganismes.total, 0)}</span>
           <span>, financés par les trois administrations ci-dessus</span>
         </div>
 
@@ -104,11 +103,11 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
           <div className="grid gap-2 text-xs text-muted-foreground sm:grid-cols-2">
             <div className="flex flex-wrap items-center justify-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[var(--chart-1)]" />
-              État → Collectivités : <span className="font-mono">{formatMd(data.transferts.etatCollectivites)}</span> (dotations)
+              État → Collectivités : <span className="font-mono">{formatMd(data.transferts.etatCollectivites, 0)}</span> (dotations)
             </div>
             <div className="flex flex-wrap items-center justify-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[var(--chart-2)]" />
-              Taxes affectées → Sécu : <span className="font-mono">{formatMd(data.transferts.taxesAffecteesSecu)}</span> (tabac, alcool...)
+              Taxes affectées → Sécu : <span className="font-mono">{formatMd(data.transferts.taxesAffecteesSecu, 0)}</span> (tabac, alcool...)
             </div>
           </div>
         </div>
@@ -157,7 +156,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         <div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm">
           <div className="flex items-center gap-2">
             <span className="font-medium text-destructive">Déficit 2026 :</span>
-            <span className="font-mono">~{formatMd(data.deficit)}</span>
+            <span className="font-mono">~{formatMd(data.deficit, 0)}</span>
             <span className="text-muted-foreground">(dépenses &gt; recettes → emprunt → dette)</span>
           </div>
         </div>

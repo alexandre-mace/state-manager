@@ -8,6 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatMd } from "@/lib/format";
 
 type SpendingDatum = {
   categorie: string;
@@ -63,7 +64,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
               formatter={(value, name) => (
                 <div className="flex flex-col gap-1">
                   <span className="font-medium">{name}</span>
-                  <span className="text-muted-foreground">{value} Md€</span>
+                  <span className="text-muted-foreground">{formatMd(Number(value))}</span>
                 </div>
               )}
             />
