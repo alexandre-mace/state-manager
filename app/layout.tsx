@@ -4,12 +4,24 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { MadeWithLove } from "@/components/made-with-love";
 
+// Le build échoue si un composant dynamique se glisse dans une page
+export const ensureStatic = "navigation";
+
+const title = "Finances Publiques Françaises 2026";
+const description =
+	"Comprendre les finances de l'État, de la Sécurité Sociale et des collectivités locales en France";
+
 export const metadata: Metadata = {
-	title: "Finances Publiques Françaises 2026",
-	description:
-		"Comprendre les finances de l'État, de la Sécurité Sociale et des collectivités locales en France",
-	icons: {
-		icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;text-anchor:middle;font-size:90px;'>🏛️</text></svg>",
+	metadataBase: new URL("https://state.alexandremace.fr"),
+	title,
+	description,
+	openGraph: {
+		title,
+		description,
+		url: "/",
+		siteName: title,
+		locale: "fr_FR",
+		type: "website",
 	},
 };
 
