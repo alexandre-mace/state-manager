@@ -59,10 +59,10 @@ export function ThousandEuroBreakdown({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Pour 1 000 € de dépenses publiques</CardTitle>
+				<CardTitle>Pour 1&#8239;000&nbsp;€ de dépenses publiques</CardTitle>
 				<CardDescription>
 					Ventilation fonctionnelle (classification COFOG) de chaque tranche de
-					1 000 € dépensés par les administrations publiques
+					1&#8239;000&nbsp;€ dépensés par les administrations publiques
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-3">

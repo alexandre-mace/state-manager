@@ -7,9 +7,9 @@
     "dette_pib_pct": 119.0,
     "deficit_public_pib_pct": 5,
     "deficit_periode": "2026, objectif de la loi de finances",
-    "deficit_objectif": "objectif sous 3 % en 2029",
+    "deficit_objectif": "objectif sous 3 % en 2029",
     "population": 69100000,
-    "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
+    "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
   "sources": {
     "loi_finances_2026": {
@@ -75,8 +75,8 @@
   },
   "budgetEtat": {
     "description": "Le budget de l'État finance les missions régaliennes et les politiques publiques nationales",
-    "note": "Chiffres de la loi de finances 2026 (promulguée le 19 février 2026) : recettes et charges nettes du budget général, après prélèvements sur recettes au profit des collectivités et de l'UE. Solde général y compris comptes spéciaux : -134,6 Md€.",
-    "notePensions": "Les crédits votés de chaque mission comprennent la contribution du ministère au CAS Pensions, le compte qui paie les retraites des fonctionnaires de l'État, retraités actuels compris. Son taux est passé de 74,28 % du traitement indiciaire brut en 2024 à 82,28 % en 2026 : cette hausse grossit les crédits des ministères sans moyens nouveaux pour leurs services. Ces pensions figurent aussi dans la branche Vieillesse de la Sécurité sociale, il ne faut donc pas additionner les deux. Montants votés en loi de finances 2026 ; part retraites tirée des projets annuels de performance du projet de loi.",
+    "note": "Chiffres de la loi de finances 2026 (promulguée le 19 février 2026) : recettes et charges nettes du budget général, après prélèvements sur recettes au profit des collectivités et de l'UE. Solde général y compris comptes spéciaux : -134,6 Md€.",
+    "notePensions": "Les crédits votés de chaque mission comprennent la contribution du ministère au CAS Pensions, le compte qui paie les retraites des fonctionnaires de l'État, retraités actuels compris. Son taux est passé de 74,28 % du traitement indiciaire brut en 2024 à 82,28 % en 2026 : cette hausse grossit les crédits des ministères sans moyens nouveaux pour leurs services. Ces pensions figurent aussi dans la branche Vieillesse de la Sécurité sociale, il ne faut donc pas additionner les deux. Montants votés en loi de finances 2026 ; part retraites tirée des projets annuels de performance du projet de loi.",
     "recettes_nettes_milliards_eur": 325.4,
     "depenses_milliards_eur": 458.9,
     "deficit_milliards_eur": 133.5,
@@ -134,14 +134,14 @@
         "mission": "Défense",
         "ministere": "Armées",
         "montant_milliards_eur": 66.5,
-        "description": "Forces armées, équipements (+6,7 Md€ hors pensions vs 2025 au projet de loi, conformément à la LPM accélérée)",
+        "description": "Forces armées, équipements (+6,7 Md€ hors pensions vs 2025 au projet de loi, conformément à la LPM accélérée)",
         "dont_pensions_milliards_eur": 9.6
       },
       {
         "mission": "Engagements financiers de l'État",
         "ministere": "Économie et Finances",
         "montant_milliards_eur": 60.3,
-        "description": "Charge de la dette (intérêts) : 59,3 Md€, en forte hausse",
+        "description": "Charge de la dette (intérêts) : 59,3 Md€, en forte hausse",
         "dont_pensions_milliards_eur": 0
       },
       {
@@ -197,7 +197,7 @@
   },
   "securiteSociale": {
     "description": "La Sécurité Sociale couvre les risques sociaux : maladie, vieillesse, famille, accidents du travail",
-    "note": "LFSS 2026 promulguée le 30 décembre 2025. Mesures majeures : suspension de la réforme des retraites de 2023 et gel des pensions en 2026. Déficit 2025 constaté : 21,6 Md€.",
+    "note": "LFSS 2026 promulguée le 30 décembre 2025. Mesures majeures : suspension de la réforme des retraites de 2023 et gel des pensions en 2026. Déficit 2025 constaté : 21,6 Md€.",
     "recettes_milliards_eur": 664.8,
     "depenses_milliards_eur": 684.2,
     "deficit_milliards_eur": 19.4,
@@ -387,7 +387,7 @@
     ]
   },
   "prelevementsObligatoires": {
-    "description": "Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : 43,6 % du PIB)",
+    "description": "Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : 43,6 % du PIB)",
     "total_milliards_eur": 1312,
     "pib_pct": 43.6,
     "periode": "Montant estimé pour 2026, taux 2025 constaté par l'INSEE",
@@ -442,7 +442,7 @@
       "italie_pct": 42.5,
       "espagne_pct": 37,
       "moyenne_ue_pct": 40.4,
-      "note": "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark."
+      "note": "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark."
     }
   },
   "dette": {
@@ -715,7 +715,7 @@
     }
   },
   "destinationDepenses": {
-    "description": "Pour 1 000 € de dépenses publiques, voici comment ils sont répartis (ventilation fonctionnelle COFOG)",
+    "description": "Pour 1 000 € de dépenses publiques, voici comment ils sont répartis (ventilation fonctionnelle COFOG)",
     "base_milliards_eur": 1722,
     "source": "Proportions basées sur la classification COFOG 2024 (FIPECO/INSEE)",
     "postes": [
@@ -804,19 +804,19 @@
     "services": [
       {
         "service": "Éducation",
-        "valeur": "~8 500 €/élève/an",
+        "valeur": "~8 500 €/élève/an",
         "detail": "De la maternelle au lycée, gratuit",
         "icon": "GraduationCap"
       },
       {
         "service": "Santé",
-        "valeur": "~4 000 €/personne/an",
+        "valeur": "~4 000 €/personne/an",
         "detail": "Consultations, hospitalisations, médicaments",
         "icon": "Heart"
       },
       {
         "service": "Retraite",
-        "valeur": "~1 550 €/mois net moyen",
+        "valeur": "~1 550 €/mois net moyen",
         "detail": "17,2M de retraités",
         "icon": "Clock"
       },
@@ -828,25 +828,25 @@
       },
       {
         "service": "Sécurité",
-        "valeur": "250 000 policiers/gendarmes",
+        "valeur": "250 000 policiers/gendarmes",
         "detail": "+ pompiers, sécurité civile",
         "icon": "Shield"
       },
       {
         "service": "Justice",
-        "valeur": "9 000 magistrats",
+        "valeur": "9 000 magistrats",
         "detail": "Tribunaux, aide juridictionnelle",
         "icon": "Scale"
       },
       {
         "service": "Famille",
-        "valeur": "~2 800 €/an/enfant moyen",
+        "valeur": "~2 800 €/an/enfant moyen",
         "detail": "Allocations familiales, aides garde (branche famille CNAF)",
         "icon": "Users"
       },
       {
         "service": "Chômage",
-        "valeur": "~1 200 €/mois moyen",
+        "valeur": "~1 200 €/mois moyen",
         "detail": "Indemnisation des demandeurs d'emploi",
         "icon": "Briefcase"
       }
@@ -860,7 +860,7 @@
       },
       {
         "question": "Pourquoi y a-t-il un déficit ?",
-        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2025, le déficit public constaté a atteint 152,5 Md€ (5,1% du PIB) ; la loi de finances 2026 vise ~150 Md€ (5% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
+        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2025, le déficit public constaté a atteint 152,5 Md€ (5,1% du PIB) ; la loi de finances 2026 vise ~150 Md€ (5% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
       },
       {
         "question": "Qui paye vraiment les impôts en France ?",
@@ -875,8 +875,8 @@
         "reponse": "Les cotisations patronales (~32% du brut) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
       },
       {
-        "question": "Pourquoi les dépenses (1 722 Md€) sont très supérieures aux prélèvements (1 312 Md€) ?",
-        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (~260 Md€). Les recettes totales sont donc d'environ 1 572 Md€. Le déficit (~150 Md€) est la différence entre ces recettes totales et les dépenses."
+        "question": "Pourquoi les dépenses (1 722 Md€) sont très supérieures aux prélèvements (1 312 Md€) ?",
+        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (~260 Md€). Les recettes totales sont donc d'environ 1 572 Md€. Le déficit (~150 Md€) est la différence entre ces recettes totales et les dépenses."
       },
       {
         "question": "Pourquoi la France dépense-t-elle plus que ses voisins européens ?",
@@ -890,7 +890,7 @@
     "glossaire": [
       {
         "terme": "PIB",
-        "definition": "Produit Intérieur Brut : valeur totale de la production de biens et services en France (2 991 Md€ en 2025, ~3 010 Md€ estimés en 2026)"
+        "definition": "Produit Intérieur Brut : valeur totale de la production de biens et services en France (2 991 Md€ en 2025, ~3 010 Md€ estimés en 2026)"
       },
       {
         "terme": "PLF",
@@ -906,7 +906,7 @@
       },
       {
         "terme": "ONDAM",
-        "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé (274,4 Md€ en 2026)"
+        "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé (274,4 Md€ en 2026)"
       },
       {
         "terme": "CSG",
@@ -955,9 +955,9 @@
       ]
     },
     "reperes": {
-      "pension_moyenne": "~1 550 €/mois net",
-      "remboursement_sante": "~77 %",
-      "duree_chomage": "~24 mois"
+      "pension_moyenne": "~1 550 €/mois net",
+      "remboursement_sante": "~77 %",
+      "duree_chomage": "~24 mois"
     }
   }
 }

@@ -35,7 +35,7 @@ const COUNTRY_LABELS: Record<string, string> = {
 };
 
 const SOMMAIRE = [
-	{ id: "repartition", libelle: "Pour 1 000 €" },
+	{ id: "repartition", libelle: "Pour 1\u202f000\u00a0€" },
 	{ id: "qui-gere", libelle: "Qui dépense" },
 	{ id: "administrations", libelle: "Administrations" },
 	{ id: "prelevements", libelle: "Prélèvements" },

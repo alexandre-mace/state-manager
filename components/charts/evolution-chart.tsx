@@ -208,7 +208,9 @@ export function DeficitChart({ data }: EvolutionChartProps) {
 			<ComposedChart
 				data={data}
 				margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
-				title="Solde public en pourcentage du PIB, par année, avec la limite européenne de 3 %"
+				title={
+					"Solde public en pourcentage du PIB, par année, avec la limite européenne de 3\u00a0%"
+				}
 			>
 				<CartesianGrid strokeDasharray="3 3" vertical={false} />
 				<XAxis
