@@ -253,7 +253,7 @@
       ]
     },
     "tauxCotisations": {
-      "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
+      "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. La CSG et la CRDS portent sur 98,25 % du brut, d'où des totaux un peu inférieurs à la somme des taux. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
       "salariales": [
         {
           "cle": "vieillesse_plafonnee_sal",
@@ -1104,11 +1104,11 @@
         "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053228984"
       },
       {
-        "libelle": "Barème de l'impôt sur le revenu 2025 (service-public.fr)",
+        "libelle": "Barème de l'impôt sur le revenu 2026, revenus 2025 (service-public.fr)",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"
       },
       {
-        "libelle": "Décote de l'impôt sur le revenu 2026 (Weblex, chiffres clés)",
+        "libelle": "Décote de l'impôt sur le revenu 2026, revenus 2025 (Weblex, chiffres clés)",
         "url": "https://www.weblex.fr/chiffres-cles/impot-sur-le-revenu-et-decote-2026"
       }
     ]

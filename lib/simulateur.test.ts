@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import donnees from "../data/finances-publiques-2026.json";
+import { formatEur, formatNombre } from "./format";
 import {
 	assiette,
 	coefficientRgdu,
@@ -114,6 +115,31 @@ describe("simulation complète", () => {
 		// Salarié : 11,31 points sur le brut, plus 9,7 points de CSG-CRDS sur 98,25 % du brut
 		expect(tauxSousLePass(salariales, p)).toBeCloseTo(11.31 + 9.7 * 0.9825, 6);
 		expect(tauxSousLePass(patronales, p)).toBeCloseTo(42.05, 6);
+	});
+});
+
+describe("textes du JSON", () => {
+	// Les libellés recopient des paramètres : s'ils divergent, la page se contredit
+	const tc = donnees.securiteSociale.tauxCotisations;
+	const libelles = [...tc.salariales, ...tc.patronales].map(
+		(c) => c.cotisation,
+	);
+
+	it("citent le PASS et l'allègement maximal en vigueur", () => {
+		expect(tc.description).toContain(formatEur(p.pass_annuel_eur));
+		expect(tc.note).toContain(
+			`${formatNombre((p.rgdu.tmin + p.rgdu.tdelta) * 100, 2)} points`,
+		);
+		expect(tc.note).toContain(`${p.rgdu.seuil_smic} SMIC`);
+	});
+
+	it("citent les plafonds de tranche en multiples du PASS", () => {
+		expect(
+			libelles.some((l) => l.includes(`${p.plafonds_pass.tranches_1_2} PASS`)),
+		).toBe(true);
+		expect(
+			libelles.some((l) => l.includes(`${p.plafonds_pass.chomage} PASS`)),
+		).toBe(true);
 	});
 });
 
