@@ -1,10 +1,12 @@
 // Espace insécable avant l'unité : « 1 722 Md€ » ne se coupe jamais en fin de ligne
-const NBSP = " ";
+const NBSP = "\u00a0";
 
-export const formatNombre = (value: number, decimales = 1) =>
-  value.toLocaleString("fr-FR", { maximumFractionDigits: decimales });
+// decimalesMin fixe le nombre de décimales, pour aligner une colonne de montants
+export const formatNombre = (value: number, decimales = 1, decimalesMin = 0) =>
+  value.toLocaleString("fr-FR", { minimumFractionDigits: decimalesMin, maximumFractionDigits: decimales });
 
-export const formatMd = (value: number, decimales = 1) => `${formatNombre(value, decimales)}${NBSP}Md€`;
+export const formatMd = (value: number, decimales = 1, decimalesMin = 0) =>
+  `${formatNombre(value, decimales, decimalesMin)}${NBSP}Md€`;
 
 export const formatPct = (value: number, decimales = 1) => `${formatNombre(value, decimales)}${NBSP}%`;
 

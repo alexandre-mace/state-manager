@@ -37,7 +37,7 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
               <li key={d.mission} className="space-y-1.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-sm font-medium">{d.mission}</span>
-                  <span className="shrink-0 font-mono text-sm">{formatMd(d.amount_milliards_eur)}</span>
+                  <span className="shrink-0 font-mono text-sm">{formatMd(d.amount_milliards_eur, 1, 1)}</span>
                 </div>
                 <div className="flex h-2.5 overflow-hidden rounded-full bg-muted" aria-hidden="true">
                   <div className="bg-chart-2" style={{ width: `${(horsPensions / max) * 100}%` }} />
@@ -46,7 +46,7 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
                 <p className="text-xs text-muted-foreground">
                   {d.description}.
                   {d.pensions_milliards_eur > 0 && (
-                    <> Dont {formatMd(d.pensions_milliards_eur)} de retraites des agents, soit {formatMd(horsPensions)} hors retraites.</>
+                    <> Dont {formatMd(d.pensions_milliards_eur, 1, 1)} de retraites des agents, soit {formatMd(horsPensions, 1, 1)} hors retraites.</>
                   )}
                 </p>
               </li>

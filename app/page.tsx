@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { formatMd, formatPct } from "@/lib/format";
+import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
 
 const COUNTRY_LABELS: Record<string, string> = {
   danemark: "Danemark",
@@ -68,7 +68,7 @@ export default function Home() {
 
   const population = context.population;
   const formatPerHab = (milliards: number) =>
-    Math.round((milliards * 1_000_000_000) / population).toLocaleString("fr-FR") + " €/hab";
+    `${formatEur((milliards * 1_000_000_000) / population)}/hab`;
 
   // Prepare data for charts
   const spendingData = vueGlobale.repartition;
@@ -251,7 +251,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-          <SourceNote sources={[sources.budget_etat, sources.comptes_2025, sources.dette]} />
+          <SourceNote sources={[sources.loi_finances_2026, sources.comptes_2025, sources.dette]} />
         </section>
 
         <nav
@@ -396,7 +396,7 @@ export default function Home() {
                   </Card>
                 </div>
               </div>
-              <SourceNote sources={[sources.budget_etat]} />
+              <SourceNote sources={[sources.loi_finances_2026, sources.budget_etat]} />
             </TabsContent>
 
             {/* Sécurité Sociale */}
@@ -561,7 +561,7 @@ export default function Home() {
                       <div key={i} className="space-y-1 border-b border-border pb-3 last:border-0">
                         <div className="flex justify-between items-baseline">
                           <span className="font-medium">{type.type}</span>
-                          <span className="text-sm text-muted-foreground">{type.nombre.toLocaleString("fr-FR")} entités</span>
+                          <span className="text-sm text-muted-foreground">{formatNombre(type.nombre, 0)} entités</span>
                         </div>
                         <div className="flex justify-between items-baseline">
                           <span className="text-xs text-muted-foreground">Dépenses</span>
@@ -721,7 +721,7 @@ export default function Home() {
             <Card>
               <CardHeader>
                 <CardTitle>Solde public (% du PIB)</CardTitle>
-                <CardDescription>La limite européenne est de 3 % de déficit ; dernier excédent : {dernierExcedent}</CardDescription>
+                <CardDescription>La limite européenne est de 3&nbsp;% de déficit ; dernier excédent : {dernierExcedent}</CardDescription>
               </CardHeader>
               <CardContent>
                 <DeficitChart data={evolutionHistory} />

@@ -72,7 +72,7 @@ export function ThousandEuroBreakdown({ postes, baseMiliardsEur }: ThousandEuroB
                   {Icon && <Icon className="h-4 w-4 text-muted-foreground" />}
                   <span>{poste.label}</span>
                 </div>
-                <span className="font-mono font-medium">{poste.montant_eur} €</span>
+                <span className="font-mono font-medium">{formatEur(poste.montant_eur)}</span>
               </div>
               <div className="h-2 w-full rounded-full bg-muted">
                 <div

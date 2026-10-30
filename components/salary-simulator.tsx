@@ -30,6 +30,9 @@ function calculerIR(revenuImposable: number, tranches: Tranche[]): number {
   return impot;
 }
 
+const SALAIRE_MIN = 15000;
+const SALAIRE_MAX = 150000;
+
 interface SalarySimulatorProps {
   // Taux en fraction du brut, par clé de cotisation (tauxCotisations du JSON)
   taux: Record<string, number>;
@@ -95,7 +98,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
       <CardHeader>
         <CardTitle>Simulateur : Où va mon argent ?</CardTitle>
         <CardDescription>
-          Décomposition d&apos;un salaire brut annuel (célibataire sans enfant, {simulateur.bareme_ir.description.toLowerCase()})
+          Décomposition d&apos;un salaire brut annuel (célibataire sans enfant, {simulateur.bareme_ir.description})
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -107,8 +110,8 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
           <input
             id="salaire-brut-annuel"
             type="range"
-            min={15000}
-            max={150000}
+            min={SALAIRE_MIN}
+            max={SALAIRE_MAX}
             step={1000}
             value={salaireBrutAnnuel}
             onChange={(e) => setSalaireBrutAnnuel(Number(e.target.value))}
@@ -116,8 +119,8 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
             className="w-full accent-primary"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>15 000 €</span>
-            <span>150 000 €</span>
+            <span>{formatEur(SALAIRE_MIN)}</span>
+            <span>{formatEur(SALAIRE_MAX)}</span>
           </div>
         </div>
 

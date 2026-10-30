@@ -8,7 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { formatMd } from "@/lib/format";
+import { formatMd, formatNombre } from "@/lib/format";
 
 type SpendingDatum = {
   categorie: string;
@@ -103,7 +103,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
                       y={viewBox.cy}
                       className="fill-foreground text-2xl font-bold"
                     >
-                      {total.toLocaleString("fr-FR")}
+                      {formatNombre(total)}
                     </tspan>
                     <tspan
                       x={viewBox.cx}

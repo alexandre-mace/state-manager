@@ -12,8 +12,12 @@
     "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
   "sources": {
+    "loi_finances_2026": {
+      "libelle": "Loi n° 2026-103 de finances pour 2026, crédits par mission (Légifrance)",
+      "url": "https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000053509625"
+    },
     "budget_etat": {
-      "libelle": "Budget de l'État, loi de finances 2026 (budget.gouv.fr)",
+      "libelle": "Dossier du projet de loi de finances 2026 (budget.gouv.fr)",
       "url": "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026"
     },
     "securite_sociale": {
@@ -926,7 +930,7 @@
     "base_csg_pct": 98.25,
     "abattement_frais_pro_pct": 10,
     "bareme_ir": {
-      "description": "Barème 2026 (revenus 2025)",
+      "description": "barème 2026 sur les revenus 2025",
       "tranches": [
         {
           "limite_eur": 11294,
