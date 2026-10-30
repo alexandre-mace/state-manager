@@ -22,8 +22,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
-import { findOrThrow, requireAmount } from "@/lib/data";
 import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
+import { findOrThrow, requireAmount } from "@/lib/guards";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
 const COUNTRY_LABELS: Record<string, string> = {
@@ -228,7 +228,7 @@ export default function Home() {
 				<section className="space-y-6">
 					<div className="flex flex-wrap gap-2">
 						<Badge className="text-xs font-medium uppercase tracking-wider">
-							Finances publiques 2026
+							Finances publiques {financeData.year}
 						</Badge>
 						<Badge variant="outline" className="text-xs">
 							Mis à jour le{" "}

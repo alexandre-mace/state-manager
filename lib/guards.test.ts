@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findOrThrow, requireAmount } from "./data";
+import { findOrThrow, requireAmount } from "./guards";
 
 describe("findOrThrow", () => {
 	const list = [{ categorie: "État" }, { categorie: "Sécurité Sociale" }];

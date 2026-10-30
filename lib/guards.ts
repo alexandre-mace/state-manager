@@ -9,7 +9,7 @@ export function findOrThrow<T>(
 	return entry;
 }
 
-// Un impôt porte son montant net ou, à défaut, son montant brut ; jamais aucun des deux
+// Un impôt porte son montant net ou son montant brut : l'absence des deux casse le build
 export function requireAmount(
 	value: number | undefined,
 	label: string,
