@@ -21,7 +21,10 @@ pourcentages affichés divergent des chiffres officiels.
 
 **Pièges de périmètre**, tous rencontrés :
 - Les missions budgétaires en crédits de paiement sont « y compris pensions ». L'écart est massif sur
-  la Défense.
+  la Défense. La part retraites (`dont_pensions_milliards_eur`) n'est pas dans la loi de finances : elle
+  se lit dans les PAP, ligne « Contributions d'équilibre au CAS Pensions », programme par programme.
+  Pour Recherche et enseignement supérieur elle est sous-estimée, les universités la payant sur leurs
+  subventions, hors titre 2.
 - Le budget de l'État se lit en recettes et charges nettes du budget général : le solde général avec
   les comptes spéciaux est légèrement différent.
 - Les prélèvements obligatoires INSEE (définition française) ne sont pas ceux d'Eurostat. Ne pas les

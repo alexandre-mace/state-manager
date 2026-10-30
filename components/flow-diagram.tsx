@@ -120,6 +120,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
           <div className="space-y-1">
             <div className="text-xs font-medium text-center mb-2" style={{ color: "var(--chart-1)" }}>
               Dépenses État
+              <div className="font-normal text-muted-foreground">hors retraites des agents</div>
             </div>
             {data.etat.depenses.map((d) => (
               <FlowBox key={d.label} label={d.label} amount={d.amount} color="var(--chart-1)" small />

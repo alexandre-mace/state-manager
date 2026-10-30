@@ -1,74 +1,60 @@
-"use client";
-
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-
 import { Card, CardContent } from "@/components/ui/card";
 
 interface MissionDatum {
   mission: string;
-  ministry: string;
-  amount_eur: number;
+  description: string;
+  amount_milliards_eur: number;
+  pensions_milliards_eur: number;
 }
 
 interface TopMissionsChartProps {
   data: MissionDatum[];
 }
 
-const currencyFormatter = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-});
+const formatMd = (value: number) =>
+  `${value.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Md€`;
 
-const billionsFormatter = new Intl.NumberFormat("de-DE", {
-  maximumFractionDigits: 0,
-});
-
+// Liste en HTML plutôt qu'un graphique : les libellés longs restent lisibles sur mobile
+// et les montants s'affichent sans survol.
 export function TopMissionsChart({ data }: TopMissionsChartProps) {
+  const max = Math.max(...data.map((d) => d.amount_milliards_eur));
+
   return (
     <Card className="h-full">
-      <CardContent className="h-[480px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            layout="vertical"
-            data={data}
-            margin={{ top: 12, right: 24, left: 0, bottom: 12 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} className="stroke-muted" />
-            <XAxis
-              type="number"
-              tickFormatter={(value) => `${billionsFormatter.format(value / 1_000_000_000)} Md€`}
-              tick={{ fontSize: 12 }}
-            />
-            <YAxis
-              dataKey="mission"
-              type="category"
-              width={240}
-              tick={{ fontSize: 12 }}
-            />
-            <Tooltip
-              cursor={{ fill: "var(--muted)", fillOpacity: 0.5 }}
-              contentStyle={{
-                borderRadius: 12,
-                border: "1px solid var(--border)",
-                backgroundColor: "var(--background)",
-              }}
-              formatter={(value, _name, item) => [
-                currencyFormatter.format(Number(value)),
-                item?.payload?.ministry ?? "Mission",
-              ]}
-            />
-            <Bar dataKey="amount_eur" fill="var(--chart-2)" radius={[0, 6, 6, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+      <CardContent className="space-y-4">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground" aria-hidden="true">
+          <span className="flex items-center gap-1.5">
+            <span className="size-2.5 rounded-sm bg-chart-2" />
+            Crédits de la mission
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-2.5 rounded-sm bg-chart-2/35" />
+            dont retraites des agents
+          </span>
+        </div>
+        <ul className="space-y-4">
+          {data.map((d) => {
+            const horsPensions = d.amount_milliards_eur - d.pensions_milliards_eur;
+            return (
+              <li key={d.mission} className="space-y-1.5">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-sm font-medium">{d.mission}</span>
+                  <span className="shrink-0 font-mono text-sm">{formatMd(d.amount_milliards_eur)}</span>
+                </div>
+                <div className="flex h-2.5 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+                  <div className="bg-chart-2" style={{ width: `${(horsPensions / max) * 100}%` }} />
+                  <div className="bg-chart-2/35" style={{ width: `${(d.pensions_milliards_eur / max) * 100}%` }} />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {d.description}
+                  {d.pensions_milliards_eur > 0 && (
+                    <>. Dont {formatMd(d.pensions_milliards_eur)} de retraites des agents, soit {formatMd(horsPensions)} hors retraites.</>
+                  )}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
       </CardContent>
     </Card>
   );

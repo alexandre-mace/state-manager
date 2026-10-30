@@ -54,8 +54,9 @@ export default function Home() {
   // Missions for state budget chart
   const missionsData = budgetEtat.principalesMissions.map((m) => ({
     mission: m.mission,
-    ministry: m.ministere,
-    amount_eur: m.montant_milliards_eur * 1_000_000_000,
+    description: m.description,
+    amount_milliards_eur: m.montant_milliards_eur,
+    pensions_milliards_eur: m.dont_pensions_milliards_eur,
   }));
 
   // Evolution data
@@ -88,10 +89,14 @@ export default function Home() {
     },
     etat: {
       total: vueGlobale.repartition.find(r => r.categorie === "État")?.depenses_milliards_eur ?? 0,
-      depenses: budgetEtat.principalesMissions.slice(0, 4).map(m => ({
-        label: MISSION_LABELS[m.mission] ?? m.mission,
-        amount: m.montant_milliards_eur,
-      })),
+      // Hors retraites des agents : ces pensions sont déjà dans la colonne Sécu (Retraites)
+      depenses: budgetEtat.principalesMissions
+        .map(m => ({
+          label: MISSION_LABELS[m.mission] ?? m.mission,
+          amount: m.montant_milliards_eur - m.dont_pensions_milliards_eur,
+        }))
+        .sort((a, b) => b.amount - a.amount)
+        .slice(0, 4),
     },
     secu: {
       total: vueGlobale.repartition.find(r => r.categorie === "Sécurité Sociale")?.depenses_milliards_eur ?? 0,
@@ -320,6 +325,7 @@ export default function Home() {
                     </p>
                   </div>
                   <TopMissionsChart data={missionsData} />
+                  <p className="text-xs text-muted-foreground">{budgetEtat.notePensions}</p>
                 </div>
                 <div className="space-y-4">
                   <div>

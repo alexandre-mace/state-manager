@@ -51,6 +51,7 @@
   "budgetEtat": {
     "description": "Le budget de l'État finance les missions régaliennes et les politiques publiques nationales",
     "note": "Chiffres de la loi de finances 2026 (promulguée le 19 février 2026) : recettes et charges nettes du budget général, après prélèvements sur recettes au profit des collectivités et de l'UE. Solde général y compris comptes spéciaux : -134,6 Md€.",
+    "notePensions": "Les crédits votés de chaque mission comprennent la contribution du ministère au CAS Pensions, le compte qui paie les retraites des fonctionnaires de l'État, retraités actuels compris. Son taux est passé de 74,28 % du traitement indiciaire brut en 2024 à 82,28 % en 2026 : cette hausse grossit les crédits des ministères sans moyens nouveaux pour leurs services. Ces pensions figurent aussi dans la branche Vieillesse de la Sécurité sociale, il ne faut donc pas additionner les deux. Montants votés en loi de finances 2026 ; part retraites tirée des projets annuels de performance du projet de loi.",
     "recettes_nettes_milliards_eur": 325.4,
     "depenses_milliards_eur": 458.9,
     "deficit_milliards_eur": 133.5,
@@ -101,61 +102,71 @@
         "mission": "Enseignement scolaire",
         "ministere": "Éducation nationale",
         "montant_milliards_eur": 89.6,
-        "description": "Écoles, collèges, lycées publics et privés (y compris pensions)"
+        "description": "Écoles, collèges, lycées publics et privés",
+        "dont_pensions_milliards_eur": 25.2
       },
       {
         "mission": "Défense",
         "ministere": "Armées",
         "montant_milliards_eur": 66.5,
-        "description": "Forces armées, équipements (57,2 Md€ hors pensions, +6,7 Md€ vs 2025 conformément à la LPM accélérée)"
+        "description": "Forces armées, équipements (+6,7 Md€ hors pensions vs 2025, conformément à la LPM accélérée)",
+        "dont_pensions_milliards_eur": 9.6
       },
       {
         "mission": "Engagements financiers de l'État",
         "ministere": "Économie et Finances",
         "montant_milliards_eur": 60.3,
-        "description": "Charge de la dette (intérêts) : 59,3 Md€, en forte hausse"
+        "description": "Charge de la dette (intérêts) : 59,3 Md€, en forte hausse",
+        "dont_pensions_milliards_eur": 0
       },
       {
         "mission": "Recherche et enseignement supérieur",
         "ministere": "Enseignement supérieur",
         "montant_milliards_eur": 31.6,
-        "description": "Universités, recherche publique"
+        "description": "Universités, recherche publique (les universités paient les pensions de leurs fonctionnaires sur leurs subventions : cette part n'est pas isolée ici)",
+        "dont_pensions_milliards_eur": 0.2
       },
       {
         "mission": "Solidarité, insertion et égalité des chances",
         "ministere": "Solidarités",
         "montant_milliards_eur": 31.3,
-        "description": "AAH, RSA, aide sociale"
+        "description": "AAH, RSA, aide sociale",
+        "dont_pensions_milliards_eur": 0
       },
       {
         "mission": "Sécurités",
         "ministere": "Intérieur",
         "montant_milliards_eur": 25.8,
-        "description": "Police nationale, gendarmerie, sécurité civile"
+        "description": "Police nationale, gendarmerie, sécurité civile",
+        "dont_pensions_milliards_eur": 8.3
       },
       {
         "mission": "Écologie et mobilités",
         "ministere": "Transition écologique",
         "montant_milliards_eur": 22.8,
-        "description": "Transports, environnement, énergie"
+        "description": "Transports, environnement, énergie",
+        "dont_pensions_milliards_eur": 1.0
       },
       {
         "mission": "Travail et emploi",
         "ministere": "Travail",
         "montant_milliards_eur": 20.8,
-        "description": "France Travail, formation professionnelle, apprentissage"
+        "description": "France Travail, formation professionnelle, apprentissage",
+        "dont_pensions_milliards_eur": 0.3
       },
       {
         "mission": "Justice",
         "ministere": "Justice",
         "montant_milliards_eur": 13,
-        "description": "Tribunaux, prisons, aide juridictionnelle"
+        "description": "Tribunaux, prisons, aide juridictionnelle",
+        "dont_pensions_milliards_eur": 2.4
       },
       {
         "mission": "Culture",
         "ministere": "Culture",
         "montant_milliards_eur": 3.7,
-        "description": "Patrimoine, création, médias"
+        "description": "Patrimoine, création, médias",
+        "dont_pensions_milliards_eur": 0.2
       }
     ]
   },
@@ -175,7 +186,7 @@
       {
         "branche": "Vieillesse",
         "depenses_milliards_eur": 310,
-        "description": "Pensions de retraite, tous régimes de base (CNAV, MSA, régimes spéciaux)"
+        "description": "Pensions de retraite, tous régimes de base (CNAV, MSA, fonctionnaires de l'État, régimes spéciaux)"
       },
       {
         "branche": "Famille",
