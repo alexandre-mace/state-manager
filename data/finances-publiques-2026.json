@@ -253,7 +253,7 @@
       ]
     },
     "tauxCotisations": {
-      "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. La CSG et la CRDS portent sur 98,25 % du brut, d'où des totaux un peu inférieurs à la somme des taux. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
+      "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. La CSG et la CRDS portent sur 98,25 % du brut, d'où un total salarial un peu inférieur à la somme des taux. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
       "salariales": [
         {
           "cle": "vieillesse_plafonnee_sal",

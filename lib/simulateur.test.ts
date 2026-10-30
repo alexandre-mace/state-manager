@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import donnees from "../data/finances-publiques-2026.json";
-import { formatEur, formatNombre } from "./format";
+import { formatEur, formatNombre, formatPct } from "./format";
 import {
 	assiette,
 	coefficientRgdu,
@@ -127,6 +127,7 @@ describe("textes du JSON", () => {
 
 	it("citent le PASS et l'allègement maximal en vigueur", () => {
 		expect(tc.description).toContain(formatEur(p.pass_annuel_eur));
+		expect(tc.description).toContain(formatPct(p.csg.base_pct, 2));
 		expect(tc.note).toContain(
 			`${formatNombre((p.rgdu.tmin + p.rgdu.tdelta) * 100, 2)} points`,
 		);
