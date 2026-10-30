@@ -95,7 +95,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         {/* Autres organismes */}
         <div className="rounded-lg border border-border bg-muted/30 p-3 text-center text-xs text-muted-foreground">
           + <strong>Autres organismes publics</strong> (universités, hôpitaux, agences) : <span className="font-mono">{formatMd(data.autresOrganismes.total)}</span>
-          <span className="ml-1">— financés par les trois administrations ci-dessus</span>
+          <span>, financés par les trois administrations ci-dessus</span>
         </div>
 
         {/* Transferts */}

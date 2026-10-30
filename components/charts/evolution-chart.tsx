@@ -47,7 +47,18 @@ const chartConfig = {
 const formatPct = (value: number) =>
   `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} %`;
 
+// Graduations à pas régulier : le domaine automatique de Recharts tombait sur 43, 51, 59 %
+const regularTicks = (values: number[], step: number) => {
+  const low = Math.floor(Math.min(...values) / step) * step;
+  const high = Math.ceil(Math.max(...values) / step) * step;
+  return Array.from({ length: Math.round((high - low) / step) + 1 }, (_, i) => low + i * step);
+};
+
 export function EvolutionChart({ data }: EvolutionChartProps) {
+  const ticks = regularTicks(
+    data.flatMap((d) => [d.depenses_pib_pct, d.recettes_pib_pct ?? d.depenses_pib_pct]),
+    5,
+  );
   return (
     <ChartContainer config={chartConfig} className="!aspect-auto h-[350px] w-full">
       <ComposedChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
@@ -70,11 +81,12 @@ export function EvolutionChart({ data }: EvolutionChartProps) {
           minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value) => `${value} %`}
+          tickFormatter={(value: number) => `${value.toLocaleString("fr-FR")}\u00a0%`}
           tick={{ fontSize: 11 }}
           tickLine={false}
           axisLine={false}
-          domain={["dataMin - 2", "dataMax + 2"]}
+          ticks={ticks}
+          domain={[ticks[0], ticks[ticks.length - 1]]}
         />
         <ChartTooltip
           content={
@@ -134,6 +146,8 @@ export function DeficitChart({ data }: EvolutionChartProps) {
       color: "var(--chart-4)",
     },
   } satisfies ChartConfig;
+  // 0 et -3 inclus pour que les deux lignes de référence restent dans le cadre
+  const ticks = regularTicks([...data.map((d) => d.deficit_pib_pct), 0, -3], 2);
 
   return (
     <ChartContainer config={chartConfigDeficit} className="!aspect-auto h-[200px] w-full">
@@ -147,15 +161,16 @@ export function DeficitChart({ data }: EvolutionChartProps) {
           minTickGap={28}
         />
         <YAxis
-          tickFormatter={(value) => `${value}%`}
+          tickFormatter={(value: number) => `${value.toLocaleString("fr-FR")}\u00a0%`}
           tick={{ fontSize: 11 }}
           tickLine={false}
           axisLine={false}
-          domain={["dataMin - 1", "dataMax + 1"]}
+          ticks={ticks}
+          domain={[ticks[0], ticks[ticks.length - 1]]}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ReferenceLine y={0} stroke="var(--muted-foreground)" strokeWidth={1} />
-        <ReferenceLine y={-3} stroke="var(--destructive)" strokeDasharray="5 5" label={{ value: "Limite UE (3%)", fontSize: 10, fill: "var(--destructive)" }} />
+        <ReferenceLine y={-3} stroke="var(--destructive)" strokeDasharray="5 5" label={{ value: "Limite UE (3\u00a0%)", fontSize: 10, fill: "var(--destructive)" }} />
         <Bar
           dataKey="deficit_pib_pct"
           fill="var(--color-deficit_pib_pct)"

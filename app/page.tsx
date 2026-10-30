@@ -31,11 +31,11 @@ const COUNTRY_LABELS: Record<string, string> = {
 };
 
 const formatMd = (value: number) => {
-  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })} Md€`;
+  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}\u00a0Md€`;
 };
 
 const formatPct = (value: number) => {
-  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}%`;
+  return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}\u00a0%`;
 };
 
 export default function Home() {
@@ -136,7 +136,7 @@ export default function Home() {
               Finances publiques 2026
             </Badge>
             <Badge variant="outline" className="text-xs">
-              Mis à jour le {financeData.lastUpdate}
+              Mis à jour le {new Date(financeData.lastUpdate).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
             </Badge>
           </div>
           <div className="space-y-4">
@@ -164,6 +164,7 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">{vueGlobale.periode}</p>
                 <p className="text-xs text-muted-foreground">
                   soit {formatPct(vueGlobale.depenses_pib_pct)} du PIB
                 </p>
@@ -180,6 +181,7 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">{prelevementsObligatoires.periode}</p>
                 <p className="text-xs text-muted-foreground">
                   soit {formatPct(prelevementsObligatoires.pib_pct)} du PIB
                 </p>
@@ -196,8 +198,9 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">{context.deficit_periode}</p>
                 <p className="text-xs text-muted-foreground">
-                  soit {formatPct(context.deficit_public_pib_pct)} du PIB — objectif &lt;3% en 2029
+                  soit {formatPct(context.deficit_public_pib_pct)} du PIB, {context.deficit_objectif}
                 </p>
                 <p className="text-xs font-medium text-muted-foreground">
                   {formatPerHab(context.deficit_public_pib_pct / 100 * context.pib_milliards_eur)}
@@ -212,8 +215,9 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">{dette.periode}</p>
                 <p className="text-xs text-muted-foreground">
-                  soit {formatPct(context.dette_pib_pct)} du PIB (3e de l&apos;UE)
+                  soit {formatPct(context.dette_pib_pct)} du PIB ({dette.rang_ue})
                 </p>
                 <p className="text-xs font-medium text-muted-foreground">
                   {formatPerHab(context.dette_publique_milliards_eur)}
@@ -673,7 +677,7 @@ export default function Home() {
             <Card>
               <CardHeader>
                 <CardTitle>Solde public (% du PIB)</CardTitle>
-                <CardDescription>La limite européenne est de 3% de déficit — dernier excédent : 1974</CardDescription>
+                <CardDescription>La limite européenne est de 3 % de déficit ; dernier excédent : 1974</CardDescription>
               </CardHeader>
               <CardContent>
                 <DeficitChart data={evolutionHistory} />

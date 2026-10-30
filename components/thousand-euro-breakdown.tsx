@@ -83,7 +83,7 @@ export function ThousandEuroBreakdown({ postes, baseMiliardsEur }: ThousandEuroB
           );
         })}
         <p className="pt-2 text-xs text-muted-foreground">
-          Total : {sorted.reduce((sum, p) => sum + p.montant_eur, 0)} €{baseMiliardsEur ? ` — calculé à partir des dépenses totales de ${baseMiliardsEur.toLocaleString("fr-FR")} Md€` : ""}
+          Total : {sorted.reduce((sum, p) => sum + p.montant_eur, 0)} €{baseMiliardsEur ? `, calculé à partir des dépenses totales de ${baseMiliardsEur.toLocaleString("fr-FR")}\u00a0Md€` : ""}
         </p>
       </CardContent>
     </Card>

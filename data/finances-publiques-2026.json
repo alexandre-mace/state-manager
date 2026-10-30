@@ -6,6 +6,8 @@
     "dette_publique_milliards_eur": 3536,
     "dette_pib_pct": 117.5,
     "deficit_public_pib_pct": 5,
+    "deficit_periode": "2026, objectif de la loi de finances",
+    "deficit_objectif": "objectif sous 3 % en 2029",
     "population": 69100000,
     "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
@@ -21,6 +23,7 @@
     "description": "Les finances publiques françaises sont gérées par quatre catégories d'administrations publiques (APU)",
     "depenses_totales_milliards_eur": 1722,
     "depenses_pib_pct": 57.2,
+    "periode": "2026, prévision de la loi de finances",
     "repartition": [
       {
         "categorie": "Sécurité Sociale",
@@ -352,6 +355,7 @@
     "description": "Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : 43,6 % du PIB)",
     "total_milliards_eur": 1312,
     "pib_pct": 43.6,
+    "periode": "Montant estimé pour 2026, taux 2025 constaté par l'INSEE",
     "repartition": [
       {
         "type": "Cotisations sociales",
@@ -409,6 +413,8 @@
   "dette": {
     "montant_milliards_eur": 3536,
     "pib_pct": 117.5,
+    "periode": "Fin du 1er trimestre 2026 (INSEE)",
+    "rang_ue": "3e de l'UE fin 2025",
     "evolution": [
       {
         "annee": 1978,
