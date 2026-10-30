@@ -249,7 +249,9 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 				{/* Légende déficit */}
 				<div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm">
 					<div className="flex items-center gap-2">
-						<span className="font-medium text-destructive">Déficit {data.year} :</span>
+						<span className="font-medium text-destructive">
+							Déficit {data.year} :
+						</span>
 						<span className="font-mono">~{formatMd(data.deficit, 0)}</span>
 						<span className="text-muted-foreground">
 							(dépenses &gt; recettes → emprunt → dette)
