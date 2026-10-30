@@ -1,5 +1,6 @@
 /* Copie de shadcn@4.23.0 dist/tailwind.css : variantes data-* et keyframes attendues
-   par les composants du kit. À remplacer par la version du paquet lors d'une mise à jour. */
+   par les composants du kit. À remplacer par la version du paquet lors d'une mise à jour.
+   shadcn, licence MIT, copyright (c) 2023 shadcn. */
 @theme inline {
   @keyframes accordion-down {
     from {

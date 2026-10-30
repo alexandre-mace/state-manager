@@ -22,7 +22,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
-import { trouver } from "@/lib/donnees";
+import { findOrThrow, requireAmount } from "@/lib/data";
 import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
@@ -94,6 +94,12 @@ export default function Home() {
 		securiteSociale.tauxCotisations.patronales,
 	);
 
+	const autresOrganismes = findOrThrow(
+		vueGlobale.repartition,
+		(r) => r.categorie === "Autres organismes publics",
+		"Autres organismes publics",
+	);
+
 	const population = context.population;
 	const formatPerHab = (milliards: number) =>
 		`${formatEur((milliards * 1_000_000_000) / population)}/hab`;
@@ -119,12 +125,12 @@ export default function Home() {
 	)?.annee;
 
 	// Flow diagram data (derived from JSON)
-	const cotisationsMontant = trouver(
+	const cotisationsMontant = findOrThrow(
 		prelevementsObligatoires.repartition,
 		(r) => r.type === "Cotisations sociales",
 		"Cotisations sociales",
 	).montant_milliards_eur;
-	const csgMontant = trouver(
+	const csgMontant = findOrThrow(
 		prelevementsObligatoires.repartition,
 		(r) => r.type === "CSG-CRDS",
 		"CSG-CRDS",
@@ -155,7 +161,7 @@ export default function Home() {
 			csgCrds: csgMontant,
 		},
 		etat: {
-			total: trouver(
+			total: findOrThrow(
 				vueGlobale.repartition,
 				(r) => r.categorie === "État",
 				"État",
@@ -170,7 +176,7 @@ export default function Home() {
 				.slice(0, 4),
 		},
 		secu: {
-			total: trouver(
+			total: findOrThrow(
 				vueGlobale.repartition,
 				(r) => r.categorie === "Sécurité Sociale",
 				"Sécurité Sociale",
@@ -184,7 +190,7 @@ export default function Home() {
 				})),
 		},
 		collectivites: {
-			total: trouver(
+			total: findOrThrow(
 				vueGlobale.repartition,
 				(r) => r.categorie === "Collectivités locales",
 				"Collectivités locales",
@@ -195,24 +201,16 @@ export default function Home() {
 			})),
 		},
 		autresOrganismes: {
-			total: trouver(
-				vueGlobale.repartition,
-				(r) => r.categorie === "Autres organismes publics",
-				"Autres organismes publics",
-			).depenses_milliards_eur,
-			description: trouver(
-				vueGlobale.repartition,
-				(r) => r.categorie === "Autres organismes publics",
-				"Autres organismes publics",
-			).description,
+			total: autresOrganismes.depenses_milliards_eur,
+			description: autresOrganismes.description,
 		},
 		transferts: {
-			etatCollectivites: trouver(
+			etatCollectivites: findOrThrow(
 				collectivitesLocales.recettes,
 				(r) => r.source === "Dotations de l'État",
 				"Dotations de l'État",
 			).montant_milliards_eur,
-			taxesAffecteesSecu: trouver(
+			taxesAffecteesSecu: findOrThrow(
 				securiteSociale.financement.sources,
 				(s) => s.source === "Impôts et taxes affectés",
 				"Impôts et taxes affectés",
@@ -450,7 +448,7 @@ export default function Home() {
 											{formatMd(budgetEtat.depenses_milliards_eur)}), qui est
 											une composante des{" "}
 											{formatMd(
-												trouver(
+												findOrThrow(
 													vueGlobale.repartition,
 													(r) => r.categorie === "État",
 													"État",
@@ -527,9 +525,12 @@ export default function Home() {
 																</span>
 																<span className="font-mono text-sm">
 																	{formatMd(
-																		"montant_milliards_eur" in impot
-																			? (impot.montant_milliards_eur ?? 0)
-																			: (impot.montant_brut_milliards_eur ?? 0),
+																		requireAmount(
+																			"montant_milliards_eur" in impot
+																				? impot.montant_milliards_eur
+																				: impot.montant_brut_milliards_eur,
+																			impot.label,
+																		),
 																	)}
 																</span>
 															</div>

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // L'emoji du site, rendu en PNG au build pour l'onglet et l'écran d'accueil iOS
-export function icone(taille: number) {
+export function renderIcon(size: number) {
 	return new ImageResponse(
 		<div
 			style={{
@@ -10,11 +10,11 @@ export function icone(taille: number) {
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				fontSize: taille * 0.85,
+				fontSize: size * 0.85,
 			}}
 		>
 			🏛️
 		</div>,
-		{ width: taille, height: taille },
+		{ width: size, height: size },
 	);
 }
