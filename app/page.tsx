@@ -219,6 +219,7 @@ export default function Home() {
 		deficit: Math.round(
 			(context.deficit_public_pib_pct / 100) * context.pib_milliards_eur,
 		),
+		year: financeData.year,
 	};
 
 	return (
