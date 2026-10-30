@@ -1,0 +1,119 @@
+import { describe, expect, it } from "vitest";
+import donnees from "../data/finances-publiques-2026.json";
+import {
+	assiette,
+	coefficientRgdu,
+	impotSurLeRevenu,
+	lireCotisations,
+	type ParametresSimulateur,
+	simuler,
+	tauxSousLePass,
+} from "./simulateur";
+
+const p: ParametresSimulateur = donnees.simulateur;
+const salariales = lireCotisations(
+	donnees.securiteSociale.tauxCotisations.salariales,
+);
+const patronales = lireCotisations(
+	donnees.securiteSociale.tauxCotisations.patronales,
+);
+const pass = p.pass_annuel_eur;
+
+describe("réduction générale dégressive unique", () => {
+	// Exemples de la fiche service-public F24542
+	it("vaut le maximum 0,4021 au SMIC", () => {
+		expect(coefficientRgdu(21_876.4, p)).toBe(0.4021);
+	});
+
+	it("vaut 0,0615 à 3 500 € par mois", () => {
+		expect(coefficientRgdu(42_000, p)).toBe(0.0615);
+	});
+
+	it("s'éteint à 3 SMIC", () => {
+		expect(coefficientRgdu(3 * 21_876.4, p)).toBe(0);
+		expect(coefficientRgdu(100_000, p)).toBe(0);
+	});
+
+	it("reste plafonnée sous le SMIC annuel", () => {
+		expect(coefficientRgdu(15_000, p)).toBe(0.4021);
+	});
+});
+
+describe("impôt sur le revenu, célibataire", () => {
+	it("applique la décote aux revenus modestes", () => {
+		// (20 000 − 11 600) × 11 % = 924 ; décote 897 − 45,25 % × 924 = 478,89
+		expect(impotSurLeRevenu(20_000, p)).toBeCloseTo(445.11, 2);
+	});
+
+	it("n'applique plus de décote au-delà de son seuil", () => {
+		// (29 579 − 11 600) × 11 % + (30 000 − 29 579) × 30 %
+		expect(impotSurLeRevenu(30_000, p)).toBeCloseTo(2_103.99, 2);
+	});
+
+	it("est nul sous la première tranche", () => {
+		expect(impotSurLeRevenu(11_000, p)).toBe(0);
+	});
+});
+
+describe("assiettes", () => {
+	it("coupe la tranche 1 au PASS et ouvre la tranche 2 au-delà", () => {
+		expect(assiette(30_000, "tranche1", p)).toBe(30_000);
+		expect(assiette(30_000, "tranche2", p)).toBe(0);
+		expect(assiette(60_000, "tranche1", p)).toBe(pass);
+		expect(assiette(60_000, "tranche2", p)).toBe(60_000 - pass);
+	});
+
+	it("applique l'abattement CSG de 1,75 % jusqu'à 4 PASS seulement", () => {
+		expect(assiette(40_000, "csg", p)).toBeCloseTo(39_300, 6);
+		expect(assiette(5 * pass, "csg", p)).toBeCloseTo(
+			4 * pass * 0.9825 + pass,
+			6,
+		);
+	});
+});
+
+describe("simulation complète", () => {
+	it("ne fait payer la CET qu'au-delà du PASS", () => {
+		const sous = simuler(pass - 1_000, salariales, patronales, p);
+		const dessus = simuler(pass + 1_000, salariales, patronales, p);
+		const tauxCet = 0.14 + 0.21;
+		// Franchir le PASS fait payer la CET sur tout le salaire, pas sur l'excédent seul
+		const ecartRetraite = dessus.parPoste.retraite - sous.parPoste.retraite;
+		expect(ecartRetraite).toBeGreaterThan(((pass + 1_000) * tauxCet) / 100);
+	});
+
+	it("efface presque toutes les cotisations patronales au SMIC", () => {
+		const s = simuler(21_876.4, salariales, patronales, p);
+		expect(s.allegement).toBeCloseTo(21_876.4 * 0.4021, 2);
+		expect(s.cotisationsPatronales / s.brut).toBeLessThan(0.02);
+	});
+
+	it("garde les égalités comptables", () => {
+		for (const brut of [15_000, 35_000, 60_000, 150_000]) {
+			const s = simuler(brut, salariales, patronales, p);
+			expect(s.coutEmployeur).toBeCloseTo(brut + s.cotisationsPatronales, 6);
+			expect(s.netApresIR).toBeCloseTo(
+				brut - s.cotisationsSalariales - s.impot,
+				6,
+			);
+			const totalPostes = Object.values(s.parPoste).reduce((a, b) => a + b, 0);
+			expect(totalPostes).toBeCloseTo(
+				s.cotisationsSalariales + s.cotisationsPatronalesAvantAllegement,
+				6,
+			);
+		}
+	});
+
+	it("donne des taux sous le PASS cohérents avec les tableaux officiels", () => {
+		expect(tauxSousLePass(salariales)).toBeCloseTo(21.01, 6);
+		expect(tauxSousLePass(patronales)).toBeCloseTo(42.05, 6);
+	});
+});
+
+describe("lecture du JSON", () => {
+	it("refuse une assiette inconnue", () => {
+		expect(() =>
+			lireCotisations([{ cle: "x", assiette: "plafonee", poste: "retraite" }]),
+		).toThrow("Assiette inconnue");
+	});
+});

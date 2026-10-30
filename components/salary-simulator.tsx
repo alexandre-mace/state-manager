@@ -9,13 +9,14 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { formatEur, formatPct } from "@/lib/format";
+import {
+	type Cotisation,
+	type ParametresSimulateur,
+	type Poste,
+	simuler,
+} from "@/lib/simulateur";
 
-type Tranche = { limite_eur: number | null; taux_pct: number };
-
-export interface SimulateurData {
-	base_csg_pct: number;
-	abattement_frais_pro_pct: number;
-	bareme_ir: { description: string; tranches: Tranche[] };
+export interface SimulateurData extends ParametresSimulateur {
 	reperes: {
 		pension_moyenne: string;
 		remboursement_sante: string;
@@ -23,98 +24,33 @@ export interface SimulateurData {
 	};
 }
 
-function calculerIR(revenuImposable: number, tranches: Tranche[]): number {
-	let impot = 0;
-	let reste = revenuImposable;
-	let precedent = 0;
-
-	for (const tranche of tranches) {
-		const limite = tranche.limite_eur ?? Infinity;
-		const montantTranche = Math.min(reste, limite - precedent);
-		if (montantTranche <= 0) break;
-		impot += montantTranche * (tranche.taux_pct / 100);
-		reste -= montantTranche;
-		precedent = limite;
-	}
-
-	return impot;
-}
-
 const SALAIRE_MIN = 15000;
 const SALAIRE_MAX = 150000;
 
 interface SalarySimulatorProps {
-	// Taux en fraction du brut, par clé de cotisation (tauxCotisations du JSON)
-	taux: Record<string, number>;
+	salariales: Cotisation[];
+	patronales: Cotisation[];
 	simulateur: SimulateurData;
 }
 
-export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
+export function SalarySimulator({
+	salariales,
+	patronales,
+	simulateur,
+}: SalarySimulatorProps) {
 	const [salaireBrutAnnuel, setSalaireBrutAnnuel] = useState(35000);
-	const t = (cle: string) => {
-		const valeur = taux[cle];
-		if (valeur === undefined)
-			throw new Error(`Taux de cotisation absent du JSON : ${cle}`);
-		return valeur;
-	};
+	const s = simuler(salaireBrutAnnuel, salariales, patronales, simulateur);
+	const poste = (p: Poste) => s.parPoste[p];
+	const seuilAllegement =
+		simulateur.rgdu.seuil_smic * simulateur.rgdu.smic_annuel_eur;
 
-	const baseCSG = salaireBrutAnnuel * (simulateur.base_csg_pct / 100);
+	const totalCotisationsSalariales = s.cotisationsSalariales;
+	const totalCotisationsPatronales = s.cotisationsPatronales;
+	const salaireNetAvantIR = s.netAvantIR;
+	const irAnnuel = s.impot;
+	const salaireNetApresIR = s.netApresIR;
+	const coutEmployeur = s.coutEmployeur;
 
-	// Cotisations salariales
-	const cotisationsSalariales = {
-		vieillesse:
-			salaireBrutAnnuel *
-			(t("vieillesse_plafonnee_sal") + t("vieillesse_deplafonnee_sal")),
-		retraiteComplementaire:
-			salaireBrutAnnuel * t("retraite_complementaire_sal"),
-		csgDeductible: baseCSG * t("csg_deductible"),
-		csgCrdsNonDeductible: baseCSG * t("csg_non_deductible_crds"),
-	};
-
-	const totalCotisationsSalariales = Object.values(
-		cotisationsSalariales,
-	).reduce((a, b) => a + b, 0);
-
-	// Cotisations patronales
-	const cotisationsPatronales = {
-		maladie: salaireBrutAnnuel * t("maladie_pat"),
-		vieillesse:
-			salaireBrutAnnuel *
-			(t("vieillesse_plafonnee_pat") + t("vieillesse_deplafonnee_pat")),
-		famille: salaireBrutAnnuel * t("famille_pat"),
-		accidentTravail: salaireBrutAnnuel * t("accident_travail_pat"),
-		chomage: salaireBrutAnnuel * t("chomage_pat"),
-		retraiteComplementaire:
-			salaireBrutAnnuel * t("retraite_complementaire_pat"),
-		fnalAutonomie: salaireBrutAnnuel * t("fnal_autonomie_pat"),
-	};
-
-	const totalCotisationsPatronales = Object.values(
-		cotisationsPatronales,
-	).reduce((a, b) => a + b, 0);
-
-	// Salaire net avant IR
-	const salaireNetAvantIR = salaireBrutAnnuel - totalCotisationsSalariales;
-
-	// Revenu imposable : net imposable (brut - cotisations déductibles) avec abattement pour frais professionnels
-	const cotisationsDeductibles =
-		cotisationsSalariales.vieillesse +
-		cotisationsSalariales.retraiteComplementaire +
-		cotisationsSalariales.csgDeductible;
-	const revenuImposable =
-		(salaireBrutAnnuel - cotisationsDeductibles) *
-		(1 - simulateur.abattement_frais_pro_pct / 100);
-
-	// IR estimé (célibataire sans enfant)
-	const irAnnuel = calculerIR(revenuImposable, simulateur.bareme_ir.tranches);
-
-	// Salaire net après IR
-	const salaireNetApresIR = salaireNetAvantIR - irAnnuel;
-
-	// Coût total employeur
-	const coutEmployeur = salaireBrutAnnuel + totalCotisationsPatronales;
-
-	// Pourcentages
 	const pctNetSurCout = (salaireNetApresIR / coutEmployeur) * 100;
 	const pctCotisationsSurCout =
 		((totalCotisationsSalariales + totalCotisationsPatronales) /
@@ -247,7 +183,14 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 							<div className="flex justify-between text-muted-foreground">
 								<span>+ Cotisations patronales</span>
 								<span className="font-mono">
-									+{formatEur(totalCotisationsPatronales)}
+									+{formatEur(s.cotisationsPatronalesAvantAllegement)}
+								</span>
+							</div>
+							<div className="flex justify-between text-muted-foreground">
+								<span>- Allègement général</span>
+								<span className="font-mono">
+									{s.allegement > 0 && "-"}
+									{formatEur(s.allegement)}
 								</span>
 							</div>
 							<div className="flex justify-between font-semibold border-t pt-1">
@@ -280,12 +223,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 							<div className="flex justify-between font-medium">
 								<span>Retraite</span>
 								<span className="font-mono">
-									{formatEur(
-										cotisationsSalariales.vieillesse +
-											cotisationsSalariales.retraiteComplementaire +
-											cotisationsPatronales.vieillesse +
-											cotisationsPatronales.retraiteComplementaire,
-									)}
+									{formatEur(poste("retraite"))}
 								</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
@@ -296,9 +234,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
 								<span>Santé</span>
-								<span className="font-mono">
-									{formatEur(cotisationsPatronales.maladie)}
-								</span>
+								<span className="font-mono">{formatEur(poste("sante"))}</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
 								Couvre vos consultations, hospitalisations et médicaments
@@ -308,12 +244,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
 								<span>CSG-CRDS</span>
-								<span className="font-mono">
-									{formatEur(
-										cotisationsSalariales.csgDeductible +
-											cotisationsSalariales.csgCrdsNonDeductible,
-									)}
-								</span>
+								<span className="font-mono">{formatEur(poste("csg"))}</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
 								Finance la Sécu, la dépendance et la dette sociale (CADES)
@@ -322,9 +253,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
 								<span>Chômage</span>
-								<span className="font-mono">
-									{formatEur(cotisationsPatronales.chomage)}
-								</span>
+								<span className="font-mono">{formatEur(poste("chomage"))}</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
 								Ouvre droit à {simulateur.reperes.duree_chomage}{" "}
@@ -334,9 +263,7 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
 								<span>Famille</span>
-								<span className="font-mono">
-									{formatEur(cotisationsPatronales.famille)}
-								</span>
+								<span className="font-mono">{formatEur(poste("famille"))}</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
 								Allocations familiales, APL, aides à la garde d&apos;enfants
@@ -344,17 +271,26 @@ export function SalarySimulator({ taux, simulateur }: SalarySimulatorProps) {
 						</div>
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
-								<span>AT + autonomie</span>
+								<span>Accidents du travail, logement, autonomie</span>
+								<span className="font-mono">{formatEur(poste("autres"))}</span>
+							</div>
+							<p className="text-xs text-muted-foreground">
+								Accidents du travail et maladies professionnelles, aide au
+								logement (FNAL), dépendance (CSA)
+							</p>
+						</div>
+						<div className="rounded-lg border border-dashed p-3 space-y-1">
+							<div className="flex justify-between font-medium">
+								<span>Allègement général</span>
 								<span className="font-mono">
-									{formatEur(
-										cotisationsPatronales.accidentTravail +
-											cotisationsPatronales.fnalAutonomie,
-									)}
+									{s.allegement > 0 && "-"}
+									{formatEur(s.allegement)}
 								</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
-								Couverture en cas d&apos;accident du travail ou maladie
-								professionnelle
+								Réduit les cotisations patronales des salaires jusqu&apos;à 3
+								SMIC ({formatEur(seuilAllegement)} par an). Les montants
+								ci-dessus sont avant cette réduction.
 							</p>
 						</div>
 					</div>

@@ -253,80 +253,176 @@
       ]
     },
     "tauxCotisations": {
-      "description": "Taux de cotisations et prélèvements sociaux sur le salaire brut (2026)",
+      "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
       "salariales": [
         {
           "cle": "vieillesse_plafonnee_sal",
-          "cotisation": "Assurance vieillesse plafonnée",
-          "taux_pct": 6.9
+          "cotisation": "Assurance vieillesse plafonnée (jusqu'au PASS)",
+          "taux_pct": 6.9,
+          "assiette": "tranche1",
+          "poste": "retraite"
         },
         {
           "cle": "vieillesse_deplafonnee_sal",
           "cotisation": "Assurance vieillesse déplafonnée",
-          "taux_pct": 0.4
+          "taux_pct": 0.4,
+          "assiette": "totale",
+          "poste": "retraite"
+        },
+        {
+          "cle": "agirc_arrco_t1_sal",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
+          "taux_pct": 3.15,
+          "assiette": "tranche1",
+          "poste": "retraite"
+        },
+        {
+          "cle": "ceg_t1_sal",
+          "cotisation": "Contribution d'équilibre général (CEG), tranche 1",
+          "taux_pct": 0.86,
+          "assiette": "tranche1",
+          "poste": "retraite"
+        },
+        {
+          "cle": "agirc_arrco_t2_sal",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "taux_pct": 8.64,
+          "assiette": "tranche2",
+          "poste": "retraite"
+        },
+        {
+          "cle": "ceg_t2_sal",
+          "cotisation": "CEG, tranche 2",
+          "taux_pct": 1.08,
+          "assiette": "tranche2",
+          "poste": "retraite"
+        },
+        {
+          "cle": "cet_sal",
+          "cotisation": "Contribution d'équilibre technique (au-delà du PASS)",
+          "taux_pct": 0.14,
+          "assiette": "tranches_1_2",
+          "poste": "retraite",
+          "si_au_dela_pass": true
         },
         {
           "cle": "csg_deductible",
           "cotisation": "CSG déductible",
-          "taux_pct": 6.8
+          "taux_pct": 6.8,
+          "assiette": "csg",
+          "poste": "csg"
         },
         {
           "cle": "csg_non_deductible_crds",
           "cotisation": "CSG non déductible + CRDS",
-          "taux_pct": 2.9
-        },
-        {
-          "cle": "retraite_complementaire_sal",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO",
-          "taux_pct": 3.15
+          "taux_pct": 2.9,
+          "assiette": "csg",
+          "poste": "csg",
+          "non_deductible": true
         }
       ],
       "patronales": [
         {
           "cle": "maladie_pat",
           "cotisation": "Assurance maladie",
-          "taux_pct": 7
+          "taux_pct": 13,
+          "assiette": "totale",
+          "poste": "sante"
         },
         {
           "cle": "vieillesse_plafonnee_pat",
-          "cotisation": "Assurance vieillesse plafonnée",
-          "taux_pct": 8.55
+          "cotisation": "Assurance vieillesse plafonnée (jusqu'au PASS)",
+          "taux_pct": 8.55,
+          "assiette": "tranche1",
+          "poste": "retraite"
         },
         {
           "cle": "vieillesse_deplafonnee_pat",
           "cotisation": "Assurance vieillesse déplafonnée",
-          "taux_pct": 1.9
+          "taux_pct": 2.11,
+          "assiette": "totale",
+          "poste": "retraite"
         },
         {
           "cle": "famille_pat",
           "cotisation": "Allocations familiales",
-          "taux_pct": 3.45
+          "taux_pct": 5.25,
+          "assiette": "totale",
+          "poste": "famille"
         },
         {
           "cle": "accident_travail_pat",
-          "cotisation": "Accidents du travail",
-          "taux_pct": 2.2
+          "cotisation": "Accidents du travail (taux moyen national)",
+          "taux_pct": 2.08,
+          "assiette": "totale",
+          "poste": "autres"
         },
         {
           "cle": "chomage_pat",
-          "cotisation": "Chômage",
-          "taux_pct": 4.05
+          "cotisation": "Assurance chômage (jusqu'à 4 PASS)",
+          "taux_pct": 4,
+          "assiette": "plafond_4_pass",
+          "poste": "chomage"
         },
         {
-          "cle": "retraite_complementaire_pat",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO",
-          "taux_pct": 4.72
+          "cle": "ags_pat",
+          "cotisation": "Garantie des salaires (AGS)",
+          "taux_pct": 0.25,
+          "assiette": "plafond_4_pass",
+          "poste": "chomage"
         },
         {
-          "cle": "fnal_autonomie_pat",
-          "cotisation": "FNAL + Autonomie",
-          "taux_pct": 0.6
+          "cle": "agirc_arrco_t1_pat",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
+          "taux_pct": 4.72,
+          "assiette": "tranche1",
+          "poste": "retraite"
+        },
+        {
+          "cle": "ceg_t1_pat",
+          "cotisation": "CEG, tranche 1",
+          "taux_pct": 1.29,
+          "assiette": "tranche1",
+          "poste": "retraite"
+        },
+        {
+          "cle": "agirc_arrco_t2_pat",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "taux_pct": 12.95,
+          "assiette": "tranche2",
+          "poste": "retraite"
+        },
+        {
+          "cle": "ceg_t2_pat",
+          "cotisation": "CEG, tranche 2",
+          "taux_pct": 1.62,
+          "assiette": "tranche2",
+          "poste": "retraite"
+        },
+        {
+          "cle": "cet_pat",
+          "cotisation": "Contribution d'équilibre technique (au-delà du PASS)",
+          "taux_pct": 0.21,
+          "assiette": "tranches_1_2",
+          "poste": "retraite",
+          "si_au_dela_pass": true
+        },
+        {
+          "cle": "fnal_pat",
+          "cotisation": "Aide au logement (FNAL, 50 salariés ou plus)",
+          "taux_pct": 0.5,
+          "assiette": "totale",
+          "poste": "autres"
+        },
+        {
+          "cle": "csa_pat",
+          "cotisation": "Contribution solidarité autonomie",
+          "taux_pct": 0.3,
+          "assiette": "totale",
+          "poste": "autres"
         }
       ],
-      "total_salarie_pct": 20.15,
-      "total_employeur_pct": 32.47,
-      "total_pct": 52.62,
-      "note": "Un salarié au SMIC coûte environ 1.3x son salaire brut à l'employeur avec ces cotisations (avant allègements Fillon). Charges réelles plus élevées avec mutuelle, prévoyance et taxes additionnelles."
+      "note": "Avant allègement : l'allègement général (réduction générale dégressive unique) efface jusqu'à 40,21 points de cotisations patronales au SMIC et s'éteint à 3 SMIC. Hors mutuelle, prévoyance, formation professionnelle et taxe d'apprentissage."
     }
   },
   "collectivitesLocales": {
@@ -927,25 +1023,36 @@
     ]
   },
   "simulateur": {
-    "base_csg_pct": 98.25,
+    "pass_annuel_eur": 48060,
+    "csg": {
+      "base_pct": 98.25,
+      "plafond_abattement_pass": 4
+    },
+    "rgdu": {
+      "smic_annuel_eur": 21876.4,
+      "tmin": 0.02,
+      "tdelta": 0.3821,
+      "puissance": 1.75,
+      "seuil_smic": 3
+    },
     "abattement_frais_pro_pct": 10,
     "bareme_ir": {
       "description": "barème 2026 sur les revenus 2025",
       "tranches": [
         {
-          "limite_eur": 11294,
+          "limite_eur": 11600,
           "taux_pct": 0
         },
         {
-          "limite_eur": 28797,
+          "limite_eur": 29579,
           "taux_pct": 11
         },
         {
-          "limite_eur": 82341,
+          "limite_eur": 84577,
           "taux_pct": 30
         },
         {
-          "limite_eur": 177106,
+          "limite_eur": 181917,
           "taux_pct": 41
         },
         {
@@ -954,10 +1061,48 @@
         }
       ]
     },
+    "decote": {
+      "forfait_eur": 897,
+      "taux_pct": 45.25
+    },
     "reperes": {
       "pension_moyenne": "~1 550 €/mois net",
       "remboursement_sante": "~77 %",
       "duree_chomage": "~24 mois"
-    }
+    },
+    "sources": [
+      {
+        "libelle": "Taux de cotisations vieillesse 2026, décret n° 2025-1446 (Légifrance)",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053276542"
+      },
+      {
+        "libelle": "Taux AGIRC-ARRCO et PASS 2026, circulaire 2025-16 (AGIRC-ARRCO)",
+        "url": "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf"
+      },
+      {
+        "libelle": "Suppression des taux réduits maladie et allocations familiales en 2026 (service-public.fr)",
+        "url": "https://entreprendre.service-public.gouv.fr/actualites/A18448"
+      },
+      {
+        "libelle": "Assiette de la CSG et de la CRDS sur les salaires (service-public.fr)",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2971"
+      },
+      {
+        "libelle": "Réduction générale dégressive unique 2026 (service-public.fr)",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F24542"
+      },
+      {
+        "libelle": "Assurance chômage et AGS, paramètres avril 2026 (Unédic)",
+        "url": "https://unedic.org/storage/uploads/2026/05/27/unedic_parametres_utiles_avril2026_uid_6a17039e9f727.pdf"
+      },
+      {
+        "libelle": "Taux AT moyen 2026, arrêté du 30 décembre 2025 (Légifrance)",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053228984"
+      },
+      {
+        "libelle": "Barème de l'impôt sur le revenu 2025 (service-public.fr)",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"
+      }
+    ]
   }
 }

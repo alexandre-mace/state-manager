@@ -23,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
 import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
+import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
 const COUNTRY_LABELS: Record<string, string> = {
 	danemark: "Danemark",
@@ -84,6 +85,13 @@ export default function Home() {
 		retourCitoyen,
 		pedagogie,
 	} = financeData;
+
+	const cotisationsSalariales = lireCotisations(
+		securiteSociale.tauxCotisations.salariales,
+	);
+	const cotisationsPatronales = lireCotisations(
+		securiteSociale.tauxCotisations.patronales,
+	);
 
 	const population = context.population;
 	const formatPerHab = (milliards: number) =>
@@ -625,10 +633,7 @@ export default function Home() {
 											<div>
 												<h4 className="font-medium mb-3">
 													Part salariale (
-													{formatPct(
-														securiteSociale.tauxCotisations.total_salarie_pct,
-													)}
-													)
+													{formatPct(tauxSousLePass(cotisationsSalariales))})
 												</h4>
 												<div className="space-y-2 text-sm">
 													{securiteSociale.tauxCotisations.salariales.map(
@@ -648,10 +653,7 @@ export default function Home() {
 											<div>
 												<h4 className="font-medium mb-3">
 													Part patronale (
-													{formatPct(
-														securiteSociale.tauxCotisations.total_employeur_pct,
-													)}
-													)
+													{formatPct(tauxSousLePass(cotisationsPatronales))})
 												</h4>
 												<div className="space-y-2 text-sm">
 													{securiteSociale.tauxCotisations.patronales.map(
@@ -671,8 +673,11 @@ export default function Home() {
 										</div>
 										<p className="mt-4 text-sm text-muted-foreground">
 											Total :{" "}
-											{formatPct(securiteSociale.tauxCotisations.total_pct)} du
-											salaire brut. {securiteSociale.tauxCotisations.note}
+											{formatPct(
+												tauxSousLePass(cotisationsSalariales) +
+													tauxSousLePass(cotisationsPatronales),
+											)}{" "}
+											du salaire brut. {securiteSociale.tauxCotisations.note}
 										</p>
 									</CardContent>
 								</Card>
@@ -980,14 +985,11 @@ export default function Home() {
 				{/* Simulateur */}
 				<section id="simulateur" className="scroll-mt-16 space-y-6">
 					<SalarySimulator
-						taux={Object.fromEntries(
-							[
-								...securiteSociale.tauxCotisations.salariales,
-								...securiteSociale.tauxCotisations.patronales,
-							].map((c) => [c.cle, c.taux_pct / 100]),
-						)}
+						salariales={cotisationsSalariales}
+						patronales={cotisationsPatronales}
 						simulateur={financeData.simulateur}
 					/>
+					<SourceNote sources={financeData.simulateur.sources} />
 				</section>
 
 				{/* Pédagogie */}
