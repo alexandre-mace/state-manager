@@ -30,6 +30,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
   return (
     <ChartContainer config={chartConfig} className="!aspect-auto h-[320px] w-full">
       <BarChart
+        title="Dépenses de la Sécurité sociale par branche, en milliards d'euros"
         data={data}
         layout="vertical"
         margin={{ top: 12, right: 16, left: 100, bottom: 4 }}

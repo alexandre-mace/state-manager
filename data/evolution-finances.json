@@ -1,6 +1,6 @@
 {
   "description": "Évolution des finances publiques françaises (APU) depuis 1959",
-  "source": "INSEE - Comptes nationaux annuels base 2020 (tableaux 3.201 et 1.101) ; % publiés Eurostat/INSEE à partir de 1995, calculés sur le PIB base 2020 avant. Montants en euros courants (convertis pour les années antérieures à 1999).",
+  "source": "INSEE, comptes nationaux annuels base 2020 (tableaux 3.201 et 1.101) ; % publiés Eurostat/INSEE à partir de 1995, calculés sur le PIB base 2020 avant. Montants en euros courants (convertis pour les années antérieures à 1999).",
   "sourceUrl": "https://www.insee.fr/fr/statistiques/8988845",
   "annees": [
     {

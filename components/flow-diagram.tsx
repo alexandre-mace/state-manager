@@ -23,7 +23,7 @@ function FlowArrow() {
 function FlowBox({ label, amount, color, small = false }: FlowItem & { small?: boolean }) {
   return (
     <div
-      className={`rounded-lg border-2 p-3 text-center ${small ? "text-xs" : "text-sm"}`}
+      className={`min-w-0 rounded-lg border-2 p-2 text-center hyphens-auto break-words sm:p-3 ${small ? "text-xs" : "text-xs sm:text-sm"}`}
       style={{ borderColor: color, backgroundColor: `${color}15` }}
     >
       <div className="font-medium">{label}</div>
@@ -62,7 +62,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         <FlowArrow />
 
         {/* Niveau 2: Types de prélèvements */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <FlowBox label="Impôts et taxes" amount={data.prelevements.impots} color="var(--chart-1)" />
           <FlowBox label="Cotisations sociales" amount={data.prelevements.cotisations} color="var(--chart-2)" />
           <FlowBox label="CSG-CRDS" amount={data.prelevements.csgCrds} color="var(--chart-3)" />
@@ -71,7 +71,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         <FlowArrow />
 
         {/* Niveau 3: Administrations */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <div className="space-y-2">
             <FlowBox label="État" amount={data.etat.total} color="var(--chart-1)" />
             <div className="text-xs text-muted-foreground text-center">
@@ -101,13 +101,13 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         {/* Transferts */}
         <div className="rounded-lg border border-dashed p-3 text-center text-sm">
           <div className="font-medium mb-2">Transferts entre administrations</div>
-          <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-            <div className="flex items-center justify-center gap-1">
+          <div className="grid gap-2 text-xs text-muted-foreground sm:grid-cols-2">
+            <div className="flex flex-wrap items-center justify-center gap-1">
               <span className="h-2 w-2 rounded-full bg-[var(--chart-1)]" />
               État → Collectivités : <span className="font-mono">{formatMd(data.transferts.etatCollectivites)}</span> (dotations)
             </div>
-            <div className="flex items-center justify-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-[var(--chart-3)]" />
+            <div className="flex flex-wrap items-center justify-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-[var(--chart-2)]" />
               Taxes affectées → Sécu : <span className="font-mono">{formatMd(data.transferts.taxesAffecteesSecu)}</span> (tabac, alcool...)
             </div>
           </div>
@@ -116,7 +116,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
         <FlowArrow />
 
         {/* Niveau 4: Dépenses */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
           <div className="space-y-1">
             <div className="text-xs font-medium text-center mb-2" style={{ color: "var(--chart-1)" }}>
               Dépenses État

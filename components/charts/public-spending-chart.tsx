@@ -54,7 +54,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
       config={chartConfig}
       className="mx-auto h-[320px] w-[320px]"
     >
-      <PieChart>
+      <PieChart title="Répartition des dépenses publiques entre administrations">
         <ChartTooltip
           cursor={false}
           content={

@@ -34,7 +34,11 @@ const currencyFormatter = new Intl.NumberFormat("fr-FR", {
 export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
   return (
     <ChartContainer config={chartConfig} className="!aspect-auto h-[300px] w-full">
-      <AreaChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
+      <AreaChart
+        data={data}
+        margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
+        title="Dette publique en milliards d'euros et en pourcentage du PIB, par année"
+      >
         <defs>
           <linearGradient id="debtGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="var(--color-pib_pct)" stopOpacity={0.3} />

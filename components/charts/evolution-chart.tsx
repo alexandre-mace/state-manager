@@ -61,7 +61,11 @@ export function EvolutionChart({ data }: EvolutionChartProps) {
   );
   return (
     <ChartContainer config={chartConfig} className="!aspect-auto h-[350px] w-full">
-      <ComposedChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
+      <ComposedChart
+        data={data}
+        margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
+        title="Dépenses et recettes publiques en pourcentage du PIB, par année"
+      >
         <defs>
           <linearGradient id="recettesGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="var(--color-recettes_pib_pct)" stopOpacity={0.3} />
@@ -151,7 +155,11 @@ export function DeficitChart({ data }: EvolutionChartProps) {
 
   return (
     <ChartContainer config={chartConfigDeficit} className="!aspect-auto h-[200px] w-full">
-      <ComposedChart data={data} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
+      <ComposedChart
+        data={data}
+        margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
+        title="Solde public en pourcentage du PIB, par année, avec la limite européenne de 3 %"
+      >
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         <XAxis
           dataKey="annee"

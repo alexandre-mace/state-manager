@@ -30,6 +30,37 @@ const COUNTRY_LABELS: Record<string, string> = {
   "moyenne ue": "Moyenne UE",
 };
 
+const SOMMAIRE = [
+  { id: "repartition", libelle: "Pour 1 000 €" },
+  { id: "qui-gere", libelle: "Qui dépense" },
+  { id: "administrations", libelle: "Administrations" },
+  { id: "prelevements", libelle: "Prélèvements" },
+  { id: "circuit", libelle: "Circuit" },
+  { id: "dette", libelle: "Dette" },
+  { id: "evolution", libelle: "Évolution" },
+  { id: "simulateur", libelle: "Simulateur" },
+  { id: "comprendre", libelle: "Comprendre" },
+  { id: "sources", libelle: "Sources" },
+];
+
+type Source = { libelle: string; url: string };
+
+function SourceNote({ sources }: { sources: Source[] }) {
+  return (
+    <p className="text-xs text-muted-foreground">
+      Source{sources.length > 1 ? "s" : ""} :{" "}
+      {sources.map((source, i) => (
+        <span key={source.url}>
+          {i > 0 && " ; "}
+          <a href={source.url} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-foreground">
+            {source.libelle}
+          </a>
+        </span>
+      ))}
+    </p>
+  );
+}
+
 const formatMd = (value: number) => {
   return `${value.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}\u00a0Md€`;
 };
@@ -39,6 +70,7 @@ const formatPct = (value: number) => {
 };
 
 export default function Home() {
+  const { sources } = financeData;
   const { context, vueGlobale, budgetEtat, securiteSociale, collectivitesLocales, prelevementsObligatoires, dette, destinationDepenses, retourCitoyen, pedagogie } = financeData;
 
   const population = context.population;
@@ -61,6 +93,7 @@ export default function Home() {
 
   // Evolution data
   const evolutionHistory = evolutionData.annees;
+  const dernierExcedent = evolutionHistory.findLast((a) => a.deficit_pib_pct > 0)?.annee;
 
   // Flow diagram data (derived from JSON)
   const cotisationsMontant = prelevementsObligatoires.repartition.find(r => r.type === "Cotisations sociales")?.montant_milliards_eur ?? 0;
@@ -225,20 +258,34 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
+          <SourceNote sources={[sources.comptes_2025, sources.dette]} />
         </section>
 
+        <nav
+          aria-label="Sommaire"
+          className="sticky top-0 z-10 -mx-4 -my-6 overflow-x-auto border-b border-border bg-background/90 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        >
+          <ul className="flex gap-4 whitespace-nowrap text-sm text-muted-foreground">
+            {SOMMAIRE.map((entree) => (
+              <li key={entree.id}>
+                <a href={`#${entree.id}`} className="hover:text-foreground">{entree.libelle}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         {/* Pour 1 000€ de dépenses publiques */}
-        <section className="space-y-6">
+        <section id="repartition" className="scroll-mt-16 space-y-6">
           <ThousandEuroBreakdown postes={destinationDepenses.postes} baseMiliardsEur={destinationDepenses.base_milliards_eur} />
         </section>
 
         {/* Ce que vous recevez en retour */}
-        <section className="space-y-6">
+        <section id="services" className="scroll-mt-16 space-y-6">
           <CitizenReturn services={retourCitoyen.services} />
         </section>
 
         {/* Vue globale */}
-        <section className="space-y-6">
+        <section id="qui-gere" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Qui gère les dépenses publiques ?</h2>
             <p className="text-sm text-muted-foreground">
@@ -269,7 +316,7 @@ export default function Home() {
         </section>
 
         {/* Tabs: État / Sécu / Collectivités */}
-        <section className="space-y-6">
+        <section id="administrations" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Zoom sur chaque administration</h2>
             <p className="text-sm text-muted-foreground">
@@ -349,13 +396,14 @@ export default function Home() {
                             </span>
                           </div>
                           <p className="text-xs text-muted-foreground">{impot.description}</p>
-                          <p className="text-xs text-primary/70">Qui paye : {impot.qui_paye}</p>
+                          <p className="text-xs text-primary">Qui paye : {impot.qui_paye}</p>
                         </div>
                       ))}
                     </CardContent>
                   </Card>
                 </div>
               </div>
+              <SourceNote sources={[sources.budget_etat]} />
             </TabsContent>
 
             {/* Sécurité Sociale */}
@@ -419,7 +467,7 @@ export default function Home() {
                             <span className="font-mono text-sm">{formatMd(source.montant_milliards_eur)}</span>
                           </div>
                           <p className="text-xs text-muted-foreground">{source.description}</p>
-                          <p className="text-xs text-primary/70">Qui paye : {source.qui_paye}</p>
+                          <p className="text-xs text-primary">Qui paye : {source.qui_paye}</p>
                         </div>
                       ))}
                     </CardContent>
@@ -464,6 +512,7 @@ export default function Home() {
                   </p>
                 </CardContent>
               </Card>
+              <SourceNote sources={[sources.securite_sociale]} />
             </TabsContent>
 
             {/* Collectivités locales */}
@@ -550,13 +599,14 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </div>
+              <SourceNote sources={[sources.collectivites]} />
             </TabsContent>
             </Tabs>
           </div>
         </section>
 
         {/* Prélèvements obligatoires */}
-        <section className="space-y-6">
+        <section id="prelevements" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Prélèvements obligatoires</h2>
             <p className="text-sm text-muted-foreground">
@@ -604,12 +654,12 @@ export default function Home() {
         </section>
 
         {/* Diagramme de flux */}
-        <section className="space-y-6">
+        <section id="circuit" className="scroll-mt-16 space-y-6">
           <FlowDiagram data={flowData} />
         </section>
 
         {/* Dette publique */}
-        <section className="space-y-6">
+        <section id="dette" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Évolution de la dette publique</h2>
             <p className="text-sm text-muted-foreground">
@@ -654,10 +704,11 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
+          <SourceNote sources={[sources.dette_serie_longue, sources.dette]} />
         </section>
 
         {/* Évolution historique */}
-        <section className="space-y-6">
+        <section id="evolution" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Évolution des finances publiques</h2>
             <p className="text-sm text-muted-foreground">
@@ -677,22 +728,29 @@ export default function Home() {
             <Card>
               <CardHeader>
                 <CardTitle>Solde public (% du PIB)</CardTitle>
-                <CardDescription>La limite européenne est de 3 % de déficit ; dernier excédent : 1974</CardDescription>
+                <CardDescription>La limite européenne est de 3 % de déficit ; dernier excédent : {dernierExcedent}</CardDescription>
               </CardHeader>
               <CardContent>
                 <DeficitChart data={evolutionHistory} />
               </CardContent>
             </Card>
           </div>
+          <SourceNote sources={[{ libelle: evolutionData.source, url: evolutionData.sourceUrl }]} />
         </section>
 
         {/* Simulateur */}
-        <section className="space-y-6">
-          <SalarySimulator />
+        <section id="simulateur" className="scroll-mt-16 space-y-6">
+          <SalarySimulator
+            taux={Object.fromEntries(
+              [...securiteSociale.tauxCotisations.salariales, ...securiteSociale.tauxCotisations.patronales]
+                .map((c) => [c.cle, c.taux_pct / 100]),
+            )}
+            simulateur={financeData.simulateur}
+          />
         </section>
 
         {/* Pédagogie */}
-        <section className="space-y-6">
+        <section id="comprendre" className="scroll-mt-16 space-y-6">
           <div>
             <h2 className="text-2xl font-semibold">Comprendre les finances publiques</h2>
             <p className="text-sm text-muted-foreground">
@@ -705,12 +763,15 @@ export default function Home() {
               <CardHeader>
                 <CardTitle>Questions fréquentes</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-3">
                 {pedagogie.questionsFrequentes.map((qa, i) => (
-                  <div key={i} className="space-y-2">
-                    <h4 className="font-medium text-sm">{qa.question}</h4>
-                    <p className="text-sm text-muted-foreground">{qa.reponse}</p>
-                  </div>
+                  <details key={i} className="group border-b border-border pb-3 last:border-0">
+                    <summary className="cursor-pointer list-none text-sm font-medium marker:hidden">
+                      <span className="mr-2 inline-block text-muted-foreground transition-transform group-open:rotate-90">›</span>
+                      {qa.question}
+                    </summary>
+                    <p className="mt-2 text-sm text-muted-foreground">{qa.reponse}</p>
+                  </details>
                 ))}
               </CardContent>
             </Card>
@@ -733,19 +794,19 @@ export default function Home() {
         </section>
 
         {/* Sources */}
-        <section className="space-y-4">
+        <section id="sources" className="scroll-mt-16 space-y-4">
           <h2 className="text-lg font-semibold">Sources des données</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(financeData.sources).map(([key, url]) => (
+            {Object.entries(financeData.sources).map(([key, source]) => (
               <a
                 key={key}
-                href={url}
+                href={source.url}
                 target="_blank"
                 rel="noreferrer"
                 className="block rounded-lg border border-border bg-card p-4 text-sm transition-colors hover:border-primary/40"
               >
-                <span className="font-medium capitalize">{key.replace(/_/g, " ")}</span>
-                <span className="block text-xs text-muted-foreground truncate mt-1">{url}</span>
+                <span className="font-medium">{source.libelle}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{new URL(source.url).hostname}</span>
               </a>
             ))}
           </div>

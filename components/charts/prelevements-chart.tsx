@@ -41,6 +41,7 @@ export function PrelevementsChart({ data }: PrelevementsChartProps) {
   return (
     <ChartContainer config={chartConfig} className="!aspect-auto h-[380px] w-full">
       <BarChart
+        title="Prélèvements obligatoires par type, en milliards d'euros"
         data={data}
         layout="vertical"
         margin={{ top: 12, right: 16, left: 120, bottom: 4 }}

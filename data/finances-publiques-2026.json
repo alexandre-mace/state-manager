@@ -12,12 +12,30 @@
     "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
   "sources": {
-    "budget_etat": "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026",
-    "securite_sociale": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
-    "collectivites": "https://www.ccomptes.fr/fr/publications/les-finances-publiques-locales-2025-fascicule-1",
-    "dette": "https://www.insee.fr/fr/statistiques/9010340",
-    "comptes_2025": "https://www.insee.fr/fr/statistiques/8956575",
-    "dette_serie_longue": "https://www.insee.fr/fr/statistiques/8988843"
+    "budget_etat": {
+      "libelle": "Budget de l'État, loi de finances 2026 (budget.gouv.fr)",
+      "url": "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026"
+    },
+    "securite_sociale": {
+      "libelle": "Loi de financement de la Sécurité sociale (securite-sociale.fr)",
+      "url": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours"
+    },
+    "collectivites": {
+      "libelle": "Finances publiques locales 2025 (Cour des comptes)",
+      "url": "https://www.ccomptes.fr/fr/publications/les-finances-publiques-locales-2025-fascicule-1"
+    },
+    "dette": {
+      "libelle": "Dette trimestrielle des administrations publiques (INSEE)",
+      "url": "https://www.insee.fr/fr/statistiques/9010340"
+    },
+    "comptes_2025": {
+      "libelle": "Comptes des administrations publiques 2025 (INSEE)",
+      "url": "https://www.insee.fr/fr/statistiques/8956575"
+    },
+    "dette_serie_longue": {
+      "libelle": "Série longue de la dette publique (INSEE)",
+      "url": "https://www.insee.fr/fr/statistiques/8988843"
+    }
   },
   "vueGlobale": {
     "description": "Les finances publiques françaises sont gérées par quatre catégories d'administrations publiques (APU)",
@@ -234,56 +252,69 @@
       "description": "Taux de cotisations et prélèvements sociaux sur le salaire brut (2026)",
       "salariales": [
         {
+          "cle": "vieillesse_plafonnee_sal",
           "cotisation": "Assurance vieillesse plafonnée",
           "taux_pct": 6.9
         },
         {
+          "cle": "vieillesse_deplafonnee_sal",
           "cotisation": "Assurance vieillesse déplafonnée",
           "taux_pct": 0.4
         },
         {
+          "cle": "csg_deductible",
           "cotisation": "CSG déductible",
           "taux_pct": 6.8
         },
         {
+          "cle": "csg_non_deductible_crds",
           "cotisation": "CSG non déductible + CRDS",
           "taux_pct": 2.9
         },
         {
+          "cle": "retraite_complementaire_sal",
           "cotisation": "Retraite complémentaire AGIRC-ARRCO",
           "taux_pct": 3.15
         }
       ],
       "patronales": [
         {
+          "cle": "maladie_pat",
           "cotisation": "Assurance maladie",
           "taux_pct": 7
         },
         {
+          "cle": "vieillesse_plafonnee_pat",
           "cotisation": "Assurance vieillesse plafonnée",
           "taux_pct": 8.55
         },
         {
+          "cle": "vieillesse_deplafonnee_pat",
           "cotisation": "Assurance vieillesse déplafonnée",
           "taux_pct": 1.9
         },
         {
+          "cle": "famille_pat",
           "cotisation": "Allocations familiales",
           "taux_pct": 3.45
         },
         {
+          "cle": "accident_travail_pat",
           "cotisation": "Accidents du travail",
           "taux_pct": 2.2
         },
         {
+          "cle": "chomage_pat",
           "cotisation": "Chômage",
           "taux_pct": 4.05
         },
         {
+          "cle": "retraite_complementaire_pat",
           "cotisation": "Retraite complémentaire AGIRC-ARRCO",
           "taux_pct": 4.72
         },
         {
+          "cle": "fnal_autonomie_pat",
           "cotisation": "FNAL + Autonomie",
           "taux_pct": 0.6
         }
@@ -890,5 +921,39 @@
         "definition": "Article de la Constitution permettant au gouvernement de faire adopter un texte sans vote, sauf motion de censure. Utilisé pour le budget 2026"
       }
     ]
+  },
+  "simulateur": {
+    "base_csg_pct": 98.25,
+    "abattement_frais_pro_pct": 10,
+    "bareme_ir": {
+      "description": "Barème 2026 (revenus 2025)",
+      "tranches": [
+        {
+          "limite_eur": 11294,
+          "taux_pct": 0
+        },
+        {
+          "limite_eur": 28797,
+          "taux_pct": 11
+        },
+        {
+          "limite_eur": 82341,
+          "taux_pct": 30
+        },
+        {
+          "limite_eur": 177106,
+          "taux_pct": 41
+        },
+        {
+          "limite_eur": null,
+          "taux_pct": 45
+        }
+      ]
+    },
+    "reperes": {
+      "pension_moyenne": "~1 550 €/mois net",
+      "remboursement_sante": "~77 %",
+      "duree_chomage": "~24 mois"
+    }
   }
 }
