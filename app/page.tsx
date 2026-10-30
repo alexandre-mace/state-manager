@@ -22,6 +22,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
+import { trouver } from "@/lib/donnees";
 import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
@@ -118,13 +119,16 @@ export default function Home() {
 	)?.annee;
 
 	// Flow diagram data (derived from JSON)
-	const cotisationsMontant =
-		prelevementsObligatoires.repartition.find(
-			(r) => r.type === "Cotisations sociales",
-		)?.montant_milliards_eur ?? 0;
-	const csgMontant =
-		prelevementsObligatoires.repartition.find((r) => r.type === "CSG-CRDS")
-			?.montant_milliards_eur ?? 0;
+	const cotisationsMontant = trouver(
+		prelevementsObligatoires.repartition,
+		(r) => r.type === "Cotisations sociales",
+		"Cotisations sociales",
+	).montant_milliards_eur;
+	const csgMontant = trouver(
+		prelevementsObligatoires.repartition,
+		(r) => r.type === "CSG-CRDS",
+		"CSG-CRDS",
+	).montant_milliards_eur;
 
 	const MISSION_LABELS: Record<string, string> = {
 		"Enseignement scolaire": "Éducation",
@@ -151,9 +155,11 @@ export default function Home() {
 			csgCrds: csgMontant,
 		},
 		etat: {
-			total:
-				vueGlobale.repartition.find((r) => r.categorie === "État")
-					?.depenses_milliards_eur ?? 0,
+			total: trouver(
+				vueGlobale.repartition,
+				(r) => r.categorie === "État",
+				"État",
+			).depenses_milliards_eur,
 			// Hors retraites des agents : ces pensions sont déjà dans la colonne Sécu (Retraites)
 			depenses: budgetEtat.principalesMissions
 				.map((m) => ({
@@ -164,9 +170,11 @@ export default function Home() {
 				.slice(0, 4),
 		},
 		secu: {
-			total:
-				vueGlobale.repartition.find((r) => r.categorie === "Sécurité Sociale")
-					?.depenses_milliards_eur ?? 0,
+			total: trouver(
+				vueGlobale.repartition,
+				(r) => r.categorie === "Sécurité Sociale",
+				"Sécurité Sociale",
+			).depenses_milliards_eur,
 			depenses: [...securiteSociale.branches]
 				.sort((a, b) => b.depenses_milliards_eur - a.depenses_milliards_eur)
 				.slice(0, 4)
@@ -176,34 +184,39 @@ export default function Home() {
 				})),
 		},
 		collectivites: {
-			total:
-				vueGlobale.repartition.find(
-					(r) => r.categorie === "Collectivités locales",
-				)?.depenses_milliards_eur ?? 0,
+			total: trouver(
+				vueGlobale.repartition,
+				(r) => r.categorie === "Collectivités locales",
+				"Collectivités locales",
+			).depenses_milliards_eur,
 			depenses: collectivitesLocales.types.map((t) => ({
 				label: t.type.includes("EPCI") ? "Interco" : t.type,
 				amount: t.depenses_milliards_eur,
 			})),
 		},
 		autresOrganismes: {
-			total:
-				vueGlobale.repartition.find(
-					(r) => r.categorie === "Autres organismes publics",
-				)?.depenses_milliards_eur ?? 0,
-			description:
-				vueGlobale.repartition.find(
-					(r) => r.categorie === "Autres organismes publics",
-				)?.description ?? "",
+			total: trouver(
+				vueGlobale.repartition,
+				(r) => r.categorie === "Autres organismes publics",
+				"Autres organismes publics",
+			).depenses_milliards_eur,
+			description: trouver(
+				vueGlobale.repartition,
+				(r) => r.categorie === "Autres organismes publics",
+				"Autres organismes publics",
+			).description,
 		},
 		transferts: {
-			etatCollectivites:
-				collectivitesLocales.recettes.find(
-					(r) => r.source === "Dotations de l'État",
-				)?.montant_milliards_eur ?? 55,
-			taxesAffecteesSecu:
-				securiteSociale.financement.sources.find(
-					(s) => s.source === "Impôts et taxes affectés",
-				)?.montant_milliards_eur ?? 82,
+			etatCollectivites: trouver(
+				collectivitesLocales.recettes,
+				(r) => r.source === "Dotations de l'État",
+				"Dotations de l'État",
+			).montant_milliards_eur,
+			taxesAffecteesSecu: trouver(
+				securiteSociale.financement.sources,
+				(s) => s.source === "Impôts et taxes affectés",
+				"Impôts et taxes affectés",
+			).montant_milliards_eur,
 		},
 		deficit: Math.round(
 			(context.deficit_public_pib_pct / 100) * context.pib_milliards_eur,
@@ -437,9 +450,11 @@ export default function Home() {
 											{formatMd(budgetEtat.depenses_milliards_eur)}), qui est
 											une composante des{" "}
 											{formatMd(
-												vueGlobale.repartition.find(
+												trouver(
+													vueGlobale.repartition,
 													(r) => r.categorie === "État",
-												)?.depenses_milliards_eur ?? 0,
+													"État",
+												).depenses_milliards_eur,
 											)}{" "}
 											de dépenses des administrations centrales.
 										</p>
