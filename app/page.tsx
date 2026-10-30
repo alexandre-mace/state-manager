@@ -251,7 +251,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-          <SourceNote sources={[sources.loi_finances_2026, sources.comptes_2025, sources.dette]} />
+          <SourceNote sources={[sources.budget_etat, sources.comptes_2025, sources.dette]} />
         </section>
 
         <nav
