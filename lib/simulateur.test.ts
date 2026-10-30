@@ -73,13 +73,19 @@ describe("assiettes", () => {
 });
 
 describe("simulation complète", () => {
-	it("ne fait payer la CET qu'au-delà du PASS", () => {
-		const sous = simuler(pass - 1_000, salariales, patronales, p);
-		const dessus = simuler(pass + 1_000, salariales, patronales, p);
-		const tauxCet = 0.14 + 0.21;
-		// Franchir le PASS fait payer la CET sur tout le salaire, pas sur l'excédent seul
-		const ecartRetraite = dessus.parPoste.retraite - sous.parPoste.retraite;
-		expect(ecartRetraite).toBeGreaterThan(((pass + 1_000) * tauxCet) / 100);
+	it("ne fait payer la CET qu'au-delà du PASS, mais alors sur tout le salaire", () => {
+		const cet = (brut: number) =>
+			simuler(
+				brut,
+				salariales.filter((c) => c.cle === "cet_sal"),
+				patronales.filter((c) => c.cle === "cet_pat"),
+				p,
+			).parPoste.retraite;
+		expect(cet(pass - 1_000)).toBe(0);
+		expect(cet(pass + 1_000)).toBeCloseTo(
+			((pass + 1_000) * (0.14 + 0.21)) / 100,
+			6,
+		);
 	});
 
 	it("efface presque toutes les cotisations patronales au SMIC", () => {
@@ -105,8 +111,9 @@ describe("simulation complète", () => {
 	});
 
 	it("donne des taux sous le PASS cohérents avec les tableaux officiels", () => {
-		expect(tauxSousLePass(salariales)).toBeCloseTo(21.01, 6);
-		expect(tauxSousLePass(patronales)).toBeCloseTo(42.05, 6);
+		// Salarié : 11,31 points sur le brut, plus 9,7 points de CSG-CRDS sur 98,25 % du brut
+		expect(tauxSousLePass(salariales, p)).toBeCloseTo(11.31 + 9.7 * 0.9825, 6);
+		expect(tauxSousLePass(patronales, p)).toBeCloseTo(42.05, 6);
 	});
 });
 

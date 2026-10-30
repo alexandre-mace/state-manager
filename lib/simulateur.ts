@@ -7,7 +7,7 @@ export type Assiette =
 	| "tranche1"
 	| "tranche2"
 	| "tranches_1_2"
-	| "plafond_4_pass"
+	| "plafond_chomage"
 	| "csg";
 
 export type Poste =
@@ -34,6 +34,7 @@ export type Tranche = { limite_eur: number | null; taux_pct: number };
 
 export interface ParametresSimulateur {
 	pass_annuel_eur: number;
+	plafonds_pass: { tranches_1_2: number; chomage: number };
 	csg: { base_pct: number; plafond_abattement_pass: number };
 	rgdu: {
 		smic_annuel_eur: number;
@@ -74,11 +75,14 @@ export function assiette(
 		case "tranche1":
 			return Math.min(brut, pass);
 		case "tranche2":
-			return Math.min(Math.max(brut - pass, 0), 7 * pass);
+			return Math.min(
+				Math.max(brut - pass, 0),
+				(p.plafonds_pass.tranches_1_2 - 1) * pass,
+			);
 		case "tranches_1_2":
-			return Math.min(brut, 8 * pass);
-		case "plafond_4_pass":
-			return Math.min(brut, 4 * pass);
+			return Math.min(brut, p.plafonds_pass.tranches_1_2 * pass);
+		case "plafond_chomage":
+			return Math.min(brut, p.plafonds_pass.chomage * pass);
 		case "csg": {
 			// Abattement de 1,75 % pour frais professionnels, limité à 4 PASS
 			const plafond = p.csg.plafond_abattement_pass * pass;
@@ -181,11 +185,19 @@ export function simuler(
 	};
 }
 
-// Taux cumulé d'une liste de cotisations pour un salaire sous le PASS (tableau de la page)
-export function tauxSousLePass(cotisations: Cotisation[]): number {
+// Taux cumulé d'une liste de cotisations pour un salaire sous le PASS, rapporté au brut :
+// la CSG et la CRDS ne portent que sur 98,25 % du brut (tableau de la page)
+export function tauxSousLePass(
+	cotisations: Cotisation[],
+	p: ParametresSimulateur,
+): number {
 	return cotisations
 		.filter((c) => c.assiette !== "tranche2" && !c.si_au_dela_pass)
-		.reduce((total, c) => total + c.taux_pct, 0);
+		.reduce(
+			(total, c) =>
+				total + c.taux_pct * (c.assiette === "csg" ? p.csg.base_pct / 100 : 1),
+			0,
+		);
 }
 
 const ASSIETTES: Assiette[] = [
@@ -193,7 +205,7 @@ const ASSIETTES: Assiette[] = [
 	"tranche1",
 	"tranche2",
 	"tranches_1_2",
-	"plafond_4_pass",
+	"plafond_chomage",
 	"csg",
 ];
 const POSTES: Poste[] = [

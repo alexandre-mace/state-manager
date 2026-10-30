@@ -288,9 +288,10 @@ export function SalarySimulator({
 								</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
-								Réduit les cotisations patronales des salaires jusqu&apos;à 3
-								SMIC ({formatEur(seuilAllegement)} par an). Les montants
-								ci-dessus sont avant cette réduction.
+								Réduit les cotisations patronales des salaires jusqu&apos;à{" "}
+								{simulateur.rgdu.seuil_smic}&nbsp;SMIC (
+								{formatEur(seuilAllegement)} par an). Les montants ci-dessus
+								sont avant cette réduction.
 							</p>
 						</div>
 					</div>

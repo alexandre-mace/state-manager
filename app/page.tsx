@@ -633,7 +633,13 @@ export default function Home() {
 											<div>
 												<h4 className="font-medium mb-3">
 													Part salariale (
-													{formatPct(tauxSousLePass(cotisationsSalariales))})
+													{formatPct(
+														tauxSousLePass(
+															cotisationsSalariales,
+															financeData.simulateur,
+														),
+													)}
+													)
 												</h4>
 												<div className="space-y-2 text-sm">
 													{securiteSociale.tauxCotisations.salariales.map(
@@ -653,7 +659,13 @@ export default function Home() {
 											<div>
 												<h4 className="font-medium mb-3">
 													Part patronale (
-													{formatPct(tauxSousLePass(cotisationsPatronales))})
+													{formatPct(
+														tauxSousLePass(
+															cotisationsPatronales,
+															financeData.simulateur,
+														),
+													)}
+													)
 												</h4>
 												<div className="space-y-2 text-sm">
 													{securiteSociale.tauxCotisations.patronales.map(
@@ -674,8 +686,14 @@ export default function Home() {
 										<p className="mt-4 text-sm text-muted-foreground">
 											Total :{" "}
 											{formatPct(
-												tauxSousLePass(cotisationsSalariales) +
-													tauxSousLePass(cotisationsPatronales),
+												tauxSousLePass(
+													cotisationsSalariales,
+													financeData.simulateur,
+												) +
+													tauxSousLePass(
+														cotisationsPatronales,
+														financeData.simulateur,
+													),
 											)}{" "}
 											du salaire brut. {securiteSociale.tauxCotisations.note}
 										</p>

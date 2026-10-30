@@ -285,7 +285,7 @@
         },
         {
           "cle": "agirc_arrco_t2_sal",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
           "taux_pct": 8.64,
           "assiette": "tranche2",
           "poste": "retraite"
@@ -359,16 +359,16 @@
         },
         {
           "cle": "chomage_pat",
-          "cotisation": "Assurance chômage (jusqu'à 4 PASS)",
+          "cotisation": "Assurance chômage (jusqu'à 4 PASS)",
           "taux_pct": 4,
-          "assiette": "plafond_4_pass",
+          "assiette": "plafond_chomage",
           "poste": "chomage"
         },
         {
           "cle": "ags_pat",
           "cotisation": "Garantie des salaires (AGS)",
           "taux_pct": 0.25,
-          "assiette": "plafond_4_pass",
+          "assiette": "plafond_chomage",
           "poste": "chomage"
         },
         {
@@ -387,7 +387,7 @@
         },
         {
           "cle": "agirc_arrco_t2_pat",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
           "taux_pct": 12.95,
           "assiette": "tranche2",
           "poste": "retraite"
@@ -1024,6 +1024,10 @@
   },
   "simulateur": {
     "pass_annuel_eur": 48060,
+    "plafonds_pass": {
+      "tranches_1_2": 8,
+      "chomage": 4
+    },
     "csg": {
       "base_pct": 98.25,
       "plafond_abattement_pass": 4
@@ -1102,6 +1106,10 @@
       {
         "libelle": "Barème de l'impôt sur le revenu 2025 (service-public.fr)",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"
+      },
+      {
+        "libelle": "Décote de l'impôt sur le revenu 2026 (Weblex, chiffres clés)",
+        "url": "https://www.weblex.fr/chiffres-cles/impot-sur-le-revenu-et-decote-2026"
       }
     ]
   }
