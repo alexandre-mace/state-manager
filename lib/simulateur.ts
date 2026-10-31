@@ -230,3 +230,12 @@ export function lireCotisations(
 	}
 	return lignes as Cotisation[];
 }
+
+// Bornes et position de départ du curseur : des constantes d'interface, pas des paramètres
+// réglementaires. Le salaire de départ sert aussi d'exemple à la FAQ.
+export const SALARY_RANGE = {
+	min: 15_000,
+	max: 150_000,
+	step: 1_000,
+	initial: 35_000,
+};

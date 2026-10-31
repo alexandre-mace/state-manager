@@ -22,8 +22,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
+import {
+	explainerValues,
+	fillPlaceholders,
+	yearBalance,
+} from "@/lib/explainer";
 import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
-import { findOrThrow, requireAmount } from "@/lib/guards";
+import { findOrThrow } from "@/lib/guards";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
 const COUNTRY_LABELS: Record<string, string> = {
@@ -100,6 +105,11 @@ export default function Home() {
 		"Autres organismes publics",
 	);
 
+	// Déficit de l'année : la ligne des séries longues, objectif de la loi de finances. Pas un
+	// produit taux × PIB : le PIB implicite de la dette n'est pas celui de la loi de finances.
+	const currentBalance = yearBalance(evolutionData.annees, financeData.year);
+	const explainer = explainerValues(financeData, evolutionData.annees);
+
 	const population = context.population;
 	const formatPerHab = (milliards: number) =>
 		`${formatEur((milliards * 1_000_000_000) / population)}/hab`;
@@ -107,6 +117,10 @@ export default function Home() {
 	// Prepare data for charts
 	const spendingData = vueGlobale.repartition;
 	const secuBranches = securiteSociale.branches;
+	const secuBranchesTotal = secuBranches.reduce(
+		(sum, b) => sum + b.depenses_milliards_eur,
+		0,
+	);
 	const debtEvolution = dette.evolution;
 	const prelevements = prelevementsObligatoires.repartition;
 
@@ -181,9 +195,9 @@ export default function Home() {
 				(r) => r.categorie === "Sécurité Sociale",
 				"Sécurité Sociale",
 			).depenses_milliards_eur,
+			branchesTotal: secuBranchesTotal,
 			depenses: [...securiteSociale.branches]
 				.sort((a, b) => b.depenses_milliards_eur - a.depenses_milliards_eur)
-				.slice(0, 4)
 				.map((b) => ({
 					label: BRANCHE_LABELS[b.branche] ?? b.branche,
 					amount: b.depenses_milliards_eur,
@@ -216,9 +230,7 @@ export default function Home() {
 				"Impôts et taxes affectés",
 			).montant_milliards_eur,
 		},
-		deficit: Math.round(
-			(context.deficit_public_pib_pct / 100) * context.pib_milliards_eur,
-		),
+		deficit: currentBalance.deficitBillionEur,
 		year: financeData.year,
 	};
 
@@ -301,14 +313,7 @@ export default function Home() {
 							<CardHeader>
 								<CardDescription>Déficit public</CardDescription>
 								<CardTitle className="font-mono text-2xl tracking-tight text-destructive">
-									-
-									{formatMd(
-										Math.round(
-											(context.deficit_public_pib_pct / 100) *
-												context.pib_milliards_eur *
-												10,
-										) / 10,
-									)}
+									-{formatMd(currentBalance.deficitBillionEur)}
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="pt-0">
@@ -316,14 +321,11 @@ export default function Home() {
 									{context.deficit_periode}
 								</p>
 								<p className="text-xs text-muted-foreground">
-									soit {formatPct(context.deficit_public_pib_pct)} du PIB,{" "}
+									soit {formatPct(currentBalance.deficitGdpPct)} du PIB,{" "}
 									{context.deficit_objectif}
 								</p>
 								<p className="text-xs font-medium text-muted-foreground">
-									{formatPerHab(
-										(context.deficit_public_pib_pct / 100) *
-											context.pib_milliards_eur,
-									)}
+									{formatPerHab(currentBalance.deficitBillionEur)}
 								</p>
 							</CardContent>
 						</Card>
@@ -486,6 +488,9 @@ export default function Home() {
 										</CardHeader>
 									</Card>
 								</div>
+								<p className="text-xs text-muted-foreground">
+									{budgetEtat.note}
+								</p>
 
 								<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
 									<div className="space-y-4">
@@ -509,7 +514,8 @@ export default function Home() {
 												Principaux impôts d&apos;État
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												Les grandes recettes fiscales de l&apos;État
+												Ce que garde l&apos;État : montants nets des
+												remboursements et dégrèvements
 											</p>
 										</div>
 										<Card>
@@ -525,14 +531,7 @@ export default function Home() {
 																	{impot.label}
 																</span>
 																<span className="font-mono text-sm">
-																	{formatMd(
-																		requireAmount(
-																			"montant_milliards_eur" in impot
-																				? impot.montant_milliards_eur
-																				: impot.montant_brut_milliards_eur,
-																			impot.label,
-																		),
-																	)}
+																	{formatMd(impot.montant_milliards_eur)}
 																</span>
 															</div>
 															<p className="text-xs text-muted-foreground">
@@ -599,6 +598,14 @@ export default function Home() {
 											</p>
 										</div>
 										<SecuBranchesChart data={secuBranches} />
+										<p className="text-xs text-muted-foreground">
+											Chaque branche est comptée sur son propre périmètre
+											(l&apos;assurance maladie par l&apos;ONDAM, la vieillesse
+											tous régimes de base) : leur somme,{" "}
+											{formatMd(secuBranchesTotal)}, ne se compare pas aux{" "}
+											{formatMd(securiteSociale.depenses_milliards_eur)} de
+											dépenses ci-dessus.
+										</p>
 									</div>
 									<div className="space-y-4">
 										<div>
@@ -1056,10 +1063,10 @@ export default function Home() {
 											>
 												›
 											</span>
-											{qa.question}
+											{fillPlaceholders(qa.question, explainer)}
 										</summary>
 										<p className="mt-2 text-sm text-muted-foreground">
-											{qa.reponse}
+											{fillPlaceholders(qa.reponse, explainer)}
 										</p>
 									</details>
 								))}
@@ -1077,7 +1084,7 @@ export default function Home() {
 												{item.terme}
 											</dt>
 											<dd className="text-sm text-muted-foreground">
-												{item.definition}
+												{fillPlaceholders(item.definition, explainer)}
 											</dd>
 										</div>
 									))}

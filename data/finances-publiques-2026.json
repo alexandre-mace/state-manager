@@ -2,10 +2,8 @@
   "year": 2026,
   "lastUpdate": "2026-10-30",
   "context": {
-    "pib_milliards_eur": 3021,
     "dette_publique_milliards_eur": 3595.5,
     "dette_pib_pct": 119.0,
-    "deficit_public_pib_pct": 5,
     "deficit_periode": "2026, objectif de la loi de finances",
     "deficit_objectif": "objectif sous 3 % en 2029",
     "population": 69100000,
@@ -87,9 +85,8 @@
         {
           "code": "TVA",
           "label": "Taxe sur la valeur ajoutée",
-          "montant_brut_milliards_eur": 175.1,
-          "montant_net_etat_milliards_eur": 109.1,
-          "description": "Impôt indirect sur la consommation (taux normal 20%, réduit 10%, 5.5%, 2.1%)",
+          "montant_milliards_eur": 109.1,
+          "description": "Impôt indirect sur la consommation (taux normal 20 %, réduits 10 %, 5,5 % et 2,1 %) ; la Sécurité sociale et les collectivités en reçoivent d'autres parts, hors de ce montant",
           "qui_paye": "Consommateurs (via les entreprises)"
         },
         {
@@ -956,7 +953,7 @@
       },
       {
         "question": "Pourquoi y a-t-il un déficit ?",
-        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En 2025, le déficit public constaté a atteint 152,5 Md€ (5,1% du PIB) ; la loi de finances 2026 vise ~150 Md€ (5% du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
+        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En {previousYear}, le déficit public constaté a atteint {previousDeficit} ({previousDeficitPct} du PIB) ; la loi de finances {year} vise {deficit} ({deficitPct} du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
       },
       {
         "question": "Qui paye vraiment les impôts en France ?",
@@ -964,19 +961,19 @@
       },
       {
         "question": "Comment fonctionne le financement de la Sécu ?",
-        "reponse": "Sur un salaire brut de 100€, environ 20€ sont prélevés au salarié et 32€ à l'employeur en cotisations. La CSG prélève environ 9% sur tous les revenus. Ces sommes financent santé, retraite, famille, chômage."
+        "reponse": "Sur un salaire brut de 100 € sous le plafond de la Sécurité sociale, environ {employeeRate} € sont prélevés au salarié, dont {csgCrdsRate} € de CSG et de CRDS, et {employerRateBeforeRelief} € à l'employeur avant l'allègement général. L'allègement diminue la part patronale d'autant plus que le salaire est bas : pour {referenceSalary} brut par an, elle tombe à {employerRateAfterRelief} €, et presque à zéro au SMIC. La CSG porte aussi sur les revenus du capital et de remplacement. Ces sommes financent santé, retraite, famille, chômage."
       },
       {
         "question": "Pourquoi les cotisations patronales sont si élevées ?",
-        "reponse": "Les cotisations patronales (~32% du brut) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
+        "reponse": "Les cotisations patronales (environ {employerRateBeforeRelief} % du brut avant l'allègement général, {employerRateAfterRelief} % après pour un salaire de {referenceSalary} par an) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
       },
       {
-        "question": "Pourquoi les dépenses (1 722 Md€) sont très supérieures aux prélèvements (1 312 Md€) ?",
-        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (~260 Md€). Les recettes totales sont donc d'environ 1 572 Md€. Le déficit (~150 Md€) est la différence entre ces recettes totales et les dépenses."
+        "question": "Pourquoi les dépenses ({totalSpending}) sont très supérieures aux prélèvements ({totalLevies}) ?",
+        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (environ {otherRevenue}). Les recettes totales sont donc d'environ {totalRevenue}. Le déficit (environ {deficit}) est la différence entre ces recettes totales et les dépenses."
       },
       {
         "question": "Pourquoi la France dépense-t-elle plus que ses voisins européens ?",
-        "reponse": "La France consacre ~57% de son PIB aux dépenses publiques, contre ~50% en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges."
+        "reponse": "La France consacre {spendingGdpPct} de son PIB aux dépenses publiques, contre ~50% en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges."
       },
       {
         "question": "Que s'est-il passé avec le budget 2026 ?",
@@ -1002,7 +999,7 @@
       },
       {
         "terme": "ONDAM",
-        "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé (274,4 Md€ en 2026)"
+        "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé ({ondam} en {year})"
       },
       {
         "terme": "CSG",

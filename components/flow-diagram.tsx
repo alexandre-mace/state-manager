@@ -56,7 +56,11 @@ function FlowBox({
 export interface FlowDiagramData {
 	prelevements: { impots: number; cotisations: number; csgCrds: number };
 	etat: { total: number; depenses: { label: string; amount: number }[] };
-	secu: { total: number; depenses: { label: string; amount: number }[] };
+	secu: {
+		total: number;
+		branchesTotal: number;
+		depenses: { label: string; amount: number }[];
+	};
 	collectivites: {
 		total: number;
 		depenses: { label: string; amount: number }[];
@@ -207,6 +211,9 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 							style={{ color: "var(--chart-2)" }}
 						>
 							Dépenses Sécu
+							<div className="font-normal text-muted-foreground">
+								par branche
+							</div>
 						</div>
 						{data.secu.depenses.map((d) => (
 							<FlowBox
@@ -245,6 +252,21 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 						Services publics, prestations, infrastructures → Citoyens
 					</div>
 				</div>
+
+				{/* Périmètres : les sous-boîtes ne bouclent pas toutes avec leur parent */}
+				<p className="text-xs text-muted-foreground">
+					Les boîtes État, Sécurité sociale, Collectivités et autres organismes
+					suivent la comptabilité nationale et s&apos;additionnent. Dessous, les
+					missions de l&apos;État sont celles de son budget, hors retraites des
+					agents ; les branches de la Sécurité sociale sont prises chacune sur
+					son propre périmètre (loi de financement) et totalisent{" "}
+					<span className="font-mono">
+						{formatMd(data.secu.branchesTotal, 0)}
+					</span>
+					, à ne pas comparer aux{" "}
+					<span className="font-mono">{formatMd(data.secu.total, 0)}</span> de
+					la boîte.
+				</p>
 
 				{/* Légende déficit */}
 				<div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm">

@@ -13,6 +13,7 @@ import {
 	type Cotisation,
 	type ParametresSimulateur,
 	type Poste,
+	SALARY_RANGE,
 	simuler,
 } from "@/lib/simulateur";
 
@@ -23,9 +24,6 @@ export interface SimulateurData extends ParametresSimulateur {
 		duree_chomage: string;
 	};
 }
-
-const SALAIRE_MIN = 15000;
-const SALAIRE_MAX = 150000;
 
 interface SalarySimulatorProps {
 	salariales: Cotisation[];
@@ -38,7 +36,9 @@ export function SalarySimulator({
 	patronales,
 	simulateur,
 }: SalarySimulatorProps) {
-	const [salaireBrutAnnuel, setSalaireBrutAnnuel] = useState(35000);
+	const [salaireBrutAnnuel, setSalaireBrutAnnuel] = useState(
+		SALARY_RANGE.initial,
+	);
 	const s = simuler(salaireBrutAnnuel, salariales, patronales, simulateur);
 	const poste = (p: Poste) => s.parPoste[p];
 	const seuilAllegement =
@@ -76,17 +76,17 @@ export function SalarySimulator({
 					<input
 						id="salaire-brut-annuel"
 						type="range"
-						min={SALAIRE_MIN}
-						max={SALAIRE_MAX}
-						step={1000}
+						min={SALARY_RANGE.min}
+						max={SALARY_RANGE.max}
+						step={SALARY_RANGE.step}
 						value={salaireBrutAnnuel}
 						onChange={(e) => setSalaireBrutAnnuel(Number(e.target.value))}
 						aria-valuetext={formatEur(salaireBrutAnnuel)}
 						className="w-full accent-primary"
 					/>
 					<div className="flex justify-between text-xs text-muted-foreground">
-						<span>{formatEur(SALAIRE_MIN)}</span>
-						<span>{formatEur(SALAIRE_MAX)}</span>
+						<span>{formatEur(SALARY_RANGE.min)}</span>
+						<span>{formatEur(SALARY_RANGE.max)}</span>
 					</div>
 				</div>
 
