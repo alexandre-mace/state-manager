@@ -535,7 +535,11 @@ export default function Home() {
 									</div>
 								</div>
 								<SourceNote
-									sources={[sources.loiDeFinances2026, sources.stateBudget]}
+									sources={[
+										sources.loiDeFinances2026,
+										sources.stateBudget,
+										sources.revenueEstimates2026,
+									]}
 								/>
 							</TabsContent>
 

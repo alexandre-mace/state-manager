@@ -1,12 +1,15 @@
 // Finances publiques françaises de l'année en cours : tout ce qu'affiche la page hors séries
 // longues. Chiffres mis à jour le 30/10/2026 (champ lastUpdate), saisis à la main depuis :
 // - loi n° 2026-103 de finances pour 2026 (Légifrance) et dossier du projet de loi
-//   (budget.gouv.fr) : budget de l'État, missions, recettes fiscales nettes ;
+//   (budget.gouv.fr) : budget de l'État, missions ;
+// - Évaluation des voies et moyens, tome I, annexe au projet de loi de finances 2026 : recettes
+//   fiscales nettes de l'État (IR, IS, TVA, ex-TICPE nette État, ligne 1501) ;
 // - loi de financement de la Sécurité sociale 2026 (securite-sociale.fr) : branches, financement ;
 // - Cour des comptes, finances publiques locales 2025 : collectivités ;
 // - INSEE, dette trimestrielle (T2 2026, Informations rapides du 29/09/2026), comptes des
 //   administrations publiques 2025 (mars 2026) et série longue de la dette ;
-// - Eurostat 2024 et fin 2025 : comparaisons européennes ;
+// - Eurostat 2024 et fin 2025 : comparaisons européennes ; dépenses publiques moyennes de l'UE
+//   en 2025, communiqué du 21/10/2026 (notification d'octobre) ;
 // - FIPECO/INSEE, COFOG 2024 : ventilation pour 1 000 € ;
 // - textes réglementaires 2026 du simulateur, listés dans simulator.sources.
 // Les liens de chaque source sont dans sources et simulator.sources ; les pièges de périmètre
@@ -39,10 +42,12 @@ export interface PublicFinances2026 {
 	sources: Record<
 		| "loiDeFinances2026"
 		| "stateBudget"
+		| "revenueEstimates2026"
 		| "socialSecurity"
 		| "localAuthorities"
 		| "debt"
 		| "accounts2025"
+		| "eurostatDeficitDebt"
 		| "debtLongSeries",
 		Source
 	>;
@@ -51,6 +56,8 @@ export interface PublicFinances2026 {
 		totalSpendingBillionEur: number;
 		spendingGdpPct: number;
 		period: string;
+		// Moyenne de l'UE à 27, dépenses des administrations publiques en % du PIB (Eurostat)
+		euAverageSpending: { gdpPct: number; year: number };
 		breakdown: {
 			category: string;
 			sharePct: number;
@@ -220,6 +227,11 @@ export const publicFinances2026: PublicFinances2026 = {
 			label: "Dossier du projet de loi de finances 2026 (budget.gouv.fr)",
 			url: "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026",
 		},
+		revenueEstimates2026: {
+			label:
+				"Évaluation des voies et moyens, tome I, annexe au projet de loi de finances 2026 (Assemblée nationale)",
+			url: "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1087930/file/PLF%202026%20-%20V%26M%20TI%20-%20Evaluations%20des%20recettes.pdf",
+		},
 		socialSecurity: {
 			label: "Loi de financement de la Sécurité sociale (securite-sociale.fr)",
 			url: "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
@@ -236,6 +248,11 @@ export const publicFinances2026: PublicFinances2026 = {
 			label: "Comptes des administrations publiques 2025 (INSEE)",
 			url: "https://www.insee.fr/fr/statistiques/8956575",
 		},
+		eurostatDeficitDebt: {
+			label:
+				"Déficit et dette publics 2025, notification d'octobre 2026 (Eurostat)",
+			url: "https://ec.europa.eu/eurostat/en/web/products-euro-indicators/w/2-21102026-ap",
+		},
 		debtLongSeries: {
 			label: "Série longue de la dette publique (INSEE)",
 			url: "https://www.insee.fr/fr/statistiques/8988843",
@@ -247,6 +264,7 @@ export const publicFinances2026: PublicFinances2026 = {
 		totalSpendingBillionEur: 1722,
 		spendingGdpPct: 57.2,
 		period: "2026, prévision de la loi de finances",
+		euAverageSpending: { gdpPct: 49.4, year: 2025 },
 		breakdown: [
 			{
 				category: "Sécurité sociale",
@@ -314,10 +332,10 @@ export const publicFinances2026: PublicFinances2026 = {
 				},
 				{
 					code: "TICPE",
-					label:
-						"Taxe intérieure de consommation sur les produits énergétiques",
-					amountBillionEur: 18.5,
-					description: "Taxe sur les carburants et combustibles",
+					label: "Accise sur les produits énergétiques (ex-TICPE)",
+					amountBillionEur: 15.3,
+					description:
+						"Taxe sur les carburants et combustibles ; part de l'État, après les fractions versées aux collectivités, à l'AFITF et aux charges de service public de l'électricité",
 					whoPays: "Consommateurs de carburants",
 				},
 				{
@@ -1243,7 +1261,7 @@ export const publicFinances2026: PublicFinances2026 = {
 			{
 				question: "Qui paye vraiment les impôts en France ?",
 				answer:
-					"Les ménages paient environ 70 % des prélèvements (IR, CSG, TVA, cotisations salariales). Les entreprises paient ~30 % (IS, cotisations patronales, taxes). Mais in fine, tout est payé par les citoyens (consommateurs, salariés, actionnaires).",
+					"Les ménages paient l'impôt sur le revenu, la CSG, la TVA et les cotisations salariales ; les entreprises, l'impôt sur les sociétés, les cotisations patronales et des taxes sur la production. Mais in fine, tout est payé par les citoyens (consommateurs, salariés, actionnaires).",
 			},
 			{
 				question: "Comment fonctionne le financement de la Sécu ?",
@@ -1265,7 +1283,7 @@ export const publicFinances2026: PublicFinances2026 = {
 				question:
 					"Pourquoi la France dépense-t-elle plus que ses voisins européens ?",
 				answer:
-					"La France consacre {spendingGdpPct} de son PIB aux dépenses publiques, contre ~50 % en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges.",
+					"La France consacre {spendingGdpPct} de son PIB aux dépenses publiques, contre {euSpendingGdpPct} en moyenne dans l'UE en {euSpendingYear} (Eurostat). L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges.",
 			},
 			{
 				question: "Que s'est-il passé avec le budget 2026 ?",

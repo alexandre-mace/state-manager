@@ -61,6 +61,8 @@ export function explainerValues(
 		deficitPct: formatPct(current.deficitGdpPct),
 		totalSpending: formatMd(data.overview.totalSpendingBillionEur),
 		spendingGdpPct: formatPct(data.overview.spendingGdpPct),
+		euSpendingGdpPct: formatPct(data.overview.euAverageSpending.gdpPct),
+		euSpendingYear: String(data.overview.euAverageSpending.year),
 		totalLevies: formatMd(totalLevies),
 		totalRevenue: formatMd(current.revenueBillionEur),
 		otherRevenue: formatMd(current.revenueBillionEur - totalLevies),
