@@ -1218,12 +1218,12 @@ export const publicFinances2026: PublicFinances2026 = {
 			{
 				service: "Retraite",
 				value: "~1 550 €/mois net moyen",
-				detail: "17,2M de retraités",
+				detail: "17,2 millions de retraités",
 				icon: "Clock",
 			},
 			{
 				service: "Routes",
-				value: "1,1M km",
+				value: "1,1 million de km",
 				detail: "Réseau routier public entretenu",
 				icon: "Map",
 			},
@@ -1308,26 +1308,26 @@ export const publicFinances2026: PublicFinances2026 = {
 			{
 				term: "PLF",
 				definition:
-					"Projet de Loi de Finances : budget annuel de l'État, voté au Parlement",
+					"Projet de loi de finances : budget annuel de l'État, voté au Parlement",
 			},
 			{
 				term: "PLFSS",
-				definition: "Projet de Loi de Financement de la Sécurité sociale",
+				definition: "Projet de loi de financement de la Sécurité sociale",
 			},
 			{
 				term: "DGF",
 				definition:
-					"Dotation Globale de Fonctionnement : principale dotation de l'État aux collectivités",
+					"Dotation globale de fonctionnement : principale dotation de l'État aux collectivités",
 			},
 			{
 				term: "ONDAM",
 				definition:
-					"Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé ({ondam} en {year})",
+					"Objectif national de dépenses d'assurance maladie : plafond des dépenses de santé ({ondam} en {year})",
 			},
 			{
 				term: "CSG",
 				definition:
-					"Contribution Sociale Généralisée : impôt sur tous les revenus finançant la Sécu",
+					"Contribution sociale généralisée : impôt sur tous les revenus finançant la Sécu",
 			},
 			{
 				term: "CRDS",
@@ -1337,7 +1337,7 @@ export const publicFinances2026: PublicFinances2026 = {
 			{
 				term: "APU",
 				definition:
-					"Administrations Publiques : État + Sécu + Collectivités locales",
+					"Administrations publiques : État + Sécu + collectivités locales",
 			},
 			{
 				term: "49.3",

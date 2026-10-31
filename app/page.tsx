@@ -898,7 +898,7 @@ export default function Home() {
 							Évolution de la dette publique
 						</h2>
 						<p className="text-sm text-muted-foreground">
-							La dette publique atteint {formatMd(debt.amountBillionEur)} soit{" "}
+							La dette publique atteint {formatMd(debt.amountBillionEur)}, soit{" "}
 							{formatPct(debt.gdpPct)} du PIB. La charge des intérêts représente{" "}
 							{formatMd(debt.interestBillionEur)}/an. Le graphique retrace la
 							dette au sens de Maastricht depuis {debtHistory[0]?.year} (en % du
