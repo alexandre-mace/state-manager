@@ -48,6 +48,10 @@ import {
 import { findOrThrow, requireHttpsUrl } from "@/lib/guards";
 import { rateBelowPass } from "@/lib/simulator";
 
+// Les taux de cotisation officiels ont jusqu'à deux décimales (8,55 %) : les arrondir au
+// dixième les fausserait
+const RATE_DECIMALS = 2;
+
 const TABLE_OF_CONTENTS = [
 	{ id: "breakdown", label: "Pour 1\u202f000\u00a0€" },
 	{ id: "who-spends", label: "Qui dépense" },
@@ -662,6 +666,7 @@ export default function Home() {
 															employeeCotisations,
 															financeData.simulator,
 														),
+														RATE_DECIMALS,
 													)}
 													)
 												</h4>
@@ -672,7 +677,7 @@ export default function Home() {
 																{c.label}
 															</span>
 															<span className="font-mono">
-																{formatPct(c.ratePct)}
+																{formatPct(c.ratePct, RATE_DECIMALS)}
 															</span>
 														</div>
 													))}
@@ -686,6 +691,7 @@ export default function Home() {
 															employerCotisations,
 															financeData.simulator,
 														),
+														RATE_DECIMALS,
 													)}
 													)
 												</h4>
@@ -696,7 +702,7 @@ export default function Home() {
 																{c.label}
 															</span>
 															<span className="font-mono">
-																{formatPct(c.ratePct)}
+																{formatPct(c.ratePct, RATE_DECIMALS)}
 															</span>
 														</div>
 													))}
@@ -714,6 +720,7 @@ export default function Home() {
 														employerCotisations,
 														financeData.simulator,
 													),
+												RATE_DECIMALS,
 											)}{" "}
 											du salaire brut. {socialSecurity.cotisationRates.note}
 										</p>
