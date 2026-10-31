@@ -127,12 +127,12 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					</div>
 					<div className="space-y-2">
 						<FlowBox
-							label="Sécurité Sociale"
+							label="Sécurité sociale"
 							amount={data.secu.total}
 							color="var(--chart-2)"
 						/>
 						<div className="text-xs text-muted-foreground text-center">
-							<p>Reçoit : Cotisations, CSG</p>
+							<p>Reçoit : cotisations, CSG</p>
 						</div>
 					</div>
 					<div className="space-y-2">
@@ -142,7 +142,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 							color="var(--chart-3)"
 						/>
 						<div className="text-xs text-muted-foreground text-center">
-							<p>Reçoit : Taxes locales, dotations</p>
+							<p>Reçoit : taxes locales, dotations</p>
 						</div>
 					</div>
 				</div>
@@ -177,7 +177,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 							<span className="font-mono">
 								{formatMd(data.transferts.taxesAffecteesSecu, 0)}
 							</span>{" "}
-							(tabac, alcool...)
+							(part de TVA, tabac, alcool...)
 						</div>
 					</div>
 				</div>

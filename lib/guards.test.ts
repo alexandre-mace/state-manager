@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { findOrThrow, lookupOrThrow } from "./guards";
 
 describe("findOrThrow", () => {
-	const list = [{ categorie: "État" }, { categorie: "Sécurité Sociale" }];
+	const list = [{ categorie: "État" }, { categorie: "Sécurité sociale" }];
 
 	it("rend l'entrée trouvée", () => {
 		expect(findOrThrow(list, (r) => r.categorie === "État", "État")).toBe(

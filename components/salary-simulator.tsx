@@ -62,7 +62,7 @@ export function SalarySimulator({
 		<Card>
 			<CardHeader>
 				<CardTitle>
-					<h2>Simulateur : Où va mon argent ?</h2>
+					<h2>Simulateur : où va mon argent ?</h2>
 				</CardTitle>
 				<CardDescription>
 					Décomposition d&apos;un salaire brut annuel (célibataire sans enfant,{" "}
@@ -229,8 +229,9 @@ export function SalarySimulator({
 								</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
-								Finance votre future pension. Pension moyenne actuelle :{" "}
-								{simulateur.reperes.pension_moyenne}
+								Paie les pensions des retraités d&apos;aujourd&apos;hui (régime
+								par répartition) et vous ouvre des droits pour la vôtre. Pension
+								moyenne actuelle : {simulateur.reperes.pension_moyenne}
 							</p>
 						</div>
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
@@ -268,7 +269,7 @@ export function SalarySimulator({
 								<span className="font-mono">{formatEur(poste("famille"))}</span>
 							</div>
 							<p className="text-xs text-muted-foreground">
-								Allocations familiales, APL, aides à la garde d&apos;enfants
+								Allocations familiales et aides à la garde d&apos;enfants
 							</p>
 						</div>
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">

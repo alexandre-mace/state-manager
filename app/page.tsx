@@ -193,8 +193,8 @@ export default function Home() {
 		secu: {
 			total: findOrThrow(
 				vueGlobale.repartition,
-				(r) => r.categorie === "Sécurité Sociale",
-				"Sécurité Sociale",
+				(r) => r.categorie === "Sécurité sociale",
+				"Sécurité sociale",
 			).depenses_milliards_eur,
 			branchesTotal: secuBranchesTotal,
 			depenses: [...securiteSociale.branches]
@@ -261,7 +261,7 @@ export default function Home() {
 						<p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
 							{vueGlobale.description}. Cette page présente une vue
 							d&apos;ensemble des recettes, dépenses et de la dette de
-							l&apos;État, de la Sécurité Sociale et des collectivités locales.
+							l&apos;État, de la Sécurité sociale et des collectivités locales.
 						</p>
 						{context.note && (
 							<p className="text-xs text-muted-foreground">
@@ -441,7 +441,7 @@ export default function Home() {
 						<Tabs defaultValue="etat" className="w-full">
 							<TabsList>
 								<TabsTrigger value="etat">Budget de l&apos;État</TabsTrigger>
-								<TabsTrigger value="secu">Sécurité Sociale</TabsTrigger>
+								<TabsTrigger value="secu">Sécurité sociale</TabsTrigger>
 								<TabsTrigger value="collectivites">Collectivités</TabsTrigger>
 							</TabsList>
 
@@ -549,7 +549,7 @@ export default function Home() {
 								/>
 							</TabsContent>
 
-							{/* Sécurité Sociale */}
+							{/* Sécurité sociale */}
 							<TabsContent value="secu" keepMounted className="space-y-6 pt-4">
 								<Card className="bg-muted/30">
 									<CardContent>
@@ -592,7 +592,7 @@ export default function Home() {
 											</h3>
 											<p className="text-sm text-muted-foreground">
 												Les {formatCount(secuBranches.length)} branches de la
-												Sécurité Sociale
+												Sécurité sociale
 											</p>
 										</div>
 										<SecuBranchesChart data={secuBranches} />
