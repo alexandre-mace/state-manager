@@ -10,8 +10,10 @@ Tableau de bord pédagogique statique sur les finances publiques françaises. `a
 entièrement piloté par la donnée, **aucun chiffre en dur**, la note d'actualité venant de
 `context.note`.
 
-Les données sont du TypeScript typé dans `lib/data/`, un fichier par source, chacun ouvert par
-un en-tête qui dit d'où viennent les chiffres et à quelle date (next-guidelines §5). Elles sont
+Les données sont du TypeScript typé dans `lib/data/`, un fichier par jeu de données, chacun ouvert
+par un en-tête qui dit d'où viennent les chiffres et à quelle date (next-guidelines §5). Le
+fichier principal regroupe plusieurs sources (loi de finances, LFSS, INSEE, Cour des comptes,
+Eurostat) parce qu'il porte un seul exercice : son en-tête dit ce que fournit chacune. Elles sont
 saisies à la main : pas de script `pnpm data`, mettre à jour l'en-tête avec les chiffres.
 
 - `lib/data/public-finances-2026.ts` : le fichier principal, l'année en cours.
@@ -23,8 +25,10 @@ saisies à la main : pas de script `pnpm data`, mettre à jour l'en-tête avec l
 ligne de l'année des séries longues (objectif de la loi de finances), jamais comme un produit
 taux × PIB. Le PIB implicite de la dette (dette ÷ dernier ratio INSEE) n'est pas le PIB annuel
 de la loi de finances, et les mélanger décale les montants affichés des chiffres officiels. Les
-textes de la FAQ et du glossaire citent leurs chiffres par des marques `{nom}`, remplies par
-`lib/explainer.ts` : un total ne s'y recopie pas à la main.
+textes des données (FAQ, glossaire, notes, descriptions) citent leurs chiffres par des marques
+`{nom}`, remplies par `lib/explainer.ts` : un total ne s'y recopie pas à la main. La page passe
+chaque texte qui en porte par `fill`. `lib/data/typography.test.ts` refuse dans tout le texte des
+données un point décimal et une espace ordinaire avant %, € ou Md€.
 
 **Pièges de périmètre**, tous rencontrés :
 - Les missions budgétaires en crédits de paiement sont « y compris pensions ». L'écart est massif sur
@@ -54,7 +58,7 @@ des xlsx INSEE base 2020, parsables en python avec openpyxl.
 
 ## Coding Style & Naming Conventions
 
-TypeScript is strict-mode by default; minimize `any` and keep components typed via explicit props. Components and files that render JSX should use PascalCase (e.g., `StatePanel.tsx`), while reusable hooks can live in a future `hooks/` folder and start with `use`. Utility functions belong in `lib/` and use camelCase. Tailwind classes should favor the semantic tokens declared in `globals.css`; keep overrides localized with `@layer`. Run `pnpm check` before pushing to catch import ordering and accessibility rules.
+TypeScript is strict-mode by default; minimize `any` and keep components typed via explicit props. Components use PascalCase names and their files kebab-case (e.g., `SalarySimulator` in `salary-simulator.tsx`), while reusable hooks can live in a future `hooks/` folder and start with `use`. Utility functions belong in `lib/` and use camelCase. Tailwind classes should favor the semantic tokens declared in `globals.css`; keep overrides localized with `@layer`. Run `pnpm check` before pushing to catch import ordering and accessibility rules.
 
 ## Testing Guidelines
 
@@ -62,7 +66,7 @@ A static site with no backend owes no test suite (`docs/next-guidelines.md`). Th
 
 ## Commit & Pull Request Guidelines
 
-Follow the existing Git history by writing short, imperative commit subjects (e.g., `Add state panel layout`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm check`, `pnpm test`, manual checks), and links to related issues; include before/after screenshots for UI changes.
+Follow the existing Git history: Conventional Commits with a French subject, written without accents (e.g., `fix(chiffres): TICPE nette et moyenne UE sourcees`). Each commit should focus on a single logical change, with follow-up fixes squashed before merging. Pull requests need a summary of intent, testing notes (`pnpm check`, `pnpm test`, manual checks), and links to related issues; include before/after screenshots for UI changes.
 
 Conventions de la stack : `docs/next-guidelines.md`, lien vers [dev-standards](https://github.com/alexandre-mace/dev-standards).
 
