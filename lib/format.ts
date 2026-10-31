@@ -11,6 +11,9 @@ export const formatNumber = (value: number, decimals = 1, minDecimals = 0) =>
 export const formatMd = (value: number, decimals = 1, minDecimals = 0) =>
 	`${formatNumber(value, decimals, minDecimals)}${NBSP}Md€`;
 
+/** Décimales des taux de cotisation officiels, publiés au centième */
+export const RATE_DECIMALS = 2;
+
 export const formatPct = (value: number, decimals = 1) =>
 	`${formatNumber(value, decimals)}${NBSP}%`;
 

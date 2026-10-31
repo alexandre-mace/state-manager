@@ -44,13 +44,13 @@ import {
 	formatMd,
 	formatNumber,
 	formatPct,
+	RATE_DECIMALS,
 } from "@/lib/format";
 import { findOrThrow, requireHttpsUrl } from "@/lib/guards";
 import { rateBelowPass } from "@/lib/simulator";
 
 // Les taux de cotisation officiels ont jusqu'à deux décimales (8,55 %) : les arrondir au
 // dixième les fausserait
-const RATE_DECIMALS = 2;
 
 const TABLE_OF_CONTENTS = [
 	{ id: "breakdown", label: "Pour 1\u202f000\u00a0€" },

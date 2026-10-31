@@ -1,6 +1,12 @@
 import type { PublicFinances2026 } from "./data/public-finances-2026";
 import type { PublicFinanceYear } from "./data/public-finances-history";
-import { formatEur, formatMd, formatNumber, formatPct } from "./format";
+import {
+	formatEur,
+	formatMd,
+	formatNumber,
+	formatPct,
+	RATE_DECIMALS,
+} from "./format";
 import { findOrThrow } from "./guards";
 import { rateBelowPass, SALARY_RANGE, simulate } from "./simulator";
 
@@ -74,9 +80,9 @@ export function explainerValues(
 		employeeRate: formatNumber(rateBelowPass(employee, p), 0),
 		csgRate: formatPct(
 			employeeRatePct("csgDeductible") + employeeRatePct("csgNonDeductible"),
-			2,
+			RATE_DECIMALS,
 		),
-		crdsRate: formatPct(employeeRatePct("crds"), 2),
+		crdsRate: formatPct(employeeRatePct("crds"), RATE_DECIMALS),
 		csgCrdsRate: formatNumber(
 			rateBelowPass(
 				employee.filter((c) => c.destination === "csg"),

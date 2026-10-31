@@ -24,9 +24,11 @@ saisies à la main : pas de script `pnpm data`, mettre à jour l'en-tête avec l
 **Règle de cohérence** : le déficit des tuiles d'en-tête, du circuit et de la FAQ se lit dans la
 ligne de l'année des séries longues (objectif de la loi de finances), jamais comme un produit
 taux × PIB. Le PIB implicite de la dette (dette ÷ dernier ratio INSEE) n'est pas le PIB annuel
-de la loi de finances, et les mélanger décale les montants affichés des chiffres officiels. Les
-textes des données (FAQ, glossaire, notes, descriptions) citent leurs chiffres par des marques
-`{nom}`, remplies par `lib/explainer.ts` : un total ne s'y recopie pas à la main. La page passe
+de la loi de finances, et les mélanger décale les montants affichés des chiffres officiels. Un
+total ou un taux cité dans un texte des données (FAQ, glossaire, notes, descriptions) passe par une
+marque `{nom}`, remplie par `lib/explainer.ts`. Quelques textes recopient encore un paramètre
+(98,25 % d'assiette de la CSG, 40,21 points et 3 SMIC de l'allègement, rang européen de la dette,
+pension moyenne, plafonds en PASS) : les convertir quand on y touche. La page passe
 chaque texte qui en porte par `fill`. `lib/data/typography.test.ts` refuse dans tout le texte des
 données un point décimal et une espace ordinaire avant %, € ou Md€.
 

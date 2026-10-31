@@ -149,11 +149,11 @@ export function EvolutionChart({
 				/>
 				<Legend
 					wrapperStyle={{ fontSize: 12 }}
-					formatter={(value) => {
-						if (value === "revenueGdpPct") return "Recettes (% PIB)";
-						if (value === "spendingGdpPct") return "Dépenses (% PIB)";
-						return value;
-					}}
+					formatter={(value) =>
+						value in chartConfig
+							? `${chartConfig[value as keyof typeof chartConfig].label} (% PIB)`
+							: value
+					}
 				/>
 				{lastSurplus != null && (
 					<ReferenceLine
