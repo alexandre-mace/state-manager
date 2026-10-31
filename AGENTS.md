@@ -49,7 +49,7 @@ des xlsx INSEE base 2020, parsables en python avec openpyxl.
 - `pnpm dev`: launches the dev server with Turbopack at http://localhost:3000.
 - `pnpm build`: produces an optimized production build.
 - `pnpm start`: runs the compiled app locally.
-- `pnpm check`: Biome lint and format check; `pnpm format` rewrites, `components/ui/` (the kit) is left out.
+- `pnpm check`: Biome lint and format check; `pnpm format` rewrites. The kit is left out: `components/ui/`, `components/link-card.tsx` and `components/made-with-love.tsx` are fixed in the kit, then propagated with `/propagate-kit`.
 - `pnpm test`: Vitest, on the pure calculations in `lib/`.
 
 ## Coding Style & Naming Conventions

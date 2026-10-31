@@ -47,7 +47,11 @@
 	},
 	"overrides": [
 		{
-			"includes": ["components/ui/**"],
+			"includes": [
+				"components/ui/**",
+				"components/link-card.tsx",
+				"components/made-with-love.tsx"
+			],
 			"formatter": {
 				"enabled": false
 			},
