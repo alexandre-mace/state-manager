@@ -8,3 +8,15 @@ export function findOrThrow<T>(
 	if (entry === undefined) throw new Error(`Donnée absente du JSON : ${label}`);
 	return entry;
 }
+
+// Une clé renommée dans le JSON (une icône, par exemple) casse le build au lieu de disparaître
+export function lookupOrThrow<T>(
+	record: Record<string, T>,
+	key: string,
+	label: string,
+): T {
+	const value = record[key];
+	if (value === undefined)
+		throw new Error(`Clé inconnue pour ${label} : ${key}`);
+	return value;
+}

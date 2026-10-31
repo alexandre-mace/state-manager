@@ -28,6 +28,8 @@ type EvolutionDatum = {
 	depenses_milliards_eur?: number;
 	deficit_milliards_eur?: number;
 	note?: string;
+	// Événement à marquer d'une ligne verticale sur le graphique
+	marker?: string;
 };
 
 interface EvolutionChartProps {
@@ -164,16 +166,21 @@ export function EvolutionChart({
 						}}
 					/>
 				)}
-				<ReferenceLine
-					x={2020}
-					stroke="var(--muted-foreground)"
-					strokeDasharray="3 3"
-					label={{
-						value: "COVID",
-						fontSize: 10,
-						fill: "var(--muted-foreground)",
-					}}
-				/>
+				{data
+					.filter((d) => d.marker)
+					.map((d) => (
+						<ReferenceLine
+							key={d.annee}
+							x={d.annee}
+							stroke="var(--muted-foreground)"
+							strokeDasharray="3 3"
+							label={{
+								value: d.marker,
+								fontSize: 10,
+								fill: "var(--muted-foreground)",
+							}}
+						/>
+					))}
 				<Area
 					type="monotone"
 					dataKey="depenses_pib_pct"
@@ -193,15 +200,22 @@ export function EvolutionChart({
 	);
 }
 
-export function DeficitChart({ data }: EvolutionChartProps) {
+export function DeficitChart({
+	data,
+	limitPct,
+}: EvolutionChartProps & { limitPct: number }) {
 	const chartConfigDeficit = {
 		deficit_pib_pct: {
 			label: "Solde public (% PIB)",
 			color: "var(--chart-4)",
 		},
 	} satisfies ChartConfig;
-	// 0 et -3 inclus pour que les deux lignes de référence restent dans le cadre
-	const ticks = regularTicks([...data.map((d) => d.deficit_pib_pct), 0, -3], 2);
+	// 0 et la limite inclus pour que les deux lignes de référence restent dans le cadre
+	const ticks = regularTicks(
+		[...data.map((d) => d.deficit_pib_pct), 0, -limitPct],
+		2,
+	);
+	const limitLabel = formatPct(limitPct);
 
 	return (
 		<ChartContainer
@@ -211,9 +225,7 @@ export function DeficitChart({ data }: EvolutionChartProps) {
 			<ComposedChart
 				data={data}
 				margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
-				title={
-					"Solde public en pourcentage du PIB, par année, avec la limite européenne de 3\u00a0%"
-				}
+				title={`Solde public en pourcentage du PIB, par année, avec la limite européenne de ${limitLabel}`}
 			>
 				<CartesianGrid strokeDasharray="3 3" vertical={false} />
 				<XAxis
@@ -246,11 +258,11 @@ export function DeficitChart({ data }: EvolutionChartProps) {
 				/>
 				<ReferenceLine y={0} stroke="var(--muted-foreground)" strokeWidth={1} />
 				<ReferenceLine
-					y={-3}
+					y={-limitPct}
 					stroke="var(--destructive)"
 					strokeDasharray="5 5"
 					label={{
-						value: "Limite UE (3\u00a0%)",
+						value: `Limite UE (${limitLabel})`,
 						fontSize: 10,
 						fill: "var(--destructive)",
 					}}

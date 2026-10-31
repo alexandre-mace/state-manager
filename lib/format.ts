@@ -15,3 +15,20 @@ export const formatPct = (value: number, decimales = 1) =>
 	`${formatNombre(value, decimales)}${NBSP}%`;
 
 export const formatEur = (value: number) => `${formatNombre(value, 0)}${NBSP}€`;
+
+// Un compte sous dix s'écrit en lettres dans la prose : « les quatre catégories »
+const NUMBER_WORDS = [
+	"zéro",
+	"un",
+	"deux",
+	"trois",
+	"quatre",
+	"cinq",
+	"six",
+	"sept",
+	"huit",
+	"neuf",
+	"dix",
+];
+export const formatCount = (value: number) =>
+	NUMBER_WORDS[value] ?? formatNombre(value, 0);

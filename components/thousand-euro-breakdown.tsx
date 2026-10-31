@@ -21,6 +21,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { formatEur, formatMd } from "@/lib/format";
+import { lookupOrThrow } from "@/lib/guards";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 	Clock,
@@ -69,13 +70,13 @@ export function ThousandEuroBreakdown({
 			</CardHeader>
 			<CardContent className="space-y-3">
 				{sorted.map((poste) => {
-					const Icon = ICONS[poste.icon];
+					const Icon = lookupOrThrow(ICONS, poste.icon, poste.label);
 					const pct = (poste.montant_eur / total) * 100;
 					return (
 						<div key={poste.label} className="space-y-1">
 							<div className="flex items-center justify-between text-sm">
 								<div className="flex items-center gap-2">
-									{Icon && <Icon className="h-4 w-4 text-muted-foreground" />}
+									<Icon className="h-4 w-4 text-muted-foreground" />
 									<span>{poste.label}</span>
 								</div>
 								<span className="font-mono font-medium">

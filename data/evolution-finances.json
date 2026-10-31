@@ -564,7 +564,8 @@
       "depenses_pib_pct": 61.7,
       "recettes_pib_pct": 52.8,
       "deficit_pib_pct": -8.9,
-      "note": "Crise COVID-19"
+      "note": "Crise COVID-19",
+      "marker": "COVID"
     },
     {
       "annee": 2021,

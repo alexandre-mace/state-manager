@@ -21,33 +21,18 @@ interface PublicSpendingChartProps {
 	data: SpendingDatum[];
 }
 
-const chartConfig = {
-	secu: {
-		label: "Sécurité Sociale",
-		color: "var(--chart-1)",
-	},
-	etat: {
-		label: "État",
-		color: "var(--chart-2)",
-	},
-	collectivites: {
-		label: "Collectivités locales",
-		color: "var(--chart-3)",
-	},
-	odac: {
-		label: "Autres organismes publics",
-		color: "var(--chart-4)",
-	},
-} satisfies ChartConfig;
-
-const categoryToKey: Record<string, keyof typeof chartConfig> = {
-	"Sécurité Sociale": "secu",
-	État: "etat",
-	"Collectivités locales": "collectivites",
-	"Autres organismes publics": "odac",
-};
+// Une couleur par catégorie, dans l'ordre du JSON : aucun libellé recopié ici, une catégorie
+// renommée garde sa couleur
+const sliceColor = (index: number) => `var(--chart-${index + 1})`;
 
 export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
+	const chartConfig: ChartConfig = Object.fromEntries(
+		// Clé sans espace ni accent : ChartContainer en fait une variable CSS
+		data.map((d, index) => [
+			`slice${index}`,
+			{ label: d.categorie, color: sliceColor(index) },
+		]),
+	);
 	const total = data.reduce(
 		(sum, item) => sum + item.depenses_milliards_eur,
 		0,
@@ -84,15 +69,9 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 					strokeWidth={2}
 					stroke="var(--background)"
 				>
-					{data.map((entry, index) => {
-						const key = categoryToKey[entry.categorie];
-						return (
-							<Cell
-								key={entry.categorie}
-								fill={key ? `var(--color-${key})` : `var(--chart-${index + 1})`}
-							/>
-						);
-					})}
+					{data.map((entry, index) => (
+						<Cell key={entry.categorie} fill={sliceColor(index)} />
+					))}
 					<Label
 						content={({ viewBox }) => {
 							if (viewBox && "cx" in viewBox && "cy" in viewBox) {

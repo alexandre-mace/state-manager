@@ -150,4 +150,10 @@ describe("lecture du JSON", () => {
 			lireCotisations([{ cle: "x", assiette: "plafonee", poste: "retraite" }]),
 		).toThrow("Assiette inconnue");
 	});
+
+	it("refuse un poste inconnu", () => {
+		expect(() =>
+			lireCotisations([{ cle: "x", assiette: "totale", poste: "retraites" }]),
+		).toThrow("Poste inconnu pour x : retraites");
+	});
 });

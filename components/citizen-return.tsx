@@ -15,6 +15,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { lookupOrThrow } from "@/lib/guards";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 	Clock,
@@ -52,14 +53,14 @@ export function CitizenReturn({ services }: CitizenReturnProps) {
 			<CardContent>
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 					{services.map((s) => {
-						const Icon = ICONS[s.icon];
+						const Icon = lookupOrThrow(ICONS, s.icon, s.service);
 						return (
 							<div
 								key={s.service}
 								className="rounded-lg border border-border p-4 space-y-2"
 							>
 								<div className="flex items-center gap-2">
-									{Icon && <Icon className="h-5 w-5 text-primary" />}
+									<Icon className="h-5 w-5 text-primary" />
 									<span className="font-medium text-sm">{s.service}</span>
 								</div>
 								<p className="font-mono text-lg font-semibold">{s.valeur}</p>

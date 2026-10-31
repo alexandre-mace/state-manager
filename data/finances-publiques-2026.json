@@ -6,6 +6,7 @@
     "dette_pib_pct": 119.0,
     "deficit_periode": "2026, objectif de la loi de finances",
     "deficit_objectif": "objectif sous 3 % en 2029",
+    "euDeficitLimitPct": 3,
     "population": 69100000,
     "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
@@ -40,7 +41,7 @@
     }
   },
   "vueGlobale": {
-    "description": "Les finances publiques françaises sont gérées par quatre catégories d'administrations publiques (APU)",
+    "description": "Les finances publiques françaises sont gérées par les administrations publiques (APU)",
     "depenses_totales_milliards_eur": 1722,
     "depenses_pib_pct": 57.2,
     "periode": "2026, prévision de la loi de finances",
@@ -529,13 +530,39 @@
       }
     ],
     "comparaisonEuropeenne": {
-      "danemark_pct": 45.8,
-      "france_pct": 45.3,
-      "allemagne_pct": 40.9,
-      "italie_pct": 42.5,
-      "espagne_pct": 37,
-      "moyenne_ue_pct": 40.4,
-      "note": "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark."
+      "note": "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark.",
+      "countries": [
+        {
+          "code": "DK",
+          "label": "Danemark",
+          "pct": 45.8
+        },
+        {
+          "code": "FR",
+          "label": "France",
+          "pct": 45.3
+        },
+        {
+          "code": "DE",
+          "label": "Allemagne",
+          "pct": 40.9
+        },
+        {
+          "code": "IT",
+          "label": "Italie",
+          "pct": 42.5
+        },
+        {
+          "code": "ES",
+          "label": "Espagne",
+          "pct": 37
+        },
+        {
+          "code": "EU",
+          "label": "Moyenne UE",
+          "pct": 40.4
+        }
+      ]
     }
   },
   "dette": {
@@ -798,13 +825,39 @@
     ],
     "charge_interets_milliards_eur": 59.3,
     "comparaisonEuropeenne": {
-      "france_pct": 115.6,
-      "allemagne_pct": 63.5,
-      "italie_pct": 137.1,
-      "espagne_pct": 100.7,
-      "grece_pct": 146.1,
-      "moyenne_ue_pct": 81.7,
-      "note": "France = 3ème pays le plus endetté de l'UE (données Eurostat fin 2025)"
+      "note": "France = 3ème pays le plus endetté de l'UE (données Eurostat fin 2025)",
+      "countries": [
+        {
+          "code": "FR",
+          "label": "France",
+          "pct": 115.6
+        },
+        {
+          "code": "DE",
+          "label": "Allemagne",
+          "pct": 63.5
+        },
+        {
+          "code": "IT",
+          "label": "Italie",
+          "pct": 137.1
+        },
+        {
+          "code": "ES",
+          "label": "Espagne",
+          "pct": 100.7
+        },
+        {
+          "code": "GR",
+          "label": "Grèce",
+          "pct": 146.1
+        },
+        {
+          "code": "EU",
+          "label": "Moyenne UE",
+          "pct": 81.7
+        }
+      ]
     }
   },
   "destinationDepenses": {

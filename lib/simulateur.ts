@@ -84,7 +84,7 @@ export function assiette(
 		case "plafond_chomage":
 			return Math.min(brut, p.plafonds_pass.chomage * pass);
 		case "csg": {
-			// Abattement de 1,75 % pour frais professionnels, limité à 4 PASS
+			// Abattement pour frais professionnels (base_pct du brut), limité à plafond_abattement_pass PASS
 			const plafond = p.csg.plafond_abattement_pass * pass;
 			return (
 				Math.min(brut, plafond) * (p.csg.base_pct / 100) +
@@ -100,7 +100,7 @@ function montant(brut: number, c: Cotisation, p: ParametresSimulateur): number {
 }
 
 // Réduction générale dégressive unique (art. D. 241-7 CSS) : coefficient arrondi à
-// 4 décimales, nul à partir de 3 SMIC, plafonné à Tmin + Tdelta
+// 4 décimales, nul à partir de seuil_smic SMIC, plafonné à Tmin + Tdelta
 export function coefficientRgdu(brut: number, p: ParametresSimulateur): number {
 	const { smic_annuel_eur: smic, tmin, tdelta, puissance, seuil_smic } = p.rgdu;
 	if (brut >= seuil_smic * smic) return 0;
@@ -186,7 +186,7 @@ export function simuler(
 }
 
 // Taux cumulé d'une liste de cotisations pour un salaire sous le PASS, rapporté au brut :
-// la CSG et la CRDS ne portent que sur 98,25 % du brut (tableau de la page)
+// la CSG et la CRDS ne portent que sur base_pct du brut (tableau de la page)
 export function tauxSousLePass(
 	cotisations: Cotisation[],
 	p: ParametresSimulateur,

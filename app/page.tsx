@@ -8,6 +8,7 @@ import { PublicSpendingChart } from "@/components/charts/public-spending-chart";
 import { SecuBranchesChart } from "@/components/charts/secu-branches-chart";
 import { TopMissionsChart } from "@/components/charts/top-missions-chart";
 import { CitizenReturn } from "@/components/citizen-return";
+import { EuropeanComparison } from "@/components/european-comparison";
 import { FlowDiagram, type FlowDiagramData } from "@/components/flow-diagram";
 import { SalarySimulator } from "@/components/salary-simulator";
 import { ThousandEuroBreakdown } from "@/components/thousand-euro-breakdown";
@@ -27,19 +28,20 @@ import {
 	fillPlaceholders,
 	yearBalance,
 } from "@/lib/explainer";
-import { formatEur, formatMd, formatNombre, formatPct } from "@/lib/format";
+import {
+	lastSurplusYear,
+	perInhabitantEur,
+	taxesAndDuties,
+} from "@/lib/finances";
+import {
+	formatCount,
+	formatEur,
+	formatMd,
+	formatNombre,
+	formatPct,
+} from "@/lib/format";
 import { findOrThrow } from "@/lib/guards";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
-
-const COUNTRY_LABELS: Record<string, string> = {
-	danemark: "Danemark",
-	france: "France",
-	allemagne: "Allemagne",
-	italie: "Italie",
-	espagne: "Espagne",
-	grece: "Grèce",
-	"moyenne ue": "Moyenne UE",
-};
 
 const SOMMAIRE = [
 	{ id: "repartition", libelle: "Pour 1\u202f000\u00a0€" },
@@ -99,6 +101,11 @@ export default function Home() {
 		securiteSociale.tauxCotisations.patronales,
 	);
 
+	const etat = findOrThrow(
+		vueGlobale.repartition,
+		(r) => r.categorie === "État",
+		"État",
+	);
 	const autresOrganismes = findOrThrow(
 		vueGlobale.repartition,
 		(r) => r.categorie === "Autres organismes publics",
@@ -110,9 +117,8 @@ export default function Home() {
 	const currentBalance = yearBalance(evolutionData.annees, financeData.year);
 	const explainer = explainerValues(financeData, evolutionData.annees);
 
-	const population = context.population;
-	const formatPerHab = (milliards: number) =>
-		`${formatEur((milliards * 1_000_000_000) / population)}/hab`;
+	const formatPerHab = (billionEur: number) =>
+		`${formatEur(perInhabitantEur(billionEur, context.population))}/hab`;
 
 	// Prepare data for charts
 	const spendingData = vueGlobale.repartition;
@@ -134,9 +140,7 @@ export default function Home() {
 
 	// Evolution data
 	const evolutionHistory = evolutionData.annees;
-	const dernierExcedent = evolutionHistory.findLast(
-		(a) => a.deficit_pib_pct > 0,
-	)?.annee;
+	const dernierExcedent = lastSurplusYear(evolutionHistory);
 
 	// Flow diagram data (derived from JSON)
 	const cotisationsMontant = findOrThrow(
@@ -167,19 +171,16 @@ export default function Home() {
 
 	const flowData: FlowDiagramData = {
 		prelevements: {
-			impots:
-				prelevementsObligatoires.total_milliards_eur -
-				cotisationsMontant -
-				csgMontant,
+			impots: taxesAndDuties({
+				totalBillionEur: prelevementsObligatoires.total_milliards_eur,
+				cotisationsBillionEur: cotisationsMontant,
+				csgCrdsBillionEur: csgMontant,
+			}),
 			cotisations: cotisationsMontant,
 			csgCrds: csgMontant,
 		},
 		etat: {
-			total: findOrThrow(
-				vueGlobale.repartition,
-				(r) => r.categorie === "État",
-				"État",
-			).depenses_milliards_eur,
+			total: etat.depenses_milliards_eur,
 			// Hors retraites des agents : ces pensions sont déjà dans la colonne Sécu (Retraites)
 			depenses: budgetEtat.principalesMissions
 				.map((m) => ({
@@ -390,7 +391,8 @@ export default function Home() {
 						<p className="text-sm text-muted-foreground">
 							La section précédente montrait <strong>à quoi</strong> sert
 							l&apos;argent public (retraites, santé, éducation...). Ici, on
-							regarde <strong>qui</strong> le dépense : les quatre catégories
+							regarde <strong>qui</strong> le dépense : les{" "}
+							{formatCount(spendingData.length)} catégories
 							d&apos;administrations publiques (APU). Les chiffres diffèrent car
 							une même fonction (ex : l&apos;éducation) est financée par
 							plusieurs administrations à la fois.
@@ -451,14 +453,7 @@ export default function Home() {
 											{budgetEtat.description}. Les chiffres ci-dessous portent
 											sur le budget de l&apos;État stricto sensu (
 											{formatMd(budgetEtat.depenses_milliards_eur)}), qui est
-											une composante des{" "}
-											{formatMd(
-												findOrThrow(
-													vueGlobale.repartition,
-													(r) => r.categorie === "État",
-													"État",
-												).depenses_milliards_eur,
-											)}{" "}
+											une composante des {formatMd(etat.depenses_milliards_eur)}{" "}
 											de dépenses des administrations centrales.
 										</p>
 									</CardContent>
@@ -596,7 +591,8 @@ export default function Home() {
 												Dépenses par branche
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												Les cinq branches de la Sécurité Sociale
+												Les {formatCount(secuBranches.length)} branches de la
+												Sécurité Sociale
 											</p>
 										</div>
 										<SecuBranchesChart data={secuBranches} />
@@ -874,52 +870,14 @@ export default function Home() {
 					</div>
 					<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
 						<PrelevementsChart data={prelevements} />
-						<Card>
-							<CardHeader>
-								<CardTitle>
-									<h3>Comparaison européenne</h3>
-								</CardTitle>
-								<CardDescription>
-									Taux de prélèvements obligatoires (% du PIB)
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-3">
-								{Object.entries(prelevementsObligatoires.comparaisonEuropeenne)
-									.filter(([key]) => key !== "note")
-									.sort(([, a], [, b]) => (b as number) - (a as number))
-									.map(([key, value]) => {
-										const rawLabel = key.replace("_pct", "").replace(/_/g, " ");
-										const label = COUNTRY_LABELS[rawLabel] ?? rawLabel;
-										const isFrance = key === "france_pct";
-										return (
-											<div
-												key={key}
-												className="flex justify-between items-center"
-											>
-												<span
-													className={`${isFrance ? "font-semibold" : "text-muted-foreground"}`}
-												>
-													{label}
-												</span>
-												<div className="flex items-center gap-2">
-													<div
-														className={`h-2 rounded ${isFrance ? "bg-primary" : "bg-muted-foreground/30"}`}
-														style={{ width: `${(value as number) * 2}px` }}
-													/>
-													<span
-														className={`font-mono text-sm ${isFrance ? "font-semibold" : ""}`}
-													>
-														{formatPct(value as number)}
-													</span>
-												</div>
-											</div>
-										);
-									})}
-								<p className="text-xs text-muted-foreground pt-2">
-									{prelevementsObligatoires.comparaisonEuropeenne.note}
-								</p>
-							</CardContent>
-						</Card>
+						<EuropeanComparison
+							description="Taux de prélèvements obligatoires (% du PIB)"
+							countries={
+								prelevementsObligatoires.comparaisonEuropeenne.countries
+							}
+							note={prelevementsObligatoires.comparaisonEuropeenne.note}
+							highlightClassName="bg-primary"
+						/>
 					</div>
 				</section>
 
@@ -945,50 +903,12 @@ export default function Home() {
 					</div>
 					<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
 						<DebtEvolutionChart data={debtEvolution} />
-						<Card>
-							<CardHeader>
-								<CardTitle>
-									<h3>Comparaison européenne</h3>
-								</CardTitle>
-								<CardDescription>Dette publique (% du PIB)</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-3">
-								{Object.entries(dette.comparaisonEuropeenne)
-									.filter(([key]) => key !== "note")
-									.sort(([, a], [, b]) => (b as number) - (a as number))
-									.map(([key, value]) => {
-										const rawLabel = key.replace("_pct", "").replace(/_/g, " ");
-										const label = COUNTRY_LABELS[rawLabel] ?? rawLabel;
-										const isFrance = key === "france_pct";
-										return (
-											<div
-												key={key}
-												className="flex justify-between items-center"
-											>
-												<span
-													className={`${isFrance ? "font-semibold" : "text-muted-foreground"}`}
-												>
-													{label}
-												</span>
-												<div className="flex items-center gap-2">
-													<div
-														className={`h-2 rounded ${isFrance ? "bg-destructive" : "bg-muted-foreground/30"}`}
-														style={{ width: `${(value as number) / 2}px` }}
-													/>
-													<span
-														className={`font-mono text-sm ${isFrance ? "font-semibold" : ""}`}
-													>
-														{formatPct(value as number)}
-													</span>
-												</div>
-											</div>
-										);
-									})}
-								<p className="text-xs text-muted-foreground pt-2">
-									{dette.comparaisonEuropeenne.note}
-								</p>
-							</CardContent>
-						</Card>
+						<EuropeanComparison
+							description="Dette publique (% du PIB)"
+							countries={dette.comparaisonEuropeenne.countries}
+							note={dette.comparaisonEuropeenne.note}
+							highlightClassName="bg-destructive"
+						/>
 					</div>
 					<SourceNote sources={[sources.dette_serie_longue, sources.dette]} />
 				</section>
@@ -1028,12 +948,16 @@ export default function Home() {
 									<h3>Solde public (% du PIB)</h3>
 								</CardTitle>
 								<CardDescription>
-									La limite européenne est de 3&nbsp;% de déficit ; dernier
+									La limite européenne est de{" "}
+									{formatPct(context.euDeficitLimitPct)} de déficit ; dernier
 									excédent : {dernierExcedent}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<DeficitChart data={evolutionHistory} />
+								<DeficitChart
+									data={evolutionHistory}
+									limitPct={context.euDeficitLimitPct}
+								/>
 							</CardContent>
 						</Card>
 					</div>

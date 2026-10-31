@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findOrThrow } from "./guards";
+import { findOrThrow, lookupOrThrow } from "./guards";
 
 describe("findOrThrow", () => {
 	const list = [{ categorie: "État" }, { categorie: "Sécurité Sociale" }];
@@ -14,5 +14,15 @@ describe("findOrThrow", () => {
 		expect(() =>
 			findOrThrow(list, (r) => r.categorie === "Etat", "État"),
 		).toThrow("Donnée absente du JSON : État");
+	});
+});
+
+describe("lookupOrThrow", () => {
+	it("rend la valeur de la clé, ou casse sur une clé inconnue", () => {
+		const icons = { Heart: "cœur" };
+		expect(lookupOrThrow(icons, "Heart", "icône")).toBe("cœur");
+		expect(() => lookupOrThrow(icons, "Hearts", "icône")).toThrow(
+			"Clé inconnue pour icône : Hearts",
+		);
 	});
 });
