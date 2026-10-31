@@ -118,6 +118,8 @@ export default function Home() {
 	// produit taux × PIB : le PIB implicite de la dette n'est pas celui de la loi de finances.
 	const currentBalance = yearBalance(evolutionData.years, financeData.year);
 	const placeholderValues = explainerValues(financeData, evolutionData.years);
+	// Un texte des données cite ses chiffres par des marques {nom}
+	const fill = (text: string) => fillPlaceholders(text, placeholderValues);
 
 	const formatPerHab = (billionEur: number) =>
 		`${formatEur(perInhabitantEur(billionEur, context.population))}/hab`;
@@ -259,7 +261,7 @@ export default function Home() {
 						</p>
 						{context.note && (
 							<p className="text-xs text-muted-foreground">
-								Note : {context.note}
+								Note : {fill(context.note)}
 							</p>
 						)}
 					</div>
@@ -498,7 +500,12 @@ export default function Home() {
 												remboursements/dégrèvements)
 											</p>
 										</div>
-										<TopMissionsChart data={stateBudget.mainMissions} />
+										<TopMissionsChart
+											data={stateBudget.mainMissions.map((m) => ({
+												...m,
+												description: fill(m.description),
+											}))}
+										/>
 										<p className="text-xs text-muted-foreground">
 											{stateBudget.pensionsNote}
 										</p>
@@ -634,7 +641,7 @@ export default function Home() {
 															</span>
 														</div>
 														<p className="text-xs text-muted-foreground">
-															{source.description}
+															{fill(source.description)}
 														</p>
 														<p className="text-xs text-primary">
 															Qui paye : {source.whoPays}
@@ -858,7 +865,7 @@ export default function Home() {
 							Prélèvements obligatoires
 						</h2>
 						<p className="text-sm text-muted-foreground">
-							{compulsoryLevies.description}. Total :{" "}
+							{fill(compulsoryLevies.description)}. Total :{" "}
 							{formatMd(compulsoryLevies.totalBillionEur)} (
 							{formatPct(compulsoryLevies.gdpPct)} du PIB)
 						</p>
@@ -868,7 +875,7 @@ export default function Home() {
 						<EuropeanComparison
 							description="Taux de prélèvements obligatoires (% du PIB)"
 							countries={compulsoryLevies.europeanComparison.countries}
-							note={compulsoryLevies.europeanComparison.note}
+							note={fill(compulsoryLevies.europeanComparison.note)}
 							highlightClassName="bg-primary"
 						/>
 					</div>
@@ -1001,10 +1008,10 @@ export default function Home() {
 											>
 												›
 											</span>
-											{fillPlaceholders(qa.question, placeholderValues)}
+											{fill(qa.question)}
 										</summary>
 										<p className="mt-2 text-sm text-muted-foreground">
-											{fillPlaceholders(qa.answer, placeholderValues)}
+											{fill(qa.answer)}
 										</p>
 									</details>
 								))}
@@ -1024,7 +1031,7 @@ export default function Home() {
 												{item.term}
 											</dt>
 											<dd className="text-sm text-muted-foreground">
-												{fillPlaceholders(item.definition, placeholderValues)}
+												{fill(item.definition)}
 											</dd>
 										</div>
 									))}

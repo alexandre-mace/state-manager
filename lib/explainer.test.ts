@@ -16,14 +16,10 @@ describe("marques des textes", () => {
 		);
 	});
 
-	it("trouvent toutes une valeur dans la FAQ et le glossaire", () => {
-		const { faq, glossary } = data.explainer;
-		const texts = [
-			...faq.flatMap((q) => [q.question, q.answer]),
-			...glossary.map((g) => g.definition),
-		];
-		for (const text of texts)
-			expect(fillPlaceholders(text, values)).not.toMatch(/[{}]/);
+	it("trouvent toutes une valeur, dans tous les textes des données", () => {
+		const marks = JSON.stringify(data).match(/\{\w+\}/g) ?? [];
+		expect(marks.length).toBeGreaterThan(0);
+		for (const mark of marks) expect(values).toHaveProperty(mark.slice(1, -1));
 	});
 });
 

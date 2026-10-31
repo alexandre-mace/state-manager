@@ -4,9 +4,9 @@ import { formatEur, formatMd, formatNumber, formatPct } from "./format";
 import { findOrThrow } from "./guards";
 import { rateBelowPass, SALARY_RANGE, simulate } from "./simulator";
 
-// Les textes de la FAQ et du glossaire citent des totaux et des taux : ils les lisent dans les
-// données par des marques {nom}, au lieu de recopier des chiffres qui dériveraient à la
-// prochaine mise à jour.
+// Les textes des données (FAQ, glossaire, notes et descriptions) citent des totaux et des taux :
+// ils les lisent dans les données par des marques {nom}, au lieu de recopier des chiffres qui
+// dériveraient à la prochaine mise à jour.
 
 export type PlaceholderValues = Record<string, string>;
 
@@ -47,6 +47,8 @@ export function explainerValues(
 	const employer = data.socialSecurity.cotisationRates.employer;
 	const reference = simulate(SALARY_RANGE.initial, employee, employer, p);
 	const totalLevies = data.compulsoryLevies.totalBillionEur;
+	const employeeRatePct = (key: string) =>
+		findOrThrow(employee, (c) => c.key === key, key).ratePct;
 	const healthBranch = findOrThrow(
 		data.socialSecurity.branches,
 		(b) => b.branch === "Maladie",
@@ -64,10 +66,17 @@ export function explainerValues(
 		euSpendingGdpPct: formatPct(data.overview.euAverageSpending.gdpPct),
 		euSpendingYear: String(data.overview.euAverageSpending.year),
 		totalLevies: formatMd(totalLevies),
+		leviesGdpPct: formatPct(data.compulsoryLevies.gdpPct),
+		debtInterest: formatMd(data.debt.interestBillionEur),
 		totalRevenue: formatMd(current.revenueBillionEur),
 		otherRevenue: formatMd(current.revenueBillionEur - totalLevies),
 		ondam: formatMd(healthBranch.spendingBillionEur),
 		employeeRate: formatNumber(rateBelowPass(employee, p), 0),
+		csgRate: formatPct(
+			employeeRatePct("csgDeductible") + employeeRatePct("csgNonDeductible"),
+			2,
+		),
+		crdsRate: formatPct(employeeRatePct("crds"), 2),
 		csgCrdsRate: formatNumber(
 			rateBelowPass(
 				employee.filter((c) => c.destination === "csg"),

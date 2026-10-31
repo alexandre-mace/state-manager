@@ -215,7 +215,7 @@ export const publicFinances2026: PublicFinances2026 = {
 		deficitTarget: "objectif sous 3 % en 2029",
 		euDeficitLimitPct: 3,
 		population: 69100000,
-		note: "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB.",
+		note: "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public {previousYear} constaté par l'INSEE : {previousDeficit}, soit {previousDeficitPct} du PIB.",
 	},
 	sources: {
 		loiDeFinances2026: {
@@ -368,7 +368,7 @@ export const publicFinances2026: PublicFinances2026 = {
 				ministry: "Économie et Finances",
 				amountBillionEur: 60.3,
 				description:
-					"Charge de la dette (intérêts) : 59,3 Md€, en forte hausse",
+					"Charge de la dette (intérêts) : {debtInterest}, en forte hausse",
 				pensionsBillionEur: 0,
 			},
 			{
@@ -473,7 +473,7 @@ export const publicFinances2026: PublicFinances2026 = {
 					source: "CSG",
 					amountBillionEur: 157,
 					description:
-						"Contribution Sociale Généralisée (9,2 % sur revenus d'activité)",
+						"Contribution sociale généralisée ({csgRate} sur les revenus d'activité)",
 					whoPays: "Tous les revenus (travail, capital, remplacement)",
 				},
 				{
@@ -547,9 +547,17 @@ export const publicFinances2026: PublicFinances2026 = {
 					destination: "csg",
 				},
 				{
-					key: "csgNonDeductibleCrds",
-					label: "CSG non déductible + CRDS",
-					ratePct: 2.9,
+					key: "csgNonDeductible",
+					label: "CSG non déductible",
+					ratePct: 2.4,
+					assiette: "csg",
+					destination: "csg",
+					nonDeductible: true,
+				},
+				{
+					key: "crds",
+					label: "CRDS",
+					ratePct: 0.5,
 					assiette: "csg",
 					destination: "csg",
 					nonDeductible: true,
@@ -723,7 +731,7 @@ export const publicFinances2026: PublicFinances2026 = {
 	},
 	compulsoryLevies: {
 		description:
-			"Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : 43,6 % du PIB)",
+			"Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : {leviesGdpPct} du PIB)",
 		totalBillionEur: 1312,
 		gdpPct: 43.6,
 		period: "Montant estimé pour 2026, taux 2025 constaté par l'INSEE",
@@ -773,7 +781,7 @@ export const publicFinances2026: PublicFinances2026 = {
 			},
 		],
 		europeanComparison: {
-			note: "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark.",
+			note: "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure {leviesGdpPct} du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark.",
 			countries: [
 				{
 					code: "DK",
@@ -1295,7 +1303,7 @@ export const publicFinances2026: PublicFinances2026 = {
 			{
 				term: "PIB",
 				definition:
-					"Produit Intérieur Brut : valeur totale de la production de biens et services en France (2 991 Md€ en 2025, ~3 010 Md€ estimés en 2026)",
+					"Produit intérieur brut : valeur totale de la production de biens et services en France en un an, à laquelle se rapportent les dépenses, le déficit et la dette exprimés en pourcentage du PIB",
 			},
 			{
 				term: "PLF",
@@ -1323,7 +1331,8 @@ export const publicFinances2026: PublicFinances2026 = {
 			},
 			{
 				term: "CRDS",
-				definition: "Contribution au Remboursement de la Dette Sociale (0,5 %)",
+				definition:
+					"Contribution au remboursement de la dette sociale ({crdsRate})",
 			},
 			{
 				term: "APU",
