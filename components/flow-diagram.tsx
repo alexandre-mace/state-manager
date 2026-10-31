@@ -44,9 +44,7 @@ function FlowBox({
 			style={{ borderColor: color, backgroundColor: `${color}15` }}
 		>
 			<div className="font-medium">{label}</div>
-			<div className="font-mono font-semibold" style={{ color }}>
-				{formatMd(amount, 0)}
-			</div>
+			<div className="font-mono font-semibold">{formatMd(amount, 0)}</div>
 		</div>
 	);
 }
@@ -73,7 +71,9 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Circuit des finances publiques</CardTitle>
+				<CardTitle>
+					<h2>Circuit des finances publiques</h2>
+				</CardTitle>
 				<CardDescription>
 					Comment l&apos;argent circule entre contribuables, administrations et
 					services publics
@@ -185,8 +185,8 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 				<div className="grid grid-cols-3 gap-1.5 sm:gap-2">
 					<div className="space-y-1">
 						<div
-							className="text-xs font-medium text-center mb-2"
-							style={{ color: "var(--chart-1)" }}
+							className="mb-2 border-b-2 pb-1 text-center text-xs font-medium"
+							style={{ borderColor: "var(--chart-1)" }}
 						>
 							Dépenses État
 							<div className="font-normal text-muted-foreground">
@@ -205,8 +205,8 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					</div>
 					<div className="space-y-1">
 						<div
-							className="text-xs font-medium text-center mb-2"
-							style={{ color: "var(--chart-2)" }}
+							className="mb-2 border-b-2 pb-1 text-center text-xs font-medium"
+							style={{ borderColor: "var(--chart-2)" }}
 						>
 							Dépenses Sécu
 							<div className="font-normal text-muted-foreground">
@@ -225,8 +225,8 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					</div>
 					<div className="space-y-1">
 						<div
-							className="text-xs font-medium text-center mb-2"
-							style={{ color: "var(--chart-3)" }}
+							className="mb-2 border-b-2 pb-1 text-center text-xs font-medium"
+							style={{ borderColor: "var(--chart-3)" }}
 						>
 							Dépenses Collectivités
 						</div>

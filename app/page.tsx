@@ -400,7 +400,9 @@ export default function Home() {
 						<PublicSpendingChart data={spendingData} />
 						<Card>
 							<CardHeader>
-								<CardTitle>Qui dépense quoi ?</CardTitle>
+								<CardTitle>
+									<h3>Qui dépense quoi ?</h3>
+								</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-4">
 								{spendingData.map((item) => (
@@ -647,7 +649,9 @@ export default function Home() {
 								{/* Cotisations */}
 								<Card>
 									<CardHeader>
-										<CardTitle>Cotisations et prélèvements sociaux</CardTitle>
+										<CardTitle>
+											<h3>Cotisations et prélèvements sociaux</h3>
+										</CardTitle>
 										<CardDescription>
 											{securiteSociale.tauxCotisations.description}
 										</CardDescription>
@@ -788,7 +792,9 @@ export default function Home() {
 								<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
 									<Card>
 										<CardHeader>
-											<CardTitle>Types de collectivités</CardTitle>
+											<CardTitle>
+												<h3>Types de collectivités</h3>
+											</CardTitle>
 										</CardHeader>
 										<CardContent className="space-y-4">
 											{collectivitesLocales.types.map((type) => (
@@ -819,7 +825,9 @@ export default function Home() {
 									</Card>
 									<Card>
 										<CardHeader>
-											<CardTitle>Sources de financement</CardTitle>
+											<CardTitle>
+												<h3>Sources de financement</h3>
+											</CardTitle>
 										</CardHeader>
 										<CardContent className="space-y-4">
 											{collectivitesLocales.recettes.map((r) => (
@@ -868,7 +876,9 @@ export default function Home() {
 						<PrelevementsChart data={prelevements} />
 						<Card>
 							<CardHeader>
-								<CardTitle>Comparaison européenne</CardTitle>
+								<CardTitle>
+									<h3>Comparaison européenne</h3>
+								</CardTitle>
 								<CardDescription>
 									Taux de prélèvements obligatoires (% du PIB)
 								</CardDescription>
@@ -937,7 +947,9 @@ export default function Home() {
 						<DebtEvolutionChart data={debtEvolution} />
 						<Card>
 							<CardHeader>
-								<CardTitle>Comparaison européenne</CardTitle>
+								<CardTitle>
+									<h3>Comparaison européenne</h3>
+								</CardTitle>
 								<CardDescription>Dette publique (% du PIB)</CardDescription>
 							</CardHeader>
 							<CardContent className="space-y-3">
@@ -996,7 +1008,9 @@ export default function Home() {
 					<div className="space-y-4">
 						<Card>
 							<CardHeader>
-								<CardTitle>Recettes vs Dépenses</CardTitle>
+								<CardTitle>
+									<h3>Recettes vs Dépenses</h3>
+								</CardTitle>
 								<CardDescription>
 									L&apos;écart entre les deux courbes représente le déficit
 								</CardDescription>
@@ -1010,7 +1024,9 @@ export default function Home() {
 						</Card>
 						<Card>
 							<CardHeader>
-								<CardTitle>Solde public (% du PIB)</CardTitle>
+								<CardTitle>
+									<h3>Solde public (% du PIB)</h3>
+								</CardTitle>
 								<CardDescription>
 									La limite européenne est de 3&nbsp;% de déficit ; dernier
 									excédent : {dernierExcedent}
@@ -1052,7 +1068,9 @@ export default function Home() {
 					<div className="grid gap-6 lg:grid-cols-2">
 						<Card>
 							<CardHeader>
-								<CardTitle>Questions fréquentes</CardTitle>
+								<CardTitle>
+									<h3>Questions fréquentes</h3>
+								</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-3">
 								{pedagogie.questionsFrequentes.map((qa) => (
@@ -1078,7 +1096,9 @@ export default function Home() {
 						</Card>
 						<Card>
 							<CardHeader>
-								<CardTitle>Glossaire</CardTitle>
+								<CardTitle>
+									<h3>Glossaire</h3>
+								</CardTitle>
 							</CardHeader>
 							<CardContent>
 								<dl className="space-y-3">

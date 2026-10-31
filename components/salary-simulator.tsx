@@ -61,7 +61,9 @@ export function SalarySimulator({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Simulateur : Où va mon argent ?</CardTitle>
+				<CardTitle>
+					<h2>Simulateur : Où va mon argent ?</h2>
+				</CardTitle>
 				<CardDescription>
 					Décomposition d&apos;un salaire brut annuel (célibataire sans enfant,{" "}
 					{simulateur.bareme_ir.description})
@@ -97,7 +99,7 @@ export function SalarySimulator({
 					</div>
 					<div className="flex h-8 w-full overflow-hidden rounded-lg">
 						<div
-							className="bg-[var(--chart-2)] flex items-center justify-center text-xs text-white font-medium"
+							className="bg-[var(--chart-3)] flex items-center justify-center text-xs text-white font-medium"
 							style={{ width: `${pctNetSurCout}%` }}
 						>
 							{pctNetSurCout > 15 && "Net"}
@@ -117,7 +119,7 @@ export function SalarySimulator({
 					</div>
 					<div className="flex justify-between text-xs text-muted-foreground">
 						<span className="flex items-center gap-1">
-							<span className="h-2 w-2 rounded-full bg-[var(--chart-2)]" /> Net
+							<span className="h-2 w-2 rounded-full bg-[var(--chart-3)]" /> Net
 							: {formatPct(pctNetSurCout)}
 						</span>
 						<span className="flex items-center gap-1">
@@ -134,9 +136,9 @@ export function SalarySimulator({
 				{/* Détail */}
 				<div className="grid gap-4 sm:grid-cols-2">
 					<div className="space-y-3">
-						<h4 className="font-medium text-sm border-b pb-1">
+						<h3 className="font-medium text-sm border-b pb-1">
 							Du brut au net
-						</h4>
+						</h3>
 						<div className="space-y-1 text-sm">
 							<div className="flex justify-between">
 								<span>Salaire brut</span>
@@ -160,7 +162,7 @@ export function SalarySimulator({
 								<span>- Impôt sur le revenu</span>
 								<span className="font-mono">-{formatEur(irAnnuel)}</span>
 							</div>
-							<div className="flex justify-between font-semibold text-[var(--chart-2)] border-t pt-1">
+							<div className="flex justify-between font-semibold text-[var(--chart-3)] border-t pt-1">
 								<span>= Net après impôt</span>
 								<span className="font-mono">
 									{formatEur(salaireNetApresIR)}
@@ -170,9 +172,9 @@ export function SalarySimulator({
 					</div>
 
 					<div className="space-y-3">
-						<h4 className="font-medium text-sm border-b pb-1">
+						<h3 className="font-medium text-sm border-b pb-1">
 							Coût employeur
-						</h4>
+						</h3>
 						<div className="space-y-1 text-sm">
 							<div className="flex justify-between">
 								<span>Salaire brut</span>
@@ -213,11 +215,11 @@ export function SalarySimulator({
 
 				{/* Où vont les cotisations, version enrichie */}
 				<div className="space-y-3">
-					<h4 className="font-medium text-sm border-b pb-1">
+					<h3 className="font-medium text-sm border-b pb-1">
 						Où vont les cotisations (
 						{formatEur(totalCotisationsSalariales + totalCotisationsPatronales)}
 						) ?
-					</h4>
+					</h3>
 					<div className="grid gap-3 sm:grid-cols-2 text-sm">
 						<div className="rounded-lg bg-muted/50 p-3 space-y-1">
 							<div className="flex justify-between font-medium">
