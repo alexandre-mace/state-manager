@@ -10,24 +10,26 @@ import {
 } from "@/components/ui/chart";
 import { formatMd } from "@/lib/format";
 
-type SecuBranchDatum = {
-	branche: string;
-	depenses_milliards_eur: number;
+type BranchDatum = {
+	branch: string;
+	spendingBillionEur: number;
 	description: string;
 };
 
-interface SecuBranchesChartProps {
-	data: SecuBranchDatum[];
+interface SocialSecurityBranchesChartProps {
+	data: BranchDatum[];
 }
 
 const chartConfig = {
-	depenses_milliards_eur: {
+	spendingBillionEur: {
 		label: "Dépenses",
 		color: "var(--chart-2)",
 	},
 } satisfies ChartConfig;
 
-export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
+export function SocialSecurityBranchesChart({
+	data,
+}: SocialSecurityBranchesChartProps) {
 	return (
 		<ChartContainer
 			config={chartConfig}
@@ -59,7 +61,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
 						<ChartTooltipContent
 							formatter={(value) => (
 								<div className="flex justify-between gap-4">
-									<span>{chartConfig.depenses_milliards_eur.label}</span>
+									<span>{chartConfig.spendingBillionEur.label}</span>
 									<span className="font-mono">{formatMd(Number(value))}</span>
 								</div>
 							)}
@@ -67,7 +69,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
 					}
 				/>
 				<Bar
-					dataKey="depenses_milliards_eur"
+					dataKey="spendingBillionEur"
 					fill="var(--color-depenses_milliards_eur)"
 					radius={[0, 6, 6, 0]}
 				/>

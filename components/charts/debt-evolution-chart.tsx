@@ -11,9 +11,9 @@ import {
 import { formatMd, formatPct } from "@/lib/format";
 
 type DebtDatum = {
-	annee: number;
-	montant_milliards_eur: number;
-	pib_pct: number;
+	year: number;
+	amountBillionEur: number;
+	gdpPct: number;
 	note?: string;
 };
 
@@ -22,7 +22,7 @@ interface DebtEvolutionChartProps {
 }
 
 const chartConfig = {
-	pib_pct: {
+	gdpPct: {
 		label: "Dette publique",
 		color: "var(--chart-4)",
 	},
@@ -71,14 +71,14 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
 				<ChartTooltip
 					content={
 						<ChartTooltipContent
-							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.year}
 							formatter={(value, _name, item) => (
 								<div className="flex justify-between gap-4">
-									<span>{chartConfig.pib_pct.label}</span>
+									<span>{chartConfig.gdpPct.label}</span>
 									<span className="font-mono">
 										{`${formatPct(Number(value))} du PIB`}
-										{item?.payload?.montant_milliards_eur != null
-											? ` (${formatMd(item.payload.montant_milliards_eur, 0)})`
+										{item?.payload?.amountBillionEur != null
+											? ` (${formatMd(item.payload.amountBillionEur, 0)})`
 											: ""}
 									</span>
 								</div>
@@ -88,7 +88,7 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
 				/>
 				<Area
 					type="monotone"
-					dataKey="pib_pct"
+					dataKey="gdpPct"
 					stroke="var(--color-pib_pct)"
 					fill="url(#debtGradient)"
 					strokeWidth={2}

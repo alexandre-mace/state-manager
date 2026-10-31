@@ -20,12 +20,12 @@ import {
 import { formatMd, formatPct } from "@/lib/format";
 
 type EvolutionDatum = {
-	annee: number;
-	depenses_pib_pct: number;
-	recettes_pib_pct?: number;
-	deficit_pib_pct: number;
-	recettes_milliards_eur?: number;
-	depenses_milliards_eur?: number;
+	year: number;
+	spendingGdpPct: number;
+	revenueGdpPct?: number;
+	balanceGdpPct: number;
+	revenueBillionEur?: number;
+	spendingBillionEur?: number;
 	deficit_milliards_eur?: number;
 	note?: string;
 	// Événement à marquer d'une ligne verticale sur le graphique
@@ -37,11 +37,11 @@ interface EvolutionChartProps {
 }
 
 const chartConfig = {
-	depenses_pib_pct: {
+	spendingGdpPct: {
 		label: "Dépenses",
 		color: "var(--chart-1)",
 	},
-	recettes_pib_pct: {
+	revenueGdpPct: {
 		label: "Recettes",
 		color: "var(--chart-2)",
 	},
@@ -59,12 +59,12 @@ const regularTicks = (values: number[], step: number) => {
 
 export function EvolutionChart({
 	data,
-	dernierExcedent,
-}: EvolutionChartProps & { dernierExcedent?: number }) {
+	lastSurplus,
+}: EvolutionChartProps & { lastSurplus?: number }) {
 	const ticks = regularTicks(
 		data.flatMap((d) => [
-			d.depenses_pib_pct,
-			d.recettes_pib_pct ?? d.depenses_pib_pct,
+			d.spendingGdpPct,
+			d.revenueGdpPct ?? d.spendingGdpPct,
 		]),
 		5,
 	);
@@ -79,7 +79,7 @@ export function EvolutionChart({
 				title="Dépenses et recettes publiques en pourcentage du PIB, par année"
 			>
 				<defs>
-					<linearGradient id="recettesGradient" x1="0" y1="0" x2="0" y2="1">
+					<linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
 						<stop
 							offset="5%"
 							stopColor="var(--color-recettes_pib_pct)"
@@ -91,7 +91,7 @@ export function EvolutionChart({
 							stopOpacity={0}
 						/>
 					</linearGradient>
-					<linearGradient id="depensesGradient" x1="0" y1="0" x2="0" y2="1">
+					<linearGradient id="spendingGradient" x1="0" y1="0" x2="0" y2="1">
 						<stop
 							offset="5%"
 							stopColor="var(--color-depenses_pib_pct)"
@@ -123,16 +123,16 @@ export function EvolutionChart({
 				<ChartTooltip
 					content={
 						<ChartTooltipContent
-							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.year}
 							formatter={(value, name, item) => {
 								const label =
-									name === "recettes_pib_pct"
-										? chartConfig.recettes_pib_pct.label
-										: chartConfig.depenses_pib_pct.label;
+									name === "revenueGdpPct"
+										? chartConfig.revenueGdpPct.label
+										: chartConfig.spendingGdpPct.label;
 								const milliards =
-									name === "recettes_pib_pct"
-										? item?.payload?.recettes_milliards_eur
-										: item?.payload?.depenses_milliards_eur;
+									name === "revenueGdpPct"
+										? item?.payload?.revenueBillionEur
+										: item?.payload?.spendingBillionEur;
 								return (
 									<div className="flex justify-between gap-4">
 										<span>{label}</span>
@@ -149,14 +149,14 @@ export function EvolutionChart({
 				<Legend
 					wrapperStyle={{ fontSize: 12 }}
 					formatter={(value) => {
-						if (value === "recettes_pib_pct") return "Recettes (% PIB)";
-						if (value === "depenses_pib_pct") return "Dépenses (% PIB)";
+						if (value === "revenueGdpPct") return "Recettes (% PIB)";
+						if (value === "spendingGdpPct") return "Dépenses (% PIB)";
 						return value;
 					}}
 				/>
-				{dernierExcedent != null && (
+				{lastSurplus != null && (
 					<ReferenceLine
-						x={dernierExcedent}
+						x={lastSurplus}
 						stroke="var(--muted-foreground)"
 						strokeDasharray="3 3"
 						label={{
@@ -170,8 +170,8 @@ export function EvolutionChart({
 					.filter((d) => d.marker)
 					.map((d) => (
 						<ReferenceLine
-							key={d.annee}
-							x={d.annee}
+							key={d.year}
+							x={d.year}
 							stroke="var(--muted-foreground)"
 							strokeDasharray="3 3"
 							label={{
@@ -183,16 +183,16 @@ export function EvolutionChart({
 					))}
 				<Area
 					type="monotone"
-					dataKey="depenses_pib_pct"
+					dataKey="spendingGdpPct"
 					stroke="var(--color-depenses_pib_pct)"
-					fill="url(#depensesGradient)"
+					fill="url(#spendingGradient)"
 					strokeWidth={2}
 				/>
 				<Area
 					type="monotone"
-					dataKey="recettes_pib_pct"
+					dataKey="revenueGdpPct"
 					stroke="var(--color-recettes_pib_pct)"
-					fill="url(#recettesGradient)"
+					fill="url(#revenueGradient)"
 					strokeWidth={2}
 				/>
 			</ComposedChart>
@@ -204,22 +204,22 @@ export function DeficitChart({
 	data,
 	limitPct,
 }: EvolutionChartProps & { limitPct: number }) {
-	const chartConfigDeficit = {
-		deficit_pib_pct: {
+	const deficitChartConfig = {
+		balanceGdpPct: {
 			label: "Solde public (% PIB)",
 			color: "var(--chart-4)",
 		},
 	} satisfies ChartConfig;
 	// 0 et la limite inclus pour que les deux lignes de référence restent dans le cadre
 	const ticks = regularTicks(
-		[...data.map((d) => d.deficit_pib_pct), 0, -limitPct],
+		[...data.map((d) => d.balanceGdpPct), 0, -limitPct],
 		2,
 	);
 	const limitLabel = formatPct(limitPct);
 
 	return (
 		<ChartContainer
-			config={chartConfigDeficit}
+			config={deficitChartConfig}
 			className="!aspect-auto h-[200px] w-full"
 		>
 			<ComposedChart
@@ -246,10 +246,10 @@ export function DeficitChart({
 				<ChartTooltip
 					content={
 						<ChartTooltipContent
-							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.year}
 							formatter={(value) => (
 								<div className="flex justify-between gap-4">
-									<span>{chartConfigDeficit.deficit_pib_pct.label}</span>
+									<span>{deficitChartConfig.balanceGdpPct.label}</span>
 									<span className="font-mono">{formatPct(Number(value))}</span>
 								</div>
 							)}
@@ -267,7 +267,7 @@ export function DeficitChart({
 						fill: "var(--destructive)",
 					}}
 				/>
-				<Bar dataKey="deficit_pib_pct" fill="var(--color-deficit_pib_pct)" />
+				<Bar dataKey="balanceGdpPct" fill="var(--color-deficit_pib_pct)" />
 			</ComposedChart>
 		</ChartContainer>
 	);

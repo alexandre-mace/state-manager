@@ -39,23 +39,23 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 	Leaf,
 };
 
-interface Poste {
+interface SpendingItem {
 	label: string;
-	montant_eur: number;
+	amountEur: number;
 	icon: string;
 }
 
 interface ThousandEuroBreakdownProps {
-	postes: Poste[];
+	items: SpendingItem[];
 	baseBillionEur: number;
 }
 
 export function ThousandEuroBreakdown({
-	postes,
+	items,
 	baseBillionEur,
 }: ThousandEuroBreakdownProps) {
-	const sorted = [...postes].sort((a, b) => b.montant_eur - a.montant_eur);
-	const total = sorted.reduce((sum, p) => sum + p.montant_eur, 0) || 1;
+	const sorted = [...items].sort((a, b) => b.amountEur - a.amountEur);
+	const total = sorted.reduce((sum, p) => sum + p.amountEur, 0) || 1;
 
 	return (
 		<Card>
@@ -69,18 +69,18 @@ export function ThousandEuroBreakdown({
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-3">
-				{sorted.map((poste) => {
-					const Icon = lookupOrThrow(ICONS, poste.icon, poste.label);
-					const pct = (poste.montant_eur / total) * 100;
+				{sorted.map((item) => {
+					const Icon = lookupOrThrow(ICONS, item.icon, item.label);
+					const pct = (item.amountEur / total) * 100;
 					return (
-						<div key={poste.label} className="space-y-1">
+						<div key={item.label} className="space-y-1">
 							<div className="flex items-center justify-between text-sm">
 								<div className="flex items-center gap-2">
 									<Icon className="h-4 w-4 text-muted-foreground" />
-									<span>{poste.label}</span>
+									<span>{item.label}</span>
 								</div>
 								<span className="font-mono font-medium">
-									{formatEur(poste.montant_eur)}
+									{formatEur(item.amountEur)}
 								</span>
 							</div>
 							<div className="h-2 w-full rounded-full bg-muted">
@@ -93,8 +93,8 @@ export function ThousandEuroBreakdown({
 					);
 				})}
 				<p className="pt-2 text-xs text-muted-foreground">
-					Total : {formatEur(sorted.reduce((sum, p) => sum + p.montant_eur, 0))}
-					, calculé à partir des dépenses totales de {formatMd(baseBillionEur)}
+					Total : {formatEur(sorted.reduce((sum, p) => sum + p.amountEur, 0))},
+					calculé à partir des dépenses totales de {formatMd(baseBillionEur)}
 				</p>
 			</CardContent>
 		</Card>

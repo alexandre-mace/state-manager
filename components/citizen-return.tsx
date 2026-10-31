@@ -30,7 +30,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface Service {
 	service: string;
-	valeur: string;
+	value: string;
 	detail: string;
 	icon: string;
 }
@@ -63,7 +63,7 @@ export function CitizenReturn({ services }: CitizenReturnProps) {
 									<Icon className="h-5 w-5 text-primary" />
 									<span className="font-medium text-sm">{s.service}</span>
 								</div>
-								<p className="font-mono text-lg font-semibold">{s.valeur}</p>
+								<p className="font-mono text-lg font-semibold">{s.value}</p>
 								<p className="text-xs text-muted-foreground">{s.detail}</p>
 							</div>
 						);

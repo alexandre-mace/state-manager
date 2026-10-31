@@ -1,20 +1,20 @@
 // Espace insécable avant l'unité : « 1 722 Md€ » ne se coupe jamais en fin de ligne
 const NBSP = "\u00a0";
 
-// decimalesMin fixe le nombre de décimales, pour aligner une colonne de montants
-export const formatNombre = (value: number, decimales = 1, decimalesMin = 0) =>
+// minDecimals fixe le nombre de décimales, pour aligner une colonne de montants
+export const formatNumber = (value: number, decimals = 1, minDecimals = 0) =>
 	value.toLocaleString("fr-FR", {
-		minimumFractionDigits: decimalesMin,
-		maximumFractionDigits: decimales,
+		minimumFractionDigits: minDecimals,
+		maximumFractionDigits: decimals,
 	});
 
-export const formatMd = (value: number, decimales = 1, decimalesMin = 0) =>
-	`${formatNombre(value, decimales, decimalesMin)}${NBSP}Md€`;
+export const formatMd = (value: number, decimals = 1, minDecimals = 0) =>
+	`${formatNumber(value, decimals, minDecimals)}${NBSP}Md€`;
 
-export const formatPct = (value: number, decimales = 1) =>
-	`${formatNombre(value, decimales)}${NBSP}%`;
+export const formatPct = (value: number, decimals = 1) =>
+	`${formatNumber(value, decimals)}${NBSP}%`;
 
-export const formatEur = (value: number) => `${formatNombre(value, 0)}${NBSP}€`;
+export const formatEur = (value: number) => `${formatNumber(value, 0)}${NBSP}€`;
 
 // Un compte sous dix s'écrit en lettres dans la prose : « les quatre catégories »
 const NUMBER_WORDS = [
@@ -31,4 +31,4 @@ const NUMBER_WORDS = [
 	"dix",
 ];
 export const formatCount = (value: number) =>
-	NUMBER_WORDS[value] ?? formatNombre(value, 0);
+	NUMBER_WORDS[value] ?? formatNumber(value, 0);

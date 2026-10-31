@@ -22,9 +22,9 @@ export function taxesAndDuties(levies: {
 
 // Dernière année au solde positif des séries longues, undefined s'il n'y en a aucune
 export function lastSurplusYear(
-	years: { annee: number; deficit_pib_pct: number }[],
+	years: { year: number; balanceGdpPct: number }[],
 ) {
-	return years.findLast((y) => y.deficit_pib_pct > 0)?.annee;
+	return years.findLast((y) => y.balanceGdpPct > 0)?.year;
 }
 
 // Largeur d'une barre en pourcentage de la plus grande de sa liste

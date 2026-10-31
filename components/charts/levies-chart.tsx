@@ -10,19 +10,19 @@ import {
 } from "@/components/ui/chart";
 import { formatMd } from "@/lib/format";
 
-type PrelevementDatum = {
+type LevyDatum = {
 	type: string;
-	montant_milliards_eur: number;
-	pct_total: number;
+	amountBillionEur: number;
+	shareOfTotalPct: number;
 	description: string;
 };
 
-interface PrelevementsChartProps {
-	data: PrelevementDatum[];
+interface LeviesChartProps {
+	data: LevyDatum[];
 }
 
 const chartConfig = {
-	montant_milliards_eur: {
+	amountBillionEur: {
 		label: "Montant",
 		color: "var(--chart-1)",
 	},
@@ -38,7 +38,7 @@ const COLORS = [
 	"var(--chart-2)",
 ];
 
-export function PrelevementsChart({ data }: PrelevementsChartProps) {
+export function LeviesChart({ data }: LeviesChartProps) {
 	return (
 		<ChartContainer
 			config={chartConfig}
@@ -72,14 +72,14 @@ export function PrelevementsChart({ data }: PrelevementsChartProps) {
 						<ChartTooltipContent
 							formatter={(value) => (
 								<div className="flex justify-between gap-4">
-									<span>{chartConfig.montant_milliards_eur.label}</span>
+									<span>{chartConfig.amountBillionEur.label}</span>
 									<span className="font-mono">{formatMd(Number(value))}</span>
 								</div>
 							)}
 						/>
 					}
 				/>
-				<Bar dataKey="montant_milliards_eur" radius={[0, 6, 6, 0]}>
+				<Bar dataKey="amountBillionEur" radius={[0, 6, 6, 0]}>
 					{data.map((entry, index) => (
 						<Cell key={entry.type} fill={COLORS[index % COLORS.length]} />
 					))}

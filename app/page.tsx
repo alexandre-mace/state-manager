@@ -3,9 +3,9 @@ import {
 	DeficitChart,
 	EvolutionChart,
 } from "@/components/charts/evolution-chart";
-import { PrelevementsChart } from "@/components/charts/prelevements-chart";
+import { LeviesChart } from "@/components/charts/levies-chart";
 import { PublicSpendingChart } from "@/components/charts/public-spending-chart";
-import { SecuBranchesChart } from "@/components/charts/secu-branches-chart";
+import { SocialSecurityBranchesChart } from "@/components/charts/social-security-branches-chart";
 import { TopMissionsChart } from "@/components/charts/top-missions-chart";
 import { CitizenReturn } from "@/components/citizen-return";
 import { EuropeanComparison } from "@/components/european-comparison";
@@ -39,26 +39,26 @@ import {
 	formatCount,
 	formatEur,
 	formatMd,
-	formatNombre,
+	formatNumber,
 	formatPct,
 } from "@/lib/format";
 import { findOrThrow, requireHttpsUrl } from "@/lib/guards";
-import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
+import { rateBelowPass, readCotisations } from "@/lib/simulator";
 
-const SOMMAIRE = [
-	{ id: "repartition", libelle: "Pour 1\u202f000\u00a0€" },
-	{ id: "qui-gere", libelle: "Qui dépense" },
-	{ id: "administrations", libelle: "Administrations" },
-	{ id: "prelevements", libelle: "Prélèvements" },
-	{ id: "circuit", libelle: "Circuit" },
-	{ id: "dette", libelle: "Dette" },
-	{ id: "evolution", libelle: "Évolution" },
-	{ id: "simulateur", libelle: "Simulateur" },
-	{ id: "comprendre", libelle: "Comprendre" },
-	{ id: "sources", libelle: "Sources" },
+const TABLE_OF_CONTENTS = [
+	{ id: "breakdown", label: "Pour 1\u202f000\u00a0€" },
+	{ id: "who-spends", label: "Qui dépense" },
+	{ id: "administrations", label: "Administrations" },
+	{ id: "levies", label: "Prélèvements" },
+	{ id: "flow", label: "Circuit" },
+	{ id: "debt", label: "Dette" },
+	{ id: "history", label: "Évolution" },
+	{ id: "simulator", label: "Simulateur" },
+	{ id: "explainer", label: "Comprendre" },
+	{ id: "sources", label: "Sources" },
 ];
 
-type Source = { libelle: string; url: string };
+type Source = { label: string; url: string };
 
 function SourceNote({ sources }: { sources: Source[] }) {
 	return (
@@ -72,7 +72,7 @@ function SourceNote({ sources }: { sources: Source[] }) {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						{source.libelle}
+						{source.label}
 					</TextLink>
 				</span>
 			))}
@@ -84,76 +84,68 @@ export default function Home() {
 	const { sources } = financeData;
 	const {
 		context,
-		vueGlobale,
-		budgetEtat,
-		securiteSociale,
-		collectivitesLocales,
-		prelevementsObligatoires,
-		dette,
-		destinationDepenses,
-		retourCitoyen,
-		pedagogie,
+		overview,
+		stateBudget,
+		socialSecurity,
+		localAuthorities,
+		compulsoryLevies,
+		debt,
+		spendingByFunction,
+		citizenReturn,
+		explainer,
 	} = financeData;
 
-	const cotisationsSalariales = lireCotisations(
-		securiteSociale.tauxCotisations.salariales,
+	const employeeCotisations = readCotisations(
+		socialSecurity.cotisationRates.employee,
 	);
-	const cotisationsPatronales = lireCotisations(
-		securiteSociale.tauxCotisations.patronales,
+	const employerCotisations = readCotisations(
+		socialSecurity.cotisationRates.employer,
 	);
 
-	const etat = findOrThrow(
-		vueGlobale.repartition,
-		(r) => r.categorie === "État",
+	const stateCategory = findOrThrow(
+		overview.breakdown,
+		(r) => r.category === "État",
 		"État",
 	);
-	const autresOrganismes = findOrThrow(
-		vueGlobale.repartition,
-		(r) => r.categorie === "Autres organismes publics",
+	const otherBodies = findOrThrow(
+		overview.breakdown,
+		(r) => r.category === "Autres organismes publics",
 		"Autres organismes publics",
 	);
 
 	// Déficit de l'année : la ligne des séries longues, objectif de la loi de finances. Pas un
 	// produit taux × PIB : le PIB implicite de la dette n'est pas celui de la loi de finances.
-	const currentBalance = yearBalance(evolutionData.annees, financeData.year);
-	const explainer = explainerValues(financeData, evolutionData.annees);
+	const currentBalance = yearBalance(evolutionData.years, financeData.year);
+	const placeholderValues = explainerValues(financeData, evolutionData.years);
 
 	const formatPerHab = (billionEur: number) =>
 		`${formatEur(perInhabitantEur(billionEur, context.population))}/hab`;
 
-	// Prepare data for charts
-	const spendingData = vueGlobale.repartition;
-	const secuBranches = securiteSociale.branches;
-	const secuBranchesTotal = secuBranches.reduce(
-		(sum, b) => sum + b.depenses_milliards_eur,
+	// Données des graphiques
+	const spendingData = overview.breakdown;
+	const socialSecurityBranches = socialSecurity.branches;
+	const branchesTotal = socialSecurityBranches.reduce(
+		(sum, b) => sum + b.spendingBillionEur,
 		0,
 	);
-	const debtEvolution = dette.evolution;
-	const prelevements = prelevementsObligatoires.repartition;
+	const debtHistory = debt.history;
+	const levies = compulsoryLevies.breakdown;
 
-	// Missions for state budget chart
-	const missionsData = budgetEtat.principalesMissions.map((m) => ({
-		mission: m.mission,
-		description: m.description,
-		amount_milliards_eur: m.montant_milliards_eur,
-		pensions_milliards_eur: m.dont_pensions_milliards_eur,
-	}));
+	// Séries longues
+	const evolutionHistory = evolutionData.years;
+	const lastSurplus = lastSurplusYear(evolutionHistory);
 
-	// Evolution data
-	const evolutionHistory = evolutionData.annees;
-	const dernierExcedent = lastSurplusYear(evolutionHistory);
-
-	// Flow diagram data (derived from JSON)
-	const cotisationsMontant = findOrThrow(
-		prelevementsObligatoires.repartition,
+	// Données du circuit, tirées du JSON
+	const cotisationsBillionEur = findOrThrow(
+		compulsoryLevies.breakdown,
 		(r) => r.type === "Cotisations sociales",
 		"Cotisations sociales",
-	).montant_milliards_eur;
-	const csgMontant = findOrThrow(
-		prelevementsObligatoires.repartition,
+	).amountBillionEur;
+	const csgCrdsBillionEur = findOrThrow(
+		compulsoryLevies.breakdown,
 		(r) => r.type === "CSG-CRDS",
 		"CSG-CRDS",
-	).montant_milliards_eur;
+	).amountBillionEur;
 
 	const MISSION_LABELS: Record<string, string> = {
 		"Enseignement scolaire": "Éducation",
@@ -165,72 +157,72 @@ export default function Home() {
 		"Écologie et mobilités": "Écologie",
 	};
 
-	const BRANCHE_LABELS: Record<string, string> = {
+	const BRANCH_LABELS: Record<string, string> = {
 		Vieillesse: "Retraites",
 		Maladie: "Santé",
 	};
 
 	const flowData: FlowDiagramData = {
-		prelevements: {
-			impots: taxesAndDuties({
-				totalBillionEur: prelevementsObligatoires.total_milliards_eur,
-				cotisationsBillionEur: cotisationsMontant,
-				csgCrdsBillionEur: csgMontant,
+		levies: {
+			taxes: taxesAndDuties({
+				totalBillionEur: compulsoryLevies.totalBillionEur,
+				cotisationsBillionEur: cotisationsBillionEur,
+				csgCrdsBillionEur: csgCrdsBillionEur,
 			}),
-			cotisations: cotisationsMontant,
-			csgCrds: csgMontant,
+			cotisations: cotisationsBillionEur,
+			csgCrds: csgCrdsBillionEur,
 		},
-		etat: {
-			total: etat.depenses_milliards_eur,
+		state: {
+			total: stateCategory.spendingBillionEur,
 			// Hors retraites des agents : ces pensions sont déjà dans la colonne Sécu (Retraites)
-			depenses: budgetEtat.principalesMissions
+			spending: stateBudget.mainMissions
 				.map((m) => ({
 					label: MISSION_LABELS[m.mission] ?? m.mission,
-					amount: m.montant_milliards_eur - m.dont_pensions_milliards_eur,
+					amount: m.amountBillionEur - m.pensionsBillionEur,
 				}))
 				.sort((a, b) => b.amount - a.amount)
 				.slice(0, 4),
 		},
-		secu: {
+		socialSecurity: {
 			total: findOrThrow(
-				vueGlobale.repartition,
-				(r) => r.categorie === "Sécurité sociale",
+				overview.breakdown,
+				(r) => r.category === "Sécurité sociale",
 				"Sécurité sociale",
-			).depenses_milliards_eur,
-			branchesTotal: secuBranchesTotal,
-			depenses: [...securiteSociale.branches]
-				.sort((a, b) => b.depenses_milliards_eur - a.depenses_milliards_eur)
+			).spendingBillionEur,
+			branchesTotal: branchesTotal,
+			spending: [...socialSecurity.branches]
+				.sort((a, b) => b.spendingBillionEur - a.spendingBillionEur)
 				.map((b) => ({
-					label: BRANCHE_LABELS[b.branche] ?? b.branche,
-					amount: b.depenses_milliards_eur,
+					label: BRANCH_LABELS[b.branch] ?? b.branch,
+					amount: b.spendingBillionEur,
 				})),
 		},
-		collectivites: {
+		localAuthorities: {
 			total: findOrThrow(
-				vueGlobale.repartition,
-				(r) => r.categorie === "Collectivités locales",
+				overview.breakdown,
+				(r) => r.category === "Collectivités locales",
 				"Collectivités locales",
-			).depenses_milliards_eur,
-			depenses: collectivitesLocales.types.map((t) => ({
+			).spendingBillionEur,
+			spending: localAuthorities.types.map((t) => ({
 				label: t.type.includes("EPCI") ? "Interco" : t.type,
-				amount: t.depenses_milliards_eur,
+				amount: t.spendingBillionEur,
 			})),
 		},
-		autresOrganismes: {
-			total: autresOrganismes.depenses_milliards_eur,
-			description: autresOrganismes.description,
+		otherBodies: {
+			total: otherBodies.spendingBillionEur,
+			description: otherBodies.description,
 		},
-		transferts: {
-			etatCollectivites: findOrThrow(
-				collectivitesLocales.recettes,
+		transfers: {
+			stateToLocalAuthorities: findOrThrow(
+				localAuthorities.revenue,
 				(r) => r.source === "Dotations de l'État",
 				"Dotations de l'État",
-			).montant_milliards_eur,
-			taxesAffecteesSecu: findOrThrow(
-				securiteSociale.financement.sources,
+			).amountBillionEur,
+			earmarkedTaxesToSocialSecurity: findOrThrow(
+				socialSecurity.funding.sources,
 				(s) => s.source === "Impôts et taxes affectés",
 				"Impôts et taxes affectés",
-			).montant_milliards_eur,
+			).amountBillionEur,
 		},
 		deficit: currentBalance.deficitBillionEur,
 		year: financeData.year,
@@ -239,7 +231,7 @@ export default function Home() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-background to-muted/30 pb-16">
 			<main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pt-16 sm:px-6 lg:px-8">
-				{/* Header */}
+				{/* En-tête */}
 				<section className="space-y-6">
 					<div className="flex flex-wrap gap-2">
 						<Badge className="text-xs font-medium uppercase tracking-wider">
@@ -260,7 +252,7 @@ export default function Home() {
 							Comprendre les finances publiques françaises
 						</h1>
 						<p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
-							{vueGlobale.description}. Cette page présente une vue
+							{overview.description}. Cette page présente une vue
 							d&apos;ensemble des recettes, dépenses et de la dette de
 							l&apos;État, de la Sécurité sociale et des collectivités locales.
 						</p>
@@ -271,24 +263,24 @@ export default function Home() {
 						)}
 					</div>
 
-					{/* Key metrics */}
+					{/* Chiffres clés */}
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 						<Card>
 							<CardHeader>
 								<CardDescription>Dépenses publiques totales</CardDescription>
 								<CardTitle className="font-mono text-2xl tracking-tight">
-									{formatMd(vueGlobale.depenses_totales_milliards_eur)}
+									{formatMd(overview.totalSpendingBillionEur)}
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="pt-0">
 								<p className="text-xs text-muted-foreground">
-									{vueGlobale.periode}
+									{overview.period}
 								</p>
 								<p className="text-xs text-muted-foreground">
-									soit {formatPct(vueGlobale.depenses_pib_pct)} du PIB
+									soit {formatPct(overview.spendingGdpPct)} du PIB
 								</p>
 								<p className="text-xs font-medium text-muted-foreground">
-									{formatPerHab(vueGlobale.depenses_totales_milliards_eur)}
+									{formatPerHab(overview.totalSpendingBillionEur)}
 								</p>
 							</CardContent>
 						</Card>
@@ -296,18 +288,18 @@ export default function Home() {
 							<CardHeader>
 								<CardDescription>Prélèvements obligatoires</CardDescription>
 								<CardTitle className="font-mono text-2xl tracking-tight">
-									{formatMd(prelevementsObligatoires.total_milliards_eur)}
+									{formatMd(compulsoryLevies.totalBillionEur)}
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="pt-0">
 								<p className="text-xs text-muted-foreground">
-									{prelevementsObligatoires.periode}
+									{compulsoryLevies.period}
 								</p>
 								<p className="text-xs text-muted-foreground">
-									soit {formatPct(prelevementsObligatoires.pib_pct)} du PIB
+									soit {formatPct(compulsoryLevies.gdpPct)} du PIB
 								</p>
 								<p className="text-xs font-medium text-muted-foreground">
-									{formatPerHab(prelevementsObligatoires.total_milliards_eur)}
+									{formatPerHab(compulsoryLevies.totalBillionEur)}
 								</p>
 							</CardContent>
 						</Card>
@@ -320,11 +312,11 @@ export default function Home() {
 							</CardHeader>
 							<CardContent className="pt-0">
 								<p className="text-xs text-muted-foreground">
-									{context.deficit_periode}
+									{context.deficitPeriod}
 								</p>
 								<p className="text-xs text-muted-foreground">
 									soit {formatPct(currentBalance.deficitGdpPct)} du PIB,{" "}
-									{context.deficit_objectif}
+									{context.deficitTarget}
 								</p>
 								<p className="text-xs font-medium text-muted-foreground">
 									{formatPerHab(currentBalance.deficitBillionEur)}
@@ -335,23 +327,22 @@ export default function Home() {
 							<CardHeader>
 								<CardDescription>Dette publique</CardDescription>
 								<CardTitle className="font-mono text-2xl tracking-tight text-destructive">
-									{formatMd(context.dette_publique_milliards_eur)}
+									{formatMd(context.publicDebtBillionEur)}
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="pt-0">
-								<p className="text-xs text-muted-foreground">{dette.periode}</p>
+								<p className="text-xs text-muted-foreground">{debt.period}</p>
 								<p className="text-xs text-muted-foreground">
-									soit {formatPct(context.dette_pib_pct)} du PIB (
-									{dette.rang_ue})
+									soit {formatPct(context.debtGdpPct)} du PIB ({debt.euRank})
 								</p>
 								<p className="text-xs font-medium text-muted-foreground">
-									{formatPerHab(context.dette_publique_milliards_eur)}
+									{formatPerHab(context.publicDebtBillionEur)}
 								</p>
 							</CardContent>
 						</Card>
 					</div>
 					<SourceNote
-						sources={[sources.budget_etat, sources.comptes_2025, sources.dette]}
+						sources={[sources.stateBudget, sources.accounts2025, sources.debt]}
 					/>
 				</section>
 
@@ -360,10 +351,10 @@ export default function Home() {
 					className="sticky top-0 z-10 -mx-4 -my-6 overflow-x-auto border-b border-border bg-background/90 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
 				>
 					<ul className="flex gap-4 whitespace-nowrap text-sm text-muted-foreground">
-						{SOMMAIRE.map((entree) => (
-							<li key={entree.id}>
-								<a href={`#${entree.id}`} className="hover:text-foreground">
-									{entree.libelle}
+						{TABLE_OF_CONTENTS.map((entry) => (
+							<li key={entry.id}>
+								<a href={`#${entry.id}`} className="hover:text-foreground">
+									{entry.label}
 								</a>
 							</li>
 						))}
@@ -371,20 +362,20 @@ export default function Home() {
 				</nav>
 
 				{/* Pour 1 000€ de dépenses publiques */}
-				<section id="repartition" className="scroll-mt-16 space-y-6">
+				<section id="breakdown" className="scroll-mt-16 space-y-6">
 					<ThousandEuroBreakdown
-						postes={destinationDepenses.postes}
-						baseBillionEur={destinationDepenses.base_milliards_eur}
+						items={spendingByFunction.items}
+						baseBillionEur={spendingByFunction.baseBillionEur}
 					/>
 				</section>
 
-				{/* Ce que vous recevez en retour */}
+				{/* Ce que financent les dépenses publiques */}
 				<section id="services" className="scroll-mt-16 space-y-6">
-					<CitizenReturn services={retourCitoyen.services} />
+					<CitizenReturn services={citizenReturn.services} />
 				</section>
 
 				{/* Vue globale */}
-				<section id="qui-gere" className="scroll-mt-16 space-y-6">
+				<section id="who-spends" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
 							Qui gère les dépenses publiques ?
@@ -409,11 +400,11 @@ export default function Home() {
 							</CardHeader>
 							<CardContent className="space-y-4">
 								{spendingData.map((item) => (
-									<div key={item.categorie} className="space-y-1">
+									<div key={item.category} className="space-y-1">
 										<div className="flex justify-between">
-											<span className="font-medium">{item.categorie}</span>
+											<span className="font-medium">{item.category}</span>
 											<span className="font-mono">
-												{formatMd(item.depenses_milliards_eur)}
+												{formatMd(item.spendingBillionEur)}
 											</span>
 										</div>
 										<p className="text-xs text-muted-foreground">
@@ -426,7 +417,7 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* Tabs: État / Sécu / Collectivités */}
+				{/* Onglets : État, Sécurité sociale, collectivités */}
 				<section id="administrations" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
@@ -439,23 +430,28 @@ export default function Home() {
 						</p>
 					</div>
 					<div className="rounded-2xl border bg-muted/20 p-4 sm:p-6">
-						<Tabs defaultValue="etat" className="w-full">
+						<Tabs defaultValue="state" className="w-full">
 							<TabsList>
-								<TabsTrigger value="etat">Budget de l&apos;État</TabsTrigger>
-								<TabsTrigger value="secu">Sécurité sociale</TabsTrigger>
-								<TabsTrigger value="collectivites">Collectivités</TabsTrigger>
+								<TabsTrigger value="state">Budget de l&apos;État</TabsTrigger>
+								<TabsTrigger value="social-security">
+									Sécurité sociale
+								</TabsTrigger>
+								<TabsTrigger value="local-authorities">
+									Collectivités
+								</TabsTrigger>
 							</TabsList>
 
 							{/* Budget de l'État */}
-							<TabsContent value="etat" keepMounted className="space-y-6 pt-4">
+							<TabsContent value="state" keepMounted className="space-y-6 pt-4">
 								<Card className="bg-muted/30">
 									<CardContent>
 										<p className="text-sm">
-											{budgetEtat.description}. Les chiffres ci-dessous portent
+											{stateBudget.description}. Les chiffres ci-dessous portent
 											sur le budget de l&apos;État stricto sensu (
-											{formatMd(budgetEtat.depenses_milliards_eur)}), qui est
-											une composante des {formatMd(etat.depenses_milliards_eur)}{" "}
-											de dépenses des administrations centrales.
+											{formatMd(stateBudget.spendingBillionEur)}), qui est une
+											composante des{" "}
+											{formatMd(stateCategory.spendingBillionEur)} de dépenses
+											des administrations centrales.
 										</p>
 									</CardContent>
 								</Card>
@@ -465,7 +461,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Recettes nettes</CardDescription>
 											<CardTitle className="font-mono text-xl">
-												{formatMd(budgetEtat.recettes_nettes_milliards_eur)}
+												{formatMd(stateBudget.netRevenueBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -473,7 +469,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Dépenses</CardDescription>
 											<CardTitle className="font-mono text-xl">
-												{formatMd(budgetEtat.depenses_milliards_eur)}
+												{formatMd(stateBudget.spendingBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -481,13 +477,13 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Déficit État</CardDescription>
 											<CardTitle className="font-mono text-xl text-destructive">
-												-{formatMd(budgetEtat.deficit_milliards_eur)}
+												-{formatMd(stateBudget.deficitBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
 								</div>
 								<p className="text-xs text-muted-foreground">
-									{budgetEtat.note}
+									{stateBudget.note}
 								</p>
 
 								<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
@@ -501,9 +497,9 @@ export default function Home() {
 												remboursements/dégrèvements)
 											</p>
 										</div>
-										<TopMissionsChart data={missionsData} />
+										<TopMissionsChart data={stateBudget.mainMissions} />
 										<p className="text-xs text-muted-foreground">
-											{budgetEtat.notePensions}
+											{stateBudget.pensionsNote}
 										</p>
 									</div>
 									<div className="space-y-4">
@@ -518,43 +514,43 @@ export default function Home() {
 										</div>
 										<Card>
 											<CardContent className="space-y-3">
-												{budgetEtat.recettesFiscales.principaux_impots.map(
-													(impot) => (
-														<div
-															key={impot.label}
-															className="space-y-1 border-b border-border pb-3 last:border-0"
-														>
-															<div className="flex justify-between items-baseline">
-																<span className="font-medium">
-																	{impot.label}
-																</span>
-																<span className="font-mono text-sm">
-																	{formatMd(impot.montant_milliards_eur)}
-																</span>
-															</div>
-															<p className="text-xs text-muted-foreground">
-																{impot.description}
-															</p>
-															<p className="text-xs text-primary">
-																Qui paye : {impot.qui_paye}
-															</p>
+												{stateBudget.taxRevenue.mainTaxes.map((impot) => (
+													<div
+														key={impot.label}
+														className="space-y-1 border-b border-border pb-3 last:border-0"
+													>
+														<div className="flex justify-between items-baseline">
+															<span className="font-medium">{impot.label}</span>
+															<span className="font-mono text-sm">
+																{formatMd(impot.amountBillionEur)}
+															</span>
 														</div>
-													),
-												)}
+														<p className="text-xs text-muted-foreground">
+															{impot.description}
+														</p>
+														<p className="text-xs text-primary">
+															Qui paye : {impot.whoPays}
+														</p>
+													</div>
+												))}
 											</CardContent>
 										</Card>
 									</div>
 								</div>
 								<SourceNote
-									sources={[sources.loi_finances_2026, sources.budget_etat]}
+									sources={[sources.loiDeFinances2026, sources.stateBudget]}
 								/>
 							</TabsContent>
 
 							{/* Sécurité sociale */}
-							<TabsContent value="secu" keepMounted className="space-y-6 pt-4">
+							<TabsContent
+								value="social-security"
+								keepMounted
+								className="space-y-6 pt-4"
+							>
 								<Card className="bg-muted/30">
 									<CardContent>
-										<p className="text-sm">{securiteSociale.description}</p>
+										<p className="text-sm">{socialSecurity.description}</p>
 									</CardContent>
 								</Card>
 
@@ -563,7 +559,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Recettes</CardDescription>
 											<CardTitle className="font-mono text-xl">
-												{formatMd(securiteSociale.recettes_milliards_eur)}
+												{formatMd(socialSecurity.revenueBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -571,7 +567,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Dépenses</CardDescription>
 											<CardTitle className="font-mono text-xl">
-												{formatMd(securiteSociale.depenses_milliards_eur)}
+												{formatMd(socialSecurity.spendingBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -579,7 +575,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Déficit Sécu</CardDescription>
 											<CardTitle className="font-mono text-xl text-destructive">
-												-{formatMd(securiteSociale.deficit_milliards_eur)}
+												-{formatMd(socialSecurity.deficitBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -592,18 +588,20 @@ export default function Home() {
 												Dépenses par branche
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												Les {formatCount(secuBranches.length)} branches de la
-												Sécurité sociale
+												Les {formatCount(socialSecurityBranches.length)}{" "}
+												branches de la Sécurité sociale
 											</p>
 										</div>
-										<SecuBranchesChart data={secuBranches} />
+										<SocialSecurityBranchesChart
+											data={socialSecurityBranches}
+										/>
 										<p className="text-xs text-muted-foreground">
 											Chaque branche est comptée sur son propre périmètre
 											(l&apos;assurance maladie par l&apos;ONDAM, la vieillesse
 											tous régimes de base) : leur somme,{" "}
-											{formatMd(secuBranchesTotal)}, ne se compare pas aux{" "}
-											{formatMd(securiteSociale.depenses_milliards_eur)} de
-											dépenses ci-dessus.
+											{formatMd(branchesTotal)}, ne se compare pas aux{" "}
+											{formatMd(socialSecurity.spendingBillionEur)} de dépenses
+											ci-dessus.
 										</p>
 									</div>
 									<div className="space-y-4">
@@ -612,12 +610,12 @@ export default function Home() {
 												Financement de la Sécu
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												{securiteSociale.financement.description}
+												{socialSecurity.funding.description}
 											</p>
 										</div>
 										<Card>
 											<CardContent className="space-y-3">
-												{securiteSociale.financement.sources.map((source) => (
+												{socialSecurity.funding.sources.map((source) => (
 													<div
 														key={source.source}
 														className="space-y-1 border-b border-border pb-3 last:border-0"
@@ -627,14 +625,14 @@ export default function Home() {
 																{source.source}
 															</span>
 															<span className="font-mono text-sm">
-																{formatMd(source.montant_milliards_eur)}
+																{formatMd(source.amountBillionEur)}
 															</span>
 														</div>
 														<p className="text-xs text-muted-foreground">
 															{source.description}
 														</p>
 														<p className="text-xs text-primary">
-															Qui paye : {source.qui_paye}
+															Qui paye : {source.whoPays}
 														</p>
 													</div>
 												))}
@@ -650,7 +648,7 @@ export default function Home() {
 											<h3>Cotisations et prélèvements sociaux</h3>
 										</CardTitle>
 										<CardDescription>
-											{securiteSociale.tauxCotisations.description}
+											{socialSecurity.cotisationRates.description}
 										</CardDescription>
 									</CardHeader>
 									<CardContent>
@@ -659,85 +657,79 @@ export default function Home() {
 												<h4 className="font-medium mb-3">
 													Part salariale (
 													{formatPct(
-														tauxSousLePass(
-															cotisationsSalariales,
-															financeData.simulateur,
+														rateBelowPass(
+															employeeCotisations,
+															financeData.simulator,
 														),
 													)}
 													)
 												</h4>
 												<div className="space-y-2 text-sm">
-													{securiteSociale.tauxCotisations.salariales.map(
-														(c) => (
-															<div key={c.cle} className="flex justify-between">
-																<span className="text-muted-foreground">
-																	{c.cotisation}
-																</span>
-																<span className="font-mono">
-																	{formatPct(c.taux_pct)}
-																</span>
-															</div>
-														),
-													)}
+													{socialSecurity.cotisationRates.employee.map((c) => (
+														<div key={c.key} className="flex justify-between">
+															<span className="text-muted-foreground">
+																{c.label}
+															</span>
+															<span className="font-mono">
+																{formatPct(c.ratePct)}
+															</span>
+														</div>
+													))}
 												</div>
 											</div>
 											<div>
 												<h4 className="font-medium mb-3">
 													Part patronale (
 													{formatPct(
-														tauxSousLePass(
-															cotisationsPatronales,
-															financeData.simulateur,
+														rateBelowPass(
+															employerCotisations,
+															financeData.simulator,
 														),
 													)}
 													)
 												</h4>
 												<div className="space-y-2 text-sm">
-													{securiteSociale.tauxCotisations.patronales.map(
-														(c) => (
-															<div key={c.cle} className="flex justify-between">
-																<span className="text-muted-foreground">
-																	{c.cotisation}
-																</span>
-																<span className="font-mono">
-																	{formatPct(c.taux_pct)}
-																</span>
-															</div>
-														),
-													)}
+													{socialSecurity.cotisationRates.employer.map((c) => (
+														<div key={c.key} className="flex justify-between">
+															<span className="text-muted-foreground">
+																{c.label}
+															</span>
+															<span className="font-mono">
+																{formatPct(c.ratePct)}
+															</span>
+														</div>
+													))}
 												</div>
 											</div>
 										</div>
 										<p className="mt-4 text-sm text-muted-foreground">
 											Total :{" "}
 											{formatPct(
-												tauxSousLePass(
-													cotisationsSalariales,
-													financeData.simulateur,
+												rateBelowPass(
+													employeeCotisations,
+													financeData.simulator,
 												) +
-													tauxSousLePass(
-														cotisationsPatronales,
-														financeData.simulateur,
+													rateBelowPass(
+														employerCotisations,
+														financeData.simulator,
 													),
 											)}{" "}
-											du salaire brut. {securiteSociale.tauxCotisations.note}
+											du salaire brut. {socialSecurity.cotisationRates.note}
 										</p>
 									</CardContent>
 								</Card>
-								<SourceNote sources={[sources.securite_sociale]} />
+								<SourceNote sources={[sources.socialSecurity]} />
 							</TabsContent>
 
 							{/* Collectivités locales */}
 							<TabsContent
-								value="collectivites"
+								value="local-authorities"
 								keepMounted
 								className="space-y-6 pt-4"
 							>
 								<Card className="bg-muted/30">
 									<CardContent>
-										<p className="text-sm">
-											{collectivitesLocales.description}
-										</p>
+										<p className="text-sm">{localAuthorities.description}</p>
 									</CardContent>
 								</Card>
 
@@ -748,9 +740,7 @@ export default function Home() {
 												Recettes de fonctionnement
 											</CardDescription>
 											<CardTitle className="font-mono text-lg">
-												{formatMd(
-													collectivitesLocales.recettes_fonctionnement_milliards_eur,
-												)}
+												{formatMd(localAuthorities.operatingRevenueBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -760,9 +750,7 @@ export default function Home() {
 												Dépenses de fonctionnement
 											</CardDescription>
 											<CardTitle className="font-mono text-lg">
-												{formatMd(
-													collectivitesLocales.depenses_fonctionnement_milliards_eur,
-												)}
+												{formatMd(localAuthorities.operatingSpendingBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -770,9 +758,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Investissement</CardDescription>
 											<CardTitle className="font-mono text-lg">
-												{formatMd(
-													collectivitesLocales.investissement_milliards_eur,
-												)}
+												{formatMd(localAuthorities.investmentBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -780,7 +766,7 @@ export default function Home() {
 										<CardHeader>
 											<CardDescription>Déficit</CardDescription>
 											<CardTitle className="font-mono text-lg text-destructive">
-												-{formatMd(collectivitesLocales.deficit_milliards_eur)}
+												-{formatMd(localAuthorities.deficitBillionEur)}
 											</CardTitle>
 										</CardHeader>
 									</Card>
@@ -794,7 +780,7 @@ export default function Home() {
 											</CardTitle>
 										</CardHeader>
 										<CardContent className="space-y-4">
-											{collectivitesLocales.types.map((type) => (
+											{localAuthorities.types.map((type) => (
 												<div
 													key={type.type}
 													className="space-y-1 border-b border-border pb-3 last:border-0"
@@ -802,7 +788,7 @@ export default function Home() {
 													<div className="flex justify-between items-baseline">
 														<span className="font-medium">{type.type}</span>
 														<span className="text-sm text-muted-foreground">
-															{formatNombre(type.nombre, 0)} entités
+															{formatNumber(type.count, 0)} entités
 														</span>
 													</div>
 													<div className="flex justify-between items-baseline">
@@ -810,11 +796,11 @@ export default function Home() {
 															Dépenses
 														</span>
 														<span className="font-mono text-sm">
-															{formatMd(type.depenses_milliards_eur)}
+															{formatMd(type.spendingBillionEur)}
 														</span>
 													</div>
 													<p className="text-xs text-muted-foreground">
-														{type.competences}
+														{type.responsibilities}
 													</p>
 												</div>
 											))}
@@ -827,7 +813,7 @@ export default function Home() {
 											</CardTitle>
 										</CardHeader>
 										<CardContent className="space-y-4">
-											{collectivitesLocales.recettes.map((r) => (
+											{localAuthorities.revenue.map((r) => (
 												<div
 													key={r.source}
 													className="space-y-1 border-b border-border pb-3 last:border-0"
@@ -835,7 +821,7 @@ export default function Home() {
 													<div className="flex justify-between items-baseline">
 														<span className="font-medium">{r.source}</span>
 														<span className="font-mono text-sm">
-															{formatMd(r.montant_milliards_eur)}
+															{formatMd(r.amountBillionEur)}
 														</span>
 													</div>
 													<p className="text-xs text-muted-foreground">
@@ -851,78 +837,75 @@ export default function Home() {
 										</CardContent>
 									</Card>
 								</div>
-								<SourceNote sources={[sources.collectivites]} />
+								<SourceNote sources={[sources.localAuthorities]} />
 							</TabsContent>
 						</Tabs>
 					</div>
 				</section>
 
 				{/* Prélèvements obligatoires */}
-				<section id="prelevements" className="scroll-mt-16 space-y-6">
+				<section id="levies" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
 							Prélèvements obligatoires
 						</h2>
 						<p className="text-sm text-muted-foreground">
-							{prelevementsObligatoires.description}. Total :{" "}
-							{formatMd(prelevementsObligatoires.total_milliards_eur)} (
-							{formatPct(prelevementsObligatoires.pib_pct)} du PIB)
+							{compulsoryLevies.description}. Total :{" "}
+							{formatMd(compulsoryLevies.totalBillionEur)} (
+							{formatPct(compulsoryLevies.gdpPct)} du PIB)
 						</p>
 					</div>
 					<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-						<PrelevementsChart data={prelevements} />
+						<LeviesChart data={levies} />
 						<EuropeanComparison
 							description="Taux de prélèvements obligatoires (% du PIB)"
-							countries={
-								prelevementsObligatoires.comparaisonEuropeenne.countries
-							}
-							note={prelevementsObligatoires.comparaisonEuropeenne.note}
+							countries={compulsoryLevies.europeanComparison.countries}
+							note={compulsoryLevies.europeanComparison.note}
 							highlightClassName="bg-primary"
 						/>
 					</div>
 				</section>
 
 				{/* Diagramme de flux */}
-				<section id="circuit" className="scroll-mt-16 space-y-6">
+				<section id="flow" className="scroll-mt-16 space-y-6">
 					<FlowDiagram data={flowData} />
 				</section>
 
 				{/* Dette publique */}
-				<section id="dette" className="scroll-mt-16 space-y-6">
+				<section id="debt" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
 							Évolution de la dette publique
 						</h2>
 						<p className="text-sm text-muted-foreground">
-							La dette publique atteint {formatMd(dette.montant_milliards_eur)}{" "}
-							soit {formatPct(dette.pib_pct)} du PIB. La charge des intérêts
-							représente {formatMd(dette.charge_interets_milliards_eur)}/an. Le
-							graphique retrace la dette au sens de Maastricht depuis{" "}
-							{debtEvolution[0]?.annee} (en % du PIB, montants en Md€ au
-							survol).
+							La dette publique atteint {formatMd(debt.amountBillionEur)} soit{" "}
+							{formatPct(debt.gdpPct)} du PIB. La charge des intérêts représente{" "}
+							{formatMd(debt.interestBillionEur)}/an. Le graphique retrace la
+							dette au sens de Maastricht depuis {debtHistory[0]?.year} (en % du
+							PIB, montants en Md€ au survol).
 						</p>
 					</div>
 					<div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-						<DebtEvolutionChart data={debtEvolution} />
+						<DebtEvolutionChart data={debtHistory} />
 						<EuropeanComparison
 							description="Dette publique (% du PIB)"
-							countries={dette.comparaisonEuropeenne.countries}
-							note={dette.comparaisonEuropeenne.note}
+							countries={debt.europeanComparison.countries}
+							note={debt.europeanComparison.note}
 							highlightClassName="bg-destructive"
 						/>
 					</div>
-					<SourceNote sources={[sources.dette_serie_longue, sources.dette]} />
+					<SourceNote sources={[sources.debtLongSeries, sources.debt]} />
 				</section>
 
 				{/* Évolution historique */}
-				<section id="evolution" className="scroll-mt-16 space-y-6">
+				<section id="history" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
 							Évolution des finances publiques
 						</h2>
 						<p className="text-sm text-muted-foreground">
 							Recettes et dépenses des administrations publiques en % du PIB
-							depuis {evolutionHistory[0]?.annee} (comptes nationaux
+							depuis {evolutionHistory[0]?.year} (comptes nationaux
 							INSEE/Eurostat)
 						</p>
 					</div>
@@ -939,7 +922,7 @@ export default function Home() {
 							<CardContent>
 								<EvolutionChart
 									data={evolutionHistory}
-									dernierExcedent={dernierExcedent}
+									lastSurplus={lastSurplus}
 								/>
 							</CardContent>
 						</Card>
@@ -951,7 +934,7 @@ export default function Home() {
 								<CardDescription>
 									La limite européenne est de{" "}
 									{formatPct(context.euDeficitLimitPct)} de déficit ; dernier
-									excédent : {dernierExcedent}
+									excédent : {lastSurplus}
 								</CardDescription>
 							</CardHeader>
 							<CardContent>
@@ -964,23 +947,23 @@ export default function Home() {
 					</div>
 					<SourceNote
 						sources={[
-							{ libelle: evolutionData.source, url: evolutionData.sourceUrl },
+							{ label: evolutionData.source, url: evolutionData.sourceUrl },
 						]}
 					/>
 				</section>
 
 				{/* Simulateur */}
-				<section id="simulateur" className="scroll-mt-16 space-y-6">
+				<section id="simulator" className="scroll-mt-16 space-y-6">
 					<SalarySimulator
-						salariales={cotisationsSalariales}
-						patronales={cotisationsPatronales}
-						simulateur={financeData.simulateur}
+						employee={employeeCotisations}
+						employer={employerCotisations}
+						simulator={financeData.simulator}
 					/>
-					<SourceNote sources={financeData.simulateur.sources} />
+					<SourceNote sources={financeData.simulator.sources} />
 				</section>
 
 				{/* Pédagogie */}
-				<section id="comprendre" className="scroll-mt-16 space-y-6">
+				<section id="explainer" className="scroll-mt-16 space-y-6">
 					<div>
 						<h2 className="text-2xl font-semibold">
 							Comprendre les finances publiques
@@ -998,7 +981,7 @@ export default function Home() {
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-3">
-								{pedagogie.questionsFrequentes.map((qa) => (
+								{explainer.faq.map((qa) => (
 									<details
 										key={qa.question}
 										className="group border-b border-border pb-3 last:border-0"
@@ -1010,10 +993,10 @@ export default function Home() {
 											>
 												›
 											</span>
-											{fillPlaceholders(qa.question, explainer)}
+											{fillPlaceholders(qa.question, placeholderValues)}
 										</summary>
 										<p className="mt-2 text-sm text-muted-foreground">
-											{fillPlaceholders(qa.reponse, explainer)}
+											{fillPlaceholders(qa.answer, placeholderValues)}
 										</p>
 									</details>
 								))}
@@ -1027,13 +1010,13 @@ export default function Home() {
 							</CardHeader>
 							<CardContent>
 								<dl className="space-y-3">
-									{pedagogie.glossaire.map((item) => (
-										<div key={item.terme}>
+									{explainer.glossary.map((item) => (
+										<div key={item.term}>
 											<dt className="font-mono text-sm font-semibold text-primary">
-												{item.terme}
+												{item.term}
 											</dt>
 											<dd className="text-sm text-muted-foreground">
-												{fillPlaceholders(item.definition, explainer)}
+												{fillPlaceholders(item.definition, placeholderValues)}
 											</dd>
 										</div>
 									))}
@@ -1055,7 +1038,7 @@ export default function Home() {
 								padding="sm"
 								className="pr-10 text-sm"
 							>
-								<span className="font-medium">{source.libelle}</span>
+								<span className="font-medium">{source.label}</span>
 								<span className="mt-1 block text-xs text-muted-foreground">
 									{new URL(source.url).hostname}
 								</span>

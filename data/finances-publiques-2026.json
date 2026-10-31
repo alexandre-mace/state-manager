@@ -2,534 +2,534 @@
   "year": 2026,
   "lastUpdate": "2026-10-30",
   "context": {
-    "dette_publique_milliards_eur": 3595.5,
-    "dette_pib_pct": 119.0,
-    "deficit_periode": "2026, objectif de la loi de finances",
-    "deficit_objectif": "objectif sous 3 % en 2029",
+    "publicDebtBillionEur": 3595.5,
+    "debtGdpPct": 119.0,
+    "deficitPeriod": "2026, objectif de la loi de finances",
+    "deficitTarget": "objectif sous 3 % en 2029",
     "euDeficitLimitPct": 3,
     "population": 69100000,
     "note": "La loi de finances 2026 a été promulguée le 19 février 2026 (adoption via 49.3, motions de censure rejetées), après la loi spéciale du 23 décembre 2025. La LFSS 2026 a été promulguée le 30 décembre 2025 (suspension de la réforme des retraites de 2023, gel des pensions en 2026). Déficit public 2025 constaté par l'INSEE : 152,5 Md€, soit 5,1 % du PIB."
   },
   "sources": {
-    "loi_finances_2026": {
-      "libelle": "Loi n° 2026-103 de finances pour 2026, crédits par mission (Légifrance)",
+    "loiDeFinances2026": {
+      "label": "Loi n° 2026-103 de finances pour 2026, crédits par mission (Légifrance)",
       "url": "https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000053509625"
     },
-    "budget_etat": {
-      "libelle": "Dossier du projet de loi de finances 2026 (budget.gouv.fr)",
+    "stateBudget": {
+      "label": "Dossier du projet de loi de finances 2026 (budget.gouv.fr)",
       "url": "https://www.budget.gouv.fr/reperes/loi-finances/dossiers/plf_2026"
     },
-    "securite_sociale": {
-      "libelle": "Loi de financement de la Sécurité sociale (securite-sociale.fr)",
+    "socialSecurity": {
+      "label": "Loi de financement de la Sécurité sociale (securite-sociale.fr)",
       "url": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours"
     },
-    "collectivites": {
-      "libelle": "Finances publiques locales 2025 (Cour des comptes)",
+    "localAuthorities": {
+      "label": "Finances publiques locales 2025 (Cour des comptes)",
       "url": "https://www.ccomptes.fr/fr/publications/les-finances-publiques-locales-2025-fascicule-1"
     },
-    "dette": {
-      "libelle": "Dette trimestrielle des administrations publiques (INSEE)",
+    "debt": {
+      "label": "Dette trimestrielle des administrations publiques (INSEE)",
       "url": "https://www.insee.fr/fr/statistiques/9053525"
     },
-    "comptes_2025": {
-      "libelle": "Comptes des administrations publiques 2025 (INSEE)",
+    "accounts2025": {
+      "label": "Comptes des administrations publiques 2025 (INSEE)",
       "url": "https://www.insee.fr/fr/statistiques/8956575"
     },
-    "dette_serie_longue": {
-      "libelle": "Série longue de la dette publique (INSEE)",
+    "debtLongSeries": {
+      "label": "Série longue de la dette publique (INSEE)",
       "url": "https://www.insee.fr/fr/statistiques/8988843"
     }
   },
-  "vueGlobale": {
+  "overview": {
     "description": "Les finances publiques françaises sont gérées par les administrations publiques (APU)",
-    "depenses_totales_milliards_eur": 1722,
-    "depenses_pib_pct": 57.2,
-    "periode": "2026, prévision de la loi de finances",
-    "repartition": [
+    "totalSpendingBillionEur": 1722,
+    "spendingGdpPct": 57.2,
+    "period": "2026, prévision de la loi de finances",
+    "breakdown": [
       {
-        "categorie": "Sécurité sociale",
-        "part_pct": 39,
-        "depenses_milliards_eur": 677,
+        "category": "Sécurité sociale",
+        "sharePct": 39,
+        "spendingBillionEur": 677,
         "description": "Santé, retraites, famille, chômage"
       },
       {
-        "categorie": "État",
-        "part_pct": 34,
-        "depenses_milliards_eur": 585,
+        "category": "État",
+        "sharePct": 34,
+        "spendingBillionEur": 585,
         "description": "Défense, éducation, justice, sécurité"
       },
       {
-        "categorie": "Collectivités locales",
-        "part_pct": 17,
-        "depenses_milliards_eur": 298,
+        "category": "Collectivités locales",
+        "sharePct": 17,
+        "spendingBillionEur": 298,
         "description": "Régions, départements, communes, intercommunalités"
       },
       {
-        "categorie": "Autres organismes publics",
-        "part_pct": 10,
-        "depenses_milliards_eur": 162,
+        "category": "Autres organismes publics",
+        "sharePct": 10,
+        "spendingBillionEur": 162,
         "description": "Universités, hôpitaux publics, agences, caisses de retraite complémentaire (ODAC)"
       }
     ]
   },
-  "budgetEtat": {
+  "stateBudget": {
     "description": "Le budget de l'État finance les missions régaliennes et les politiques publiques nationales",
     "note": "Chiffres de la loi de finances 2026 (promulguée le 19 février 2026) : recettes et charges nettes du budget général, après prélèvements sur recettes au profit des collectivités et de l'UE. Solde général y compris comptes spéciaux : -134,6 Md€.",
-    "notePensions": "Les crédits votés de chaque mission comprennent la contribution du ministère au CAS Pensions, le compte qui paie les retraites des fonctionnaires de l'État, retraités actuels compris. Son taux est passé de 74,28 % du traitement indiciaire brut en 2024 à 82,28 % en 2026 : cette hausse grossit les crédits des ministères sans moyens nouveaux pour leurs services. Ces pensions figurent aussi dans la branche Vieillesse de la Sécurité sociale, il ne faut donc pas additionner les deux. Montants votés en loi de finances 2026 ; part retraites tirée des projets annuels de performance du projet de loi.",
-    "recettes_nettes_milliards_eur": 325.4,
-    "depenses_milliards_eur": 458.9,
-    "deficit_milliards_eur": 133.5,
-    "recettesFiscales": {
-      "total_brut_milliards_eur": 513.8,
-      "total_net_milliards_eur": 363.6,
-      "principaux_impots": [
+    "pensionsNote": "Les crédits votés de chaque mission comprennent la contribution du ministère au CAS Pensions, le compte qui paie les retraites des fonctionnaires de l'État, retraités actuels compris. Son taux est passé de 74,28 % du traitement indiciaire brut en 2024 à 82,28 % en 2026 : cette hausse grossit les crédits des ministères sans moyens nouveaux pour leurs services. Ces pensions figurent aussi dans la branche Vieillesse de la Sécurité sociale, il ne faut donc pas additionner les deux. Montants votés en loi de finances 2026 ; part retraites tirée des projets annuels de performance du projet de loi.",
+    "netRevenueBillionEur": 325.4,
+    "spendingBillionEur": 458.9,
+    "deficitBillionEur": 133.5,
+    "taxRevenue": {
+      "grossTotalBillionEur": 513.8,
+      "netTotalBillionEur": 363.6,
+      "mainTaxes": [
         {
           "code": "TVA",
           "label": "Taxe sur la valeur ajoutée",
-          "montant_milliards_eur": 109.1,
+          "amountBillionEur": 109.1,
           "description": "Impôt indirect sur la consommation (taux normal 20 %, réduits 10 %, 5,5 % et 2,1 %) ; la Sécurité sociale et les collectivités en reçoivent d'autres parts, hors de ce montant",
-          "qui_paye": "Consommateurs (via les entreprises)"
+          "whoPays": "Consommateurs (via les entreprises)"
         },
         {
           "code": "IR",
           "label": "Impôt sur le revenu",
-          "montant_milliards_eur": 104,
+          "amountBillionEur": 104,
           "description": "Impôt progressif sur les revenus des ménages (barème de 0 % à 45 %, indexé sur l'inflation en 2026)",
-          "qui_paye": "Ménages (environ 44 % des foyers fiscaux)"
+          "whoPays": "Ménages (environ 44 % des foyers fiscaux)"
         },
         {
           "code": "IS",
           "label": "Impôt sur les sociétés",
-          "montant_milliards_eur": 59,
+          "amountBillionEur": 59,
           "description": "Impôt sur les bénéfices des entreprises (taux normal 25 %, surtaxe grandes entreprises prorogée à taux réduits en 2026)",
-          "qui_paye": "Entreprises"
+          "whoPays": "Entreprises"
         },
         {
           "code": "TICPE",
           "label": "Taxe intérieure de consommation sur les produits énergétiques",
-          "montant_milliards_eur": 18.5,
+          "amountBillionEur": 18.5,
           "description": "Taxe sur les carburants et combustibles",
-          "qui_paye": "Consommateurs de carburants"
+          "whoPays": "Consommateurs de carburants"
         },
         {
           "code": "DMTG",
           "label": "Droits de mutation à titre gratuit",
-          "montant_milliards_eur": 16,
+          "amountBillionEur": 16,
           "description": "Droits de succession et donations",
-          "qui_paye": "Héritiers et donataires"
+          "whoPays": "Héritiers et donataires"
         }
       ]
     },
-    "principalesMissions": [
+    "mainMissions": [
       {
         "mission": "Enseignement scolaire",
-        "ministere": "Éducation nationale",
-        "montant_milliards_eur": 89.6,
+        "ministry": "Éducation nationale",
+        "amountBillionEur": 89.6,
         "description": "Écoles, collèges, lycées publics et privés",
-        "dont_pensions_milliards_eur": 25.2
+        "pensionsBillionEur": 25.2
       },
       {
         "mission": "Défense",
-        "ministere": "Armées",
-        "montant_milliards_eur": 66.5,
+        "ministry": "Armées",
+        "amountBillionEur": 66.5,
         "description": "Forces armées, équipements (+6,7 Md€ hors pensions vs 2025 au projet de loi, conformément à la LPM accélérée)",
-        "dont_pensions_milliards_eur": 9.6
+        "pensionsBillionEur": 9.6
       },
       {
         "mission": "Engagements financiers de l'État",
-        "ministere": "Économie et Finances",
-        "montant_milliards_eur": 60.3,
+        "ministry": "Économie et Finances",
+        "amountBillionEur": 60.3,
         "description": "Charge de la dette (intérêts) : 59,3 Md€, en forte hausse",
-        "dont_pensions_milliards_eur": 0
+        "pensionsBillionEur": 0
       },
       {
         "mission": "Recherche et enseignement supérieur",
-        "ministere": "Enseignement supérieur",
-        "montant_milliards_eur": 31.6,
+        "ministry": "Enseignement supérieur",
+        "amountBillionEur": 31.6,
         "description": "Universités, recherche publique (les universités paient les pensions de leurs fonctionnaires sur leurs subventions : cette part n'est pas isolée ici)",
-        "dont_pensions_milliards_eur": 0.2
+        "pensionsBillionEur": 0.2
       },
       {
         "mission": "Solidarité, insertion et égalité des chances",
-        "ministere": "Solidarités",
-        "montant_milliards_eur": 31.3,
+        "ministry": "Solidarités",
+        "amountBillionEur": 31.3,
         "description": "AAH, RSA, aide sociale",
-        "dont_pensions_milliards_eur": 0
+        "pensionsBillionEur": 0
       },
       {
         "mission": "Sécurités",
-        "ministere": "Intérieur",
-        "montant_milliards_eur": 25.8,
+        "ministry": "Intérieur",
+        "amountBillionEur": 25.8,
         "description": "Police nationale, gendarmerie, sécurité civile",
-        "dont_pensions_milliards_eur": 8.3
+        "pensionsBillionEur": 8.3
       },
       {
         "mission": "Écologie et mobilités",
-        "ministere": "Transition écologique",
-        "montant_milliards_eur": 22.8,
+        "ministry": "Transition écologique",
+        "amountBillionEur": 22.8,
         "description": "Transports, environnement, énergie",
-        "dont_pensions_milliards_eur": 1.0
+        "pensionsBillionEur": 1.0
       },
       {
         "mission": "Travail et emploi",
-        "ministere": "Travail",
-        "montant_milliards_eur": 20.8,
+        "ministry": "Travail",
+        "amountBillionEur": 20.8,
         "description": "France Travail, formation professionnelle, apprentissage",
-        "dont_pensions_milliards_eur": 0.3
+        "pensionsBillionEur": 0.3
       },
       {
         "mission": "Justice",
-        "ministere": "Justice",
-        "montant_milliards_eur": 13,
+        "ministry": "Justice",
+        "amountBillionEur": 13,
         "description": "Tribunaux, prisons, aide juridictionnelle",
-        "dont_pensions_milliards_eur": 2.4
+        "pensionsBillionEur": 2.4
       },
       {
         "mission": "Culture",
-        "ministere": "Culture",
-        "montant_milliards_eur": 3.7,
+        "ministry": "Culture",
+        "amountBillionEur": 3.7,
         "description": "Patrimoine, création, médias",
-        "dont_pensions_milliards_eur": 0.2
+        "pensionsBillionEur": 0.2
       }
     ]
   },
-  "securiteSociale": {
+  "socialSecurity": {
     "description": "La Sécurité sociale couvre les risques sociaux : maladie, vieillesse, famille, accidents du travail et autonomie",
     "note": "LFSS 2026 promulguée le 30 décembre 2025. Mesures majeures : suspension de la réforme des retraites de 2023 et gel des pensions en 2026. Déficit 2025 constaté : 21,6 Md€.",
-    "recettes_milliards_eur": 664.8,
-    "depenses_milliards_eur": 684.2,
-    "deficit_milliards_eur": 19.4,
+    "revenueBillionEur": 664.8,
+    "spendingBillionEur": 684.2,
+    "deficitBillionEur": 19.4,
     "branches": [
       {
-        "branche": "Maladie",
-        "depenses_milliards_eur": 274.4,
+        "branch": "Maladie",
+        "spendingBillionEur": 274.4,
         "description": "ONDAM : hôpitaux, médecine de ville, médicaments",
-        "evolution": "+3,1 % vs 2025"
+        "change": "+3,1 % vs 2025"
       },
       {
-        "branche": "Vieillesse",
-        "depenses_milliards_eur": 310,
+        "branch": "Vieillesse",
+        "spendingBillionEur": 310,
         "description": "Pensions de retraite, tous régimes de base (CNAV, MSA, fonctionnaires de l'État, régimes spéciaux)"
       },
       {
-        "branche": "Famille",
-        "depenses_milliards_eur": 59.7,
+        "branch": "Famille",
+        "spendingBillionEur": 59.7,
         "description": "Allocations familiales, garde d'enfants"
       },
       {
-        "branche": "Accidents du travail",
-        "depenses_milliards_eur": 17,
+        "branch": "Accidents du travail",
+        "spendingBillionEur": 17,
         "description": "Indemnisation des accidents et maladies professionnelles"
       },
       {
-        "branche": "Autonomie",
-        "depenses_milliards_eur": 43.6,
+        "branch": "Autonomie",
+        "spendingBillionEur": 43.6,
         "description": "Dépendance, APA, aide aux personnes âgées/handicapées"
       }
     ],
-    "financement": {
+    "funding": {
       "description": "La Sécu est financée par les cotisations sociales et la CSG",
       "sources": [
         {
           "source": "Cotisations sociales",
-          "montant_milliards_eur": 420,
+          "amountBillionEur": 420,
           "description": "Part salariale + part patronale sur les salaires",
-          "qui_paye": "Employeurs et salariés"
+          "whoPays": "Employeurs et salariés"
         },
         {
           "source": "CSG",
-          "montant_milliards_eur": 157,
+          "amountBillionEur": 157,
           "description": "Contribution Sociale Généralisée (9,2 % sur revenus d'activité)",
-          "qui_paye": "Tous les revenus (travail, capital, remplacement)"
+          "whoPays": "Tous les revenus (travail, capital, remplacement)"
         },
         {
           "source": "Impôts et taxes affectés",
-          "montant_milliards_eur": 82,
+          "amountBillionEur": 82,
           "description": "TVA sociale, taxes tabac/alcool, etc.",
-          "qui_paye": "Consommateurs"
+          "whoPays": "Consommateurs"
         }
       ]
     },
-    "tauxCotisations": {
+    "cotisationRates": {
       "description": "Taux 2026 sur le salaire brut d'un salarié non-cadre, entreprise de 50 salariés ou plus. La CSG et la CRDS portent sur 98,25 % du brut, d'où un total salarial un peu inférieur à la somme des taux. Les totaux portent sur un salaire sous le plafond de la Sécurité sociale (PASS, 48 060 € par an)",
-      "salariales": [
+      "employee": [
         {
-          "cle": "vieillesse_plafonnee_sal",
-          "cotisation": "Assurance vieillesse plafonnée (jusqu'au PASS)",
-          "taux_pct": 6.9,
+          "key": "cappedOldAgeEmployee",
+          "label": "Assurance vieillesse plafonnée (jusqu'au PASS)",
+          "ratePct": 6.9,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "vieillesse_deplafonnee_sal",
-          "cotisation": "Assurance vieillesse déplafonnée",
-          "taux_pct": 0.4,
-          "assiette": "totale",
-          "poste": "retraite"
+          "key": "uncappedOldAgeEmployee",
+          "label": "Assurance vieillesse déplafonnée",
+          "ratePct": 0.4,
+          "assiette": "total",
+          "destination": "pension"
         },
         {
-          "cle": "agirc_arrco_t1_sal",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
-          "taux_pct": 3.15,
+          "key": "agircArrcoT1Employee",
+          "label": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
+          "ratePct": 3.15,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "ceg_t1_sal",
-          "cotisation": "Contribution d'équilibre général (CEG), tranche 1",
-          "taux_pct": 0.86,
+          "key": "cegT1Employee",
+          "label": "Contribution d'équilibre général (CEG), tranche 1",
+          "ratePct": 0.86,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "agirc_arrco_t2_sal",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
-          "taux_pct": 8.64,
+          "key": "agircArrcoT2Employee",
+          "label": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "ratePct": 8.64,
           "assiette": "tranche2",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "ceg_t2_sal",
-          "cotisation": "CEG, tranche 2",
-          "taux_pct": 1.08,
+          "key": "cegT2Employee",
+          "label": "CEG, tranche 2",
+          "ratePct": 1.08,
           "assiette": "tranche2",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "cet_sal",
-          "cotisation": "Contribution d'équilibre technique (au-delà du PASS)",
-          "taux_pct": 0.14,
-          "assiette": "tranches_1_2",
-          "poste": "retraite",
-          "si_au_dela_pass": true
+          "key": "cetEmployee",
+          "label": "Contribution d'équilibre technique (au-delà du PASS)",
+          "ratePct": 0.14,
+          "assiette": "tranches12",
+          "destination": "pension",
+          "onlyAbovePass": true
         },
         {
-          "cle": "csg_deductible",
-          "cotisation": "CSG déductible",
-          "taux_pct": 6.8,
+          "key": "csgDeductible",
+          "label": "CSG déductible",
+          "ratePct": 6.8,
           "assiette": "csg",
-          "poste": "csg"
+          "destination": "csg"
         },
         {
-          "cle": "csg_non_deductible_crds",
-          "cotisation": "CSG non déductible + CRDS",
-          "taux_pct": 2.9,
+          "key": "csgNonDeductibleCrds",
+          "label": "CSG non déductible + CRDS",
+          "ratePct": 2.9,
           "assiette": "csg",
-          "poste": "csg",
-          "non_deductible": true
+          "destination": "csg",
+          "nonDeductible": true
         }
       ],
-      "patronales": [
+      "employer": [
         {
-          "cle": "maladie_pat",
-          "cotisation": "Assurance maladie",
-          "taux_pct": 13,
-          "assiette": "totale",
-          "poste": "sante"
+          "key": "healthEmployer",
+          "label": "Assurance maladie",
+          "ratePct": 13,
+          "assiette": "total",
+          "destination": "health"
         },
         {
-          "cle": "vieillesse_plafonnee_pat",
-          "cotisation": "Assurance vieillesse plafonnée (jusqu'au PASS)",
-          "taux_pct": 8.55,
+          "key": "cappedOldAgeEmployer",
+          "label": "Assurance vieillesse plafonnée (jusqu'au PASS)",
+          "ratePct": 8.55,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "vieillesse_deplafonnee_pat",
-          "cotisation": "Assurance vieillesse déplafonnée",
-          "taux_pct": 2.11,
-          "assiette": "totale",
-          "poste": "retraite"
+          "key": "uncappedOldAgeEmployer",
+          "label": "Assurance vieillesse déplafonnée",
+          "ratePct": 2.11,
+          "assiette": "total",
+          "destination": "pension"
         },
         {
-          "cle": "famille_pat",
-          "cotisation": "Allocations familiales",
-          "taux_pct": 5.25,
-          "assiette": "totale",
-          "poste": "famille"
+          "key": "familyEmployer",
+          "label": "Allocations familiales",
+          "ratePct": 5.25,
+          "assiette": "total",
+          "destination": "family"
         },
         {
-          "cle": "accident_travail_pat",
-          "cotisation": "Accidents du travail (taux moyen national)",
-          "taux_pct": 2.08,
-          "assiette": "totale",
-          "poste": "autres"
+          "key": "workAccidentEmployer",
+          "label": "Accidents du travail (taux moyen national)",
+          "ratePct": 2.08,
+          "assiette": "total",
+          "destination": "other"
         },
         {
-          "cle": "chomage_pat",
-          "cotisation": "Assurance chômage (jusqu'à 4 PASS)",
-          "taux_pct": 4,
-          "assiette": "plafond_chomage",
-          "poste": "chomage"
+          "key": "unemploymentEmployer",
+          "label": "Assurance chômage (jusqu'à 4 PASS)",
+          "ratePct": 4,
+          "assiette": "unemploymentCeiling",
+          "destination": "unemployment"
         },
         {
-          "cle": "ags_pat",
-          "cotisation": "Garantie des salaires (AGS)",
-          "taux_pct": 0.25,
-          "assiette": "plafond_chomage",
-          "poste": "chomage"
+          "key": "agsEmployer",
+          "label": "Garantie des salaires (AGS)",
+          "ratePct": 0.25,
+          "assiette": "unemploymentCeiling",
+          "destination": "unemployment"
         },
         {
-          "cle": "agirc_arrco_t1_pat",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
-          "taux_pct": 4.72,
+          "key": "agircArrcoT1Employer",
+          "label": "Retraite complémentaire AGIRC-ARRCO, tranche 1",
+          "ratePct": 4.72,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "ceg_t1_pat",
-          "cotisation": "CEG, tranche 1",
-          "taux_pct": 1.29,
+          "key": "cegT1Employer",
+          "label": "CEG, tranche 1",
+          "ratePct": 1.29,
           "assiette": "tranche1",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "agirc_arrco_t2_pat",
-          "cotisation": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
-          "taux_pct": 12.95,
+          "key": "agircArrcoT2Employer",
+          "label": "Retraite complémentaire AGIRC-ARRCO, tranche 2 (de 1 à 8 PASS)",
+          "ratePct": 12.95,
           "assiette": "tranche2",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "ceg_t2_pat",
-          "cotisation": "CEG, tranche 2",
-          "taux_pct": 1.62,
+          "key": "cegT2Employer",
+          "label": "CEG, tranche 2",
+          "ratePct": 1.62,
           "assiette": "tranche2",
-          "poste": "retraite"
+          "destination": "pension"
         },
         {
-          "cle": "cet_pat",
-          "cotisation": "Contribution d'équilibre technique (au-delà du PASS)",
-          "taux_pct": 0.21,
-          "assiette": "tranches_1_2",
-          "poste": "retraite",
-          "si_au_dela_pass": true
+          "key": "cetEmployer",
+          "label": "Contribution d'équilibre technique (au-delà du PASS)",
+          "ratePct": 0.21,
+          "assiette": "tranches12",
+          "destination": "pension",
+          "onlyAbovePass": true
         },
         {
-          "cle": "fnal_pat",
-          "cotisation": "Aide au logement (FNAL, 50 salariés ou plus)",
-          "taux_pct": 0.5,
-          "assiette": "totale",
-          "poste": "autres"
+          "key": "fnalEmployer",
+          "label": "Aide au logement (FNAL, 50 salariés ou plus)",
+          "ratePct": 0.5,
+          "assiette": "total",
+          "destination": "other"
         },
         {
-          "cle": "csa_pat",
-          "cotisation": "Contribution solidarité autonomie",
-          "taux_pct": 0.3,
-          "assiette": "totale",
-          "poste": "autres"
+          "key": "csaEmployer",
+          "label": "Contribution solidarité autonomie",
+          "ratePct": 0.3,
+          "assiette": "total",
+          "destination": "other"
         }
       ],
       "note": "Avant allègement : l'allègement général (réduction générale dégressive unique) efface jusqu'à 40,21 points de cotisations patronales au SMIC et s'éteint à 3 SMIC. Hors mutuelle, prévoyance, formation professionnelle et taxe d'apprentissage."
     }
   },
-  "collectivitesLocales": {
+  "localAuthorities": {
     "description": "Les collectivités territoriales gèrent les services publics locaux",
-    "recettes_fonctionnement_milliards_eur": 260,
-    "depenses_fonctionnement_milliards_eur": 225,
-    "investissement_milliards_eur": 75,
-    "deficit_milliards_eur": 11.4,
-    "dgf_milliards_eur": 27.4,
+    "operatingRevenueBillionEur": 260,
+    "operatingSpendingBillionEur": 225,
+    "investmentBillionEur": 75,
+    "deficitBillionEur": 11.4,
+    "dgfBillionEur": 27.4,
     "types": [
       {
         "type": "Communes",
-        "nombre": 34945,
-        "depenses_milliards_eur": 105,
-        "competences": "Urbanisme, écoles primaires, voirie communale, état civil"
+        "count": 34945,
+        "spendingBillionEur": 105,
+        "responsibilities": "Urbanisme, écoles primaires, voirie communale, état civil"
       },
       {
         "type": "Intercommunalités (EPCI)",
-        "nombre": 1254,
-        "depenses_milliards_eur": 65,
-        "competences": "Transports, déchets, eau, développement économique"
+        "count": 1254,
+        "spendingBillionEur": 65,
+        "responsibilities": "Transports, déchets, eau, développement économique"
       },
       {
         "type": "Départements",
-        "nombre": 101,
-        "depenses_milliards_eur": 85,
-        "competences": "RSA, APA, collèges, routes départementales, protection de l'enfance"
+        "count": 101,
+        "spendingBillionEur": 85,
+        "responsibilities": "RSA, APA, collèges, routes départementales, protection de l'enfance"
       },
       {
         "type": "Régions",
-        "nombre": 18,
-        "depenses_milliards_eur": 43,
-        "competences": "Lycées, TER, formation professionnelle, développement économique"
+        "count": 18,
+        "spendingBillionEur": 43,
+        "responsibilities": "Lycées, TER, formation professionnelle, développement économique"
       }
     ],
-    "recettes": [
+    "revenue": [
       {
         "source": "Impôts locaux",
-        "montant_milliards_eur": 90,
+        "amountBillionEur": 90,
         "description": "Taxe foncière, CFE, CVAE",
         "note": "La taxe d'habitation sur les résidences principales a été progressivement supprimée entre 2018 et 2023"
       },
       {
         "source": "Dotations de l'État",
-        "montant_milliards_eur": 55,
+        "amountBillionEur": 55,
         "description": "DGF et autres concours"
       },
       {
         "source": "Fiscalité transférée",
-        "montant_milliards_eur": 60,
+        "amountBillionEur": 60,
         "description": "Part de TVA, DMTO (droits de mutation)"
       },
       {
         "source": "Autres recettes",
-        "montant_milliards_eur": 55,
+        "amountBillionEur": 55,
         "description": "Redevances, subventions, emprunts"
       }
     ]
   },
-  "prelevementsObligatoires": {
+  "compulsoryLevies": {
     "description": "Ensemble des impôts et cotisations prélevés par les administrations publiques (estimation 2026 ; taux 2025 constaté par l'INSEE : 43,6 % du PIB)",
-    "total_milliards_eur": 1312,
-    "pib_pct": 43.6,
-    "periode": "Montant estimé pour 2026, taux 2025 constaté par l'INSEE",
-    "repartition": [
+    "totalBillionEur": 1312,
+    "gdpPct": 43.6,
+    "period": "Montant estimé pour 2026, taux 2025 constaté par l'INSEE",
+    "breakdown": [
       {
         "type": "Cotisations sociales",
-        "montant_milliards_eur": 420,
-        "pct_total": 32,
+        "amountBillionEur": 420,
+        "shareOfTotalPct": 32,
         "description": "Cotisations salariales et patronales"
       },
       {
         "type": "TVA",
-        "montant_milliards_eur": 210,
-        "pct_total": 16,
+        "amountBillionEur": 210,
+        "shareOfTotalPct": 16,
         "description": "Taxe sur la valeur ajoutée"
       },
       {
         "type": "CSG-CRDS",
-        "montant_milliards_eur": 166,
-        "pct_total": 12.7,
+        "amountBillionEur": 166,
+        "shareOfTotalPct": 12.7,
         "description": "Prélèvements sociaux sur tous les revenus"
       },
       {
         "type": "Impôt sur le revenu",
-        "montant_milliards_eur": 104,
-        "pct_total": 7.9,
+        "amountBillionEur": 104,
+        "shareOfTotalPct": 7.9,
         "description": "IR des ménages"
       },
       {
         "type": "Impôt sur les sociétés",
-        "montant_milliards_eur": 59,
-        "pct_total": 4.5,
+        "amountBillionEur": 59,
+        "shareOfTotalPct": 4.5,
         "description": "IS des entreprises"
       },
       {
         "type": "Taxes locales",
-        "montant_milliards_eur": 90,
-        "pct_total": 6.9,
+        "amountBillionEur": 90,
+        "shareOfTotalPct": 6.9,
         "description": "Taxe foncière, CFE, etc."
       },
       {
         "type": "Autres taxes",
-        "montant_milliards_eur": 263,
-        "pct_total": 20,
+        "amountBillionEur": 263,
+        "shareOfTotalPct": 20,
         "description": "TICPE, droits de succession, taxes sur les assurances, taxes diverses"
       }
     ],
-    "comparaisonEuropeenne": {
+    "europeanComparison": {
       "note": "Données Eurostat 2024 (définition plus large que celle de l'INSEE, qui mesure 43,6 % du PIB pour la France en 2025). La France reste le 2e pays de l'UE derrière le Danemark.",
       "countries": [
         {
@@ -565,266 +565,266 @@
       ]
     }
   },
-  "dette": {
-    "montant_milliards_eur": 3595.5,
-    "pib_pct": 119.0,
-    "periode": "Fin du 2e trimestre 2026 (INSEE)",
-    "rang_ue": "3e de l'UE fin 2025",
-    "evolution": [
+  "debt": {
+    "amountBillionEur": 3595.5,
+    "gdpPct": 119.0,
+    "period": "Fin du 2e trimestre 2026 (INSEE)",
+    "euRank": "3e de l'UE fin 2025",
+    "history": [
       {
-        "annee": 1978,
-        "montant_milliards_eur": 74.5,
-        "pib_pct": 21.6,
+        "year": 1978,
+        "amountBillionEur": 74.5,
+        "gdpPct": 21.6,
         "note": "Début de la série INSEE"
       },
       {
-        "annee": 1979,
-        "montant_milliards_eur": 85.1,
-        "pib_pct": 21.6
+        "year": 1979,
+        "amountBillionEur": 85.1,
+        "gdpPct": 21.6
       },
       {
-        "annee": 1980,
-        "montant_milliards_eur": 95.3,
-        "pib_pct": 21.3
+        "year": 1980,
+        "amountBillionEur": 95.3,
+        "gdpPct": 21.3
       },
       {
-        "annee": 1981,
-        "montant_milliards_eur": 114.3,
-        "pib_pct": 22.6
+        "year": 1981,
+        "amountBillionEur": 114.3,
+        "gdpPct": 22.6
       },
       {
-        "annee": 1982,
-        "montant_milliards_eur": 151.8,
-        "pib_pct": 26.2
+        "year": 1982,
+        "amountBillionEur": 151.8,
+        "gdpPct": 26.2
       },
       {
-        "annee": 1983,
-        "montant_milliards_eur": 178.3,
-        "pib_pct": 27.7
+        "year": 1983,
+        "amountBillionEur": 178.3,
+        "gdpPct": 27.7
       },
       {
-        "annee": 1984,
-        "montant_milliards_eur": 211.2,
-        "pib_pct": 30.2
+        "year": 1984,
+        "amountBillionEur": 211.2,
+        "gdpPct": 30.2
       },
       {
-        "annee": 1985,
-        "montant_milliards_eur": 238.8,
-        "pib_pct": 31.9
+        "year": 1985,
+        "amountBillionEur": 238.8,
+        "gdpPct": 31.9
       },
       {
-        "annee": 1986,
-        "montant_milliards_eur": 261.7,
-        "pib_pct": 32.4
+        "year": 1986,
+        "amountBillionEur": 261.7,
+        "gdpPct": 32.4
       },
       {
-        "annee": 1987,
-        "montant_milliards_eur": 295,
-        "pib_pct": 34.8
+        "year": 1987,
+        "amountBillionEur": 295,
+        "gdpPct": 34.8
       },
       {
-        "annee": 1988,
-        "montant_milliards_eur": 318.2,
-        "pib_pct": 34.7
+        "year": 1988,
+        "amountBillionEur": 318.2,
+        "gdpPct": 34.7
       },
       {
-        "annee": 1989,
-        "montant_milliards_eur": 351.3,
-        "pib_pct": 35.5
+        "year": 1989,
+        "amountBillionEur": 351.3,
+        "gdpPct": 35.5
       },
       {
-        "annee": 1990,
-        "montant_milliards_eur": 384.1,
-        "pib_pct": 36.8
+        "year": 1990,
+        "amountBillionEur": 384.1,
+        "gdpPct": 36.8
       },
       {
-        "annee": 1991,
-        "montant_milliards_eur": 409,
-        "pib_pct": 37.8
+        "year": 1991,
+        "amountBillionEur": 409,
+        "gdpPct": 37.8
       },
       {
-        "annee": 1992,
-        "montant_milliards_eur": 467.7,
-        "pib_pct": 41.7
+        "year": 1992,
+        "amountBillionEur": 467.7,
+        "gdpPct": 41.7
       },
       {
-        "annee": 1993,
-        "montant_milliards_eur": 546.5,
-        "pib_pct": 48.2,
+        "year": 1993,
+        "amountBillionEur": 546.5,
+        "gdpPct": 48.2,
         "note": "Récession"
       },
       {
-        "annee": 1994,
-        "montant_milliards_eur": 605,
-        "pib_pct": 51.6
+        "year": 1994,
+        "amountBillionEur": 605,
+        "gdpPct": 51.6
       },
       {
-        "annee": 1995,
-        "montant_milliards_eur": 701.6,
-        "pib_pct": 57.8
+        "year": 1995,
+        "amountBillionEur": 701.6,
+        "gdpPct": 57.8
       },
       {
-        "annee": 1996,
-        "montant_milliards_eur": 755.6,
-        "pib_pct": 60.6
+        "year": 1996,
+        "amountBillionEur": 755.6,
+        "gdpPct": 60.6
       },
       {
-        "annee": 1997,
-        "montant_milliards_eur": 799.4,
-        "pib_pct": 62
+        "year": 1997,
+        "amountBillionEur": 799.4,
+        "gdpPct": 62
       },
       {
-        "annee": 1998,
-        "montant_milliards_eur": 836.1,
-        "pib_pct": 62.1
+        "year": 1998,
+        "amountBillionEur": 836.1,
+        "gdpPct": 62.1
       },
       {
-        "annee": 1999,
-        "montant_milliards_eur": 856.9,
-        "pib_pct": 61.4
+        "year": 1999,
+        "amountBillionEur": 856.9,
+        "gdpPct": 61.4
       },
       {
-        "annee": 2000,
-        "montant_milliards_eur": 880,
-        "pib_pct": 59.7
+        "year": 2000,
+        "amountBillionEur": 880,
+        "gdpPct": 59.7
       },
       {
-        "annee": 2001,
-        "montant_milliards_eur": 907.7,
-        "pib_pct": 59.3
+        "year": 2001,
+        "amountBillionEur": 907.7,
+        "gdpPct": 59.3
       },
       {
-        "annee": 2002,
-        "montant_milliards_eur": 966.8,
-        "pib_pct": 61.3
+        "year": 2002,
+        "amountBillionEur": 966.8,
+        "gdpPct": 61.3
       },
       {
-        "annee": 2003,
-        "montant_milliards_eur": 1060.4,
-        "pib_pct": 65.4
+        "year": 2003,
+        "amountBillionEur": 1060.4,
+        "gdpPct": 65.4
       },
       {
-        "annee": 2004,
-        "montant_milliards_eur": 1134.3,
-        "pib_pct": 66.9
+        "year": 2004,
+        "amountBillionEur": 1134.3,
+        "gdpPct": 66.9
       },
       {
-        "annee": 2005,
-        "montant_milliards_eur": 1201.5,
-        "pib_pct": 68.2
+        "year": 2005,
+        "amountBillionEur": 1201.5,
+        "gdpPct": 68.2
       },
       {
-        "annee": 2006,
-        "montant_milliards_eur": 1207.3,
-        "pib_pct": 65.4
+        "year": 2006,
+        "amountBillionEur": 1207.3,
+        "gdpPct": 65.4
       },
       {
-        "annee": 2007,
-        "montant_milliards_eur": 1268.9,
-        "pib_pct": 65.5
+        "year": 2007,
+        "amountBillionEur": 1268.9,
+        "gdpPct": 65.5
       },
       {
-        "annee": 2008,
-        "montant_milliards_eur": 1389.4,
-        "pib_pct": 69.8
+        "year": 2008,
+        "amountBillionEur": 1389.4,
+        "gdpPct": 69.8
       },
       {
-        "annee": 2009,
-        "montant_milliards_eur": 1627.2,
-        "pib_pct": 84.1,
+        "year": 2009,
+        "amountBillionEur": 1627.2,
+        "gdpPct": 84.1,
         "note": "Crise financière"
       },
       {
-        "annee": 2010,
-        "montant_milliards_eur": 1722.2,
-        "pib_pct": 86.3
+        "year": 2010,
+        "amountBillionEur": 1722.2,
+        "gdpPct": 86.3
       },
       {
-        "annee": 2011,
-        "montant_milliards_eur": 1830.1,
-        "pib_pct": 88.7
+        "year": 2011,
+        "amountBillionEur": 1830.1,
+        "gdpPct": 88.7
       },
       {
-        "annee": 2012,
-        "montant_milliards_eur": 1915.8,
-        "pib_pct": 91.7
+        "year": 2012,
+        "amountBillionEur": 1915.8,
+        "gdpPct": 91.7
       },
       {
-        "annee": 2013,
-        "montant_milliards_eur": 2005,
-        "pib_pct": 94.6
+        "year": 2013,
+        "amountBillionEur": 2005,
+        "gdpPct": 94.6
       },
       {
-        "annee": 2014,
-        "montant_milliards_eur": 2071.1,
-        "pib_pct": 96.2
+        "year": 2014,
+        "amountBillionEur": 2071.1,
+        "gdpPct": 96.2
       },
       {
-        "annee": 2015,
-        "montant_milliards_eur": 2134.9,
-        "pib_pct": 97
+        "year": 2015,
+        "amountBillionEur": 2134.9,
+        "gdpPct": 97
       },
       {
-        "annee": 2016,
-        "montant_milliards_eur": 2190.5,
-        "pib_pct": 98.2
+        "year": 2016,
+        "amountBillionEur": 2190.5,
+        "gdpPct": 98.2
       },
       {
-        "annee": 2017,
-        "montant_milliards_eur": 2263.3,
-        "pib_pct": 98.8
+        "year": 2017,
+        "amountBillionEur": 2263.3,
+        "gdpPct": 98.8
       },
       {
-        "annee": 2018,
-        "montant_milliards_eur": 2320.7,
-        "pib_pct": 98.5
+        "year": 2018,
+        "amountBillionEur": 2320.7,
+        "gdpPct": 98.5
       },
       {
-        "annee": 2019,
-        "montant_milliards_eur": 2387.4,
-        "pib_pct": 98.2
+        "year": 2019,
+        "amountBillionEur": 2387.4,
+        "gdpPct": 98.2
       },
       {
-        "annee": 2020,
-        "montant_milliards_eur": 2663.9,
-        "pib_pct": 114.9,
+        "year": 2020,
+        "amountBillionEur": 2663.9,
+        "gdpPct": 114.9,
         "note": "COVID-19"
       },
       {
-        "annee": 2021,
-        "montant_milliards_eur": 2828.8,
-        "pib_pct": 112.8
+        "year": 2021,
+        "amountBillionEur": 2828.8,
+        "gdpPct": 112.8
       },
       {
-        "annee": 2022,
-        "montant_milliards_eur": 2955.6,
-        "pib_pct": 111.4
+        "year": 2022,
+        "amountBillionEur": 2955.6,
+        "gdpPct": 111.4
       },
       {
-        "annee": 2023,
-        "montant_milliards_eur": 3103.2,
-        "pib_pct": 109.5
+        "year": 2023,
+        "amountBillionEur": 3103.2,
+        "gdpPct": 109.5
       },
       {
-        "annee": 2024,
-        "montant_milliards_eur": 3306.1,
-        "pib_pct": 112.6
+        "year": 2024,
+        "amountBillionEur": 3306.1,
+        "gdpPct": 112.6
       },
       {
-        "annee": 2025,
-        "montant_milliards_eur": 3460.5,
-        "pib_pct": 115.6,
+        "year": 2025,
+        "amountBillionEur": 3460.5,
+        "gdpPct": 115.6,
         "note": "Fin 2025"
       },
       {
-        "annee": 2026,
-        "montant_milliards_eur": 3595.5,
-        "pib_pct": 119.0,
+        "year": 2026,
+        "amountBillionEur": 3595.5,
+        "gdpPct": 119.0,
         "note": "T2 2026"
       }
     ],
-    "charge_interets_milliards_eur": 59.3,
-    "comparaisonEuropeenne": {
+    "interestBillionEur": 59.3,
+    "europeanComparison": {
       "note": "France = 3e pays le plus endetté de l'UE (données Eurostat fin 2025)",
       "countries": [
         {
@@ -860,305 +860,305 @@
       ]
     }
   },
-  "destinationDepenses": {
+  "spendingByFunction": {
     "description": "Pour 1 000 € de dépenses publiques, voici comment ils sont répartis (ventilation fonctionnelle COFOG)",
-    "base_milliards_eur": 1722,
+    "baseBillionEur": 1722,
     "source": "Proportions basées sur la classification COFOG 2024 (FIPECO/INSEE)",
-    "postes": [
+    "items": [
       {
         "label": "Retraites",
-        "montant_eur": 260,
+        "amountEur": 260,
         "icon": "Clock",
         "description": "Pensions, réversion, minimum vieillesse"
       },
       {
         "label": "Santé",
-        "montant_eur": 207,
+        "amountEur": 207,
         "icon": "Heart",
         "description": "Hôpitaux, médecine de ville, médicaments"
       },
       {
         "label": "Enseignement & recherche",
-        "montant_eur": 101,
+        "amountEur": 101,
         "icon": "GraduationCap",
         "description": "Primaire, secondaire, supérieur, recherche publique"
       },
       {
         "label": "Affaires économiques",
-        "montant_eur": 99,
+        "amountEur": 99,
         "icon": "Briefcase",
         "description": "Transports, aides aux entreprises, énergie, agriculture"
       },
       {
         "label": "Administration générale",
-        "montant_eur": 62,
+        "amountEur": 62,
         "icon": "Building2",
         "description": "Fonctionnement des administrations centrales et locales"
       },
       {
         "label": "Solidarité & chômage",
-        "montant_eur": 51,
+        "amountEur": 51,
         "icon": "HandHelping",
         "description": "Minima sociaux, RSA, indemnisation chômage, insertion"
       },
       {
         "label": "Famille",
-        "montant_eur": 40,
+        "amountEur": 40,
         "icon": "Baby",
         "description": "Allocations familiales, garde d'enfants"
       },
       {
         "label": "Logement",
-        "montant_eur": 38,
+        "amountEur": 38,
         "icon": "Home",
         "description": "Équipements collectifs, APL, aménagement du territoire"
       },
       {
         "label": "Charge de la dette",
-        "montant_eur": 35,
+        "amountEur": 35,
         "icon": "TrendingDown",
         "description": "Intérêts sur la dette publique (poste en forte hausse depuis 2024)"
       },
       {
         "label": "Défense",
-        "montant_eur": 32,
+        "amountEur": 32,
         "icon": "Shield",
         "description": "Forces armées, équipements militaires"
       },
       {
         "label": "Sécurité & justice",
-        "montant_eur": 31,
+        "amountEur": 31,
         "icon": "Scale",
         "description": "Police, gendarmerie, tribunaux, prisons"
       },
       {
         "label": "Culture & loisirs",
-        "montant_eur": 26,
+        "amountEur": 26,
         "icon": "Palette",
         "description": "Patrimoine, création, médias, sports"
       },
       {
         "label": "Environnement",
-        "montant_eur": 18,
+        "amountEur": 18,
         "icon": "Leaf",
         "description": "Gestion des déchets, eau, biodiversité, pollution"
       }
     ]
   },
-  "retourCitoyen": {
+  "citizenReturn": {
     "description": "Ce que les dépenses publiques financent concrètement pour chaque citoyen",
     "services": [
       {
         "service": "Éducation",
-        "valeur": "~8 500 €/élève/an",
+        "value": "~8 500 €/élève/an",
         "detail": "De la maternelle au lycée, gratuit",
         "icon": "GraduationCap"
       },
       {
         "service": "Santé",
-        "valeur": "~4 000 €/personne/an",
+        "value": "~4 000 €/personne/an",
         "detail": "Consultations, hospitalisations, médicaments",
         "icon": "Heart"
       },
       {
         "service": "Retraite",
-        "valeur": "~1 550 €/mois net moyen",
+        "value": "~1 550 €/mois net moyen",
         "detail": "17,2M de retraités",
         "icon": "Clock"
       },
       {
         "service": "Routes",
-        "valeur": "1,1M km",
+        "value": "1,1M km",
         "detail": "Réseau routier public entretenu",
         "icon": "Map"
       },
       {
         "service": "Sécurité",
-        "valeur": "250 000 policiers/gendarmes",
+        "value": "250 000 policiers/gendarmes",
         "detail": "+ pompiers, sécurité civile",
         "icon": "Shield"
       },
       {
         "service": "Justice",
-        "valeur": "9 000 magistrats",
+        "value": "9 000 magistrats",
         "detail": "Tribunaux, aide juridictionnelle",
         "icon": "Scale"
       },
       {
         "service": "Famille",
-        "valeur": "~2 800 €/an/enfant moyen",
+        "value": "~2 800 €/an/enfant moyen",
         "detail": "Allocations familiales, aides garde (branche famille CNAF)",
         "icon": "Users"
       },
       {
         "service": "Chômage",
-        "valeur": "~1 200 €/mois moyen",
+        "value": "~1 200 €/mois moyen",
         "detail": "Indemnisation des demandeurs d'emploi",
         "icon": "Briefcase"
       }
     ]
   },
-  "pedagogie": {
-    "questionsFrequentes": [
+  "explainer": {
+    "faq": [
       {
         "question": "Quelle est la différence entre impôt et cotisation sociale ?",
-        "reponse": "L'impôt finance les dépenses générales de l'État (éducation, défense, justice) sans contrepartie directe. Les cotisations sociales financent la protection sociale (santé, retraite, chômage) et ouvrent des droits pour celui qui cotise."
+        "answer": "L'impôt finance les dépenses générales de l'État (éducation, défense, justice) sans contrepartie directe. Les cotisations sociales financent la protection sociale (santé, retraite, chômage) et ouvrent des droits pour celui qui cotise."
       },
       {
         "question": "Pourquoi y a-t-il un déficit ?",
-        "reponse": "Le déficit apparaît quand les dépenses dépassent les recettes. En {previousYear}, le déficit public constaté a atteint {previousDeficit} ({previousDeficitPct} du PIB) ; la loi de finances {year} vise {deficit} ({deficitPct} du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
+        "answer": "Le déficit apparaît quand les dépenses dépassent les recettes. En {previousYear}, le déficit public constaté a atteint {previousDeficit} ({previousDeficitPct} du PIB) ; la loi de finances {year} vise {deficit} ({deficitPct} du PIB). Causes principales : vieillissement (retraites, santé), crise COVID (2020-2022), choix politiques (baisses d'impôts, dépenses nouvelles)."
       },
       {
         "question": "Qui paye vraiment les impôts en France ?",
-        "reponse": "Les ménages paient environ 70 % des prélèvements (IR, CSG, TVA, cotisations salariales). Les entreprises paient ~30 % (IS, cotisations patronales, taxes). Mais in fine, tout est payé par les citoyens (consommateurs, salariés, actionnaires)."
+        "answer": "Les ménages paient environ 70 % des prélèvements (IR, CSG, TVA, cotisations salariales). Les entreprises paient ~30 % (IS, cotisations patronales, taxes). Mais in fine, tout est payé par les citoyens (consommateurs, salariés, actionnaires)."
       },
       {
         "question": "Comment fonctionne le financement de la Sécu ?",
-        "reponse": "Sur un salaire brut de 100 € sous le plafond de la Sécurité sociale, environ {employeeRate} € sont prélevés au salarié, dont {csgCrdsRate} € de CSG et de CRDS, et {employerRateBeforeRelief} € à l'employeur avant l'allègement général. L'allègement diminue la part patronale d'autant plus que le salaire est bas : pour {referenceSalary} brut par an, elle tombe à {employerRateAfterRelief} €, et presque à zéro au SMIC. La CSG porte aussi sur les revenus du capital et de remplacement. Ces sommes financent santé, retraite, famille, chômage."
+        "answer": "Sur un salaire brut de 100 € sous le plafond de la Sécurité sociale, environ {employeeRate} € sont prélevés au salarié, dont {csgCrdsRate} € de CSG et de CRDS, et {employerRateBeforeRelief} € à l'employeur avant l'allègement général. L'allègement diminue la part patronale d'autant plus que le salaire est bas : pour {referenceSalary} brut par an, elle tombe à {employerRateAfterRelief} €, et presque à zéro au SMIC. La CSG porte aussi sur les revenus du capital et de remplacement. Ces sommes financent santé, retraite, famille, chômage."
       },
       {
         "question": "Pourquoi les cotisations patronales sont si élevées ?",
-        "reponse": "Les cotisations patronales (environ {employerRateBeforeRelief} % du brut avant l'allègement général, {employerRateAfterRelief} % après pour un salaire de {referenceSalary} par an) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
+        "answer": "Les cotisations patronales (environ {employerRateBeforeRelief} % du brut avant l'allègement général, {employerRateAfterRelief} % après pour un salaire de {referenceSalary} par an) financent principalement la retraite, l'assurance maladie et le chômage. C'est un choix historique français de faire porter une grande part du financement social sur l'emploi plutôt que sur l'impôt."
       },
       {
         "question": "Pourquoi les dépenses ({totalSpending}) sont très supérieures aux prélèvements ({totalLevies}) ?",
-        "reponse": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (environ {otherRevenue}). Les recettes totales sont donc d'environ {totalRevenue}. Le déficit (environ {deficit}) est la différence entre ces recettes totales et les dépenses."
+        "answer": "Les prélèvements obligatoires (impôts + cotisations) ne sont pas la seule source de revenus des administrations. Il y a aussi les recettes non fiscales : redevances, dividendes d'entreprises publiques, ventes de services, transferts européens, etc. (environ {otherRevenue}). Les recettes totales sont donc d'environ {totalRevenue}. Le déficit (environ {deficit}) est la différence entre ces recettes totales et les dépenses."
       },
       {
         "question": "Pourquoi la France dépense-t-elle plus que ses voisins européens ?",
-        "reponse": "La France consacre {spendingGdpPct} de son PIB aux dépenses publiques, contre ~50 % en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges."
+        "answer": "La France consacre {spendingGdpPct} de son PIB aux dépenses publiques, contre ~50 % en moyenne dans l'UE. L'écart vient principalement de la protection sociale : retraites généreuses (départ plus tôt, taux de remplacement élevé), système de santé très couvrant, prestations familiales étendues, et minima sociaux (RSA, APL). Ce modèle social est un choix collectif qui se traduit par des prélèvements plus élevés mais aussi par des services et prestations plus larges."
       },
       {
         "question": "Que s'est-il passé avec le budget 2026 ?",
-        "reponse": "Faute d'accord au Parlement fin 2025, une loi spéciale a été votée le 23 décembre 2025 pour permettre à l'État de continuer à fonctionner. Le débat a repris en janvier 2026 : le gouvernement Lecornu a engagé sa responsabilité (article 49.3), les motions de censure ont été rejetées (fin janvier et début février), et la loi de finances 2026 a été promulguée le 19 février 2026. En contrepartie du soutien d'une partie de l'opposition, la réforme des retraites de 2023 a été suspendue et le barème de l'impôt sur le revenu indexé sur l'inflation."
+        "answer": "Faute d'accord au Parlement fin 2025, une loi spéciale a été votée le 23 décembre 2025 pour permettre à l'État de continuer à fonctionner. Le débat a repris en janvier 2026 : le gouvernement Lecornu a engagé sa responsabilité (article 49.3), les motions de censure ont été rejetées (fin janvier et début février), et la loi de finances 2026 a été promulguée le 19 février 2026. En contrepartie du soutien d'une partie de l'opposition, la réforme des retraites de 2023 a été suspendue et le barème de l'impôt sur le revenu indexé sur l'inflation."
       }
     ],
-    "glossaire": [
+    "glossary": [
       {
-        "terme": "PIB",
+        "term": "PIB",
         "definition": "Produit Intérieur Brut : valeur totale de la production de biens et services en France (2 991 Md€ en 2025, ~3 010 Md€ estimés en 2026)"
       },
       {
-        "terme": "PLF",
+        "term": "PLF",
         "definition": "Projet de Loi de Finances : budget annuel de l'État, voté au Parlement"
       },
       {
-        "terme": "PLFSS",
+        "term": "PLFSS",
         "definition": "Projet de Loi de Financement de la Sécurité sociale"
       },
       {
-        "terme": "DGF",
+        "term": "DGF",
         "definition": "Dotation Globale de Fonctionnement : principale dotation de l'État aux collectivités"
       },
       {
-        "terme": "ONDAM",
+        "term": "ONDAM",
         "definition": "Objectif National de Dépenses d'Assurance Maladie : plafond des dépenses de santé ({ondam} en {year})"
       },
       {
-        "terme": "CSG",
+        "term": "CSG",
         "definition": "Contribution Sociale Généralisée : impôt sur tous les revenus finançant la Sécu"
       },
       {
-        "terme": "CRDS",
+        "term": "CRDS",
         "definition": "Contribution au Remboursement de la Dette Sociale (0,5 %)"
       },
       {
-        "terme": "APU",
+        "term": "APU",
         "definition": "Administrations Publiques : État + Sécu + Collectivités locales"
       },
       {
-        "terme": "49.3",
+        "term": "49.3",
         "definition": "Article de la Constitution permettant au gouvernement de faire adopter un texte sans vote, sauf motion de censure. Utilisé pour le budget 2026"
       }
     ]
   },
-  "simulateur": {
-    "pass_annuel_eur": 48060,
-    "plafonds_pass": {
-      "tranches_1_2": 8,
-      "chomage": 4
+  "simulator": {
+    "annualPassEur": 48060,
+    "passCeilings": {
+      "tranches12": 8,
+      "unemployment": 4
     },
     "csg": {
-      "base_pct": 98.25,
-      "plafond_abattement_pass": 4
+      "basePct": 98.25,
+      "allowanceCeilingPass": 4
     },
     "rgdu": {
-      "smic_annuel_eur": 21876.4,
+      "annualSmicEur": 21876.4,
       "tmin": 0.02,
       "tdelta": 0.3821,
-      "puissance": 1.75,
-      "seuil_smic": 3
+      "exponent": 1.75,
+      "smicThreshold": 3
     },
-    "abattement_frais_pro_pct": 10,
-    "bareme_ir": {
+    "professionalExpensesAllowancePct": 10,
+    "incomeTaxScale": {
       "description": "barème 2026 sur les revenus 2025",
-      "tranches": [
+      "brackets": [
         {
-          "limite_eur": 11600,
-          "taux_pct": 0
+          "limitEur": 11600,
+          "ratePct": 0
         },
         {
-          "limite_eur": 29579,
-          "taux_pct": 11
+          "limitEur": 29579,
+          "ratePct": 11
         },
         {
-          "limite_eur": 84577,
-          "taux_pct": 30
+          "limitEur": 84577,
+          "ratePct": 30
         },
         {
-          "limite_eur": 181917,
-          "taux_pct": 41
+          "limitEur": 181917,
+          "ratePct": 41
         },
         {
-          "limite_eur": null,
-          "taux_pct": 45
+          "limitEur": null,
+          "ratePct": 45
         }
       ]
     },
     "decote": {
-      "forfait_eur": 897,
-      "taux_pct": 45.25
+      "flatAmountEur": 897,
+      "ratePct": 45.25
     },
-    "reperes": {
-      "pension_moyenne": "~1 550 €/mois net",
-      "remboursement_sante": "~77 %",
-      "duree_chomage": "~24 mois"
+    "benchmarks": {
+      "averagePension": "~1 550 €/mois net",
+      "healthReimbursement": "~77 %",
+      "unemploymentDuration": "~24 mois"
     },
     "sources": [
       {
-        "libelle": "Taux de cotisations vieillesse 2026, décret n° 2025-1446 (Légifrance)",
+        "label": "Taux de cotisations vieillesse 2026, décret n° 2025-1446 (Légifrance)",
         "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053276542"
       },
       {
-        "libelle": "Taux AGIRC-ARRCO et PASS 2026, circulaire 2025-16 (AGIRC-ARRCO)",
+        "label": "Taux AGIRC-ARRCO et PASS 2026, circulaire 2025-16 (AGIRC-ARRCO)",
         "url": "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf"
       },
       {
-        "libelle": "Suppression des taux réduits maladie et allocations familiales en 2026 (service-public.fr)",
+        "label": "Suppression des taux réduits maladie et allocations familiales en 2026 (service-public.fr)",
         "url": "https://entreprendre.service-public.gouv.fr/actualites/A18448"
       },
       {
-        "libelle": "Assiette de la CSG et de la CRDS sur les salaires (service-public.fr)",
+        "label": "Assiette de la CSG et de la CRDS sur les salaires (service-public.fr)",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2971"
       },
       {
-        "libelle": "Réduction générale dégressive unique 2026 (service-public.fr)",
+        "label": "Réduction générale dégressive unique 2026 (service-public.fr)",
         "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F24542"
       },
       {
-        "libelle": "Assurance chômage et AGS, paramètres avril 2026 (Unédic)",
+        "label": "Assurance chômage et AGS, paramètres avril 2026 (Unédic)",
         "url": "https://unedic.org/storage/uploads/2026/05/27/unedic_parametres_utiles_avril2026_uid_6a17039e9f727.pdf"
       },
       {
-        "libelle": "Taux AT moyen 2026, arrêté du 30 décembre 2025 (Légifrance)",
+        "label": "Taux AT moyen 2026, arrêté du 30 décembre 2025 (Légifrance)",
         "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053228984"
       },
       {
-        "libelle": "Barème de l'impôt sur le revenu 2026, revenus 2025 (service-public.fr)",
+        "label": "Barème de l'impôt sur le revenu 2026, revenus 2025 (service-public.fr)",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"
       },
       {
-        "libelle": "Décote de l'impôt sur le revenu 2026, revenus 2025 (Weblex, chiffres clés)",
+        "label": "Décote de l'impôt sur le revenu 2026, revenus 2025 (Weblex, chiffres clés)",
         "url": "https://www.weblex.fr/chiffres-cles/impot-sur-le-revenu-et-decote-2026"
       }
     ]

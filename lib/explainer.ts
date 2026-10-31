@@ -1,13 +1,13 @@
 import type evolutionData from "../data/evolution-finances.json";
 import type financeData from "../data/finances-publiques-2026.json";
-import { formatEur, formatMd, formatNombre, formatPct } from "./format";
+import { formatEur, formatMd, formatNumber, formatPct } from "./format";
 import { findOrThrow } from "./guards";
 import {
-	lireCotisations,
+	rateBelowPass,
+	readCotisations,
 	SALARY_RANGE,
-	simuler,
-	tauxSousLePass,
-} from "./simulateur";
+	simulate,
+} from "./simulator";
 
 // Les textes de la FAQ et du glossaire citent des totaux et des taux : ils les lisent dans les
 // données par des marques {nom}, au lieu de recopier des chiffres qui dériveraient à la
@@ -31,16 +31,16 @@ export function fillPlaceholders(
 }
 
 type FinanceData = typeof financeData;
-type EvolutionYear = (typeof evolutionData)["annees"][number];
+type EvolutionYear = (typeof evolutionData)["years"][number];
 
 // Déficit de l'année : une ligne des séries longues, où le solde est négatif
 export function yearBalance(years: EvolutionYear[], year: number) {
-	const row = findOrThrow(years, (y) => y.annee === year, `Année ${year}`);
+	const row = findOrThrow(years, (y) => y.year === year, `Année ${year}`);
 	return {
 		year,
-		revenueBillionEur: row.recettes_milliards_eur,
-		deficitBillionEur: -row.deficit_milliards_eur,
-		deficitGdpPct: -row.deficit_pib_pct,
+		revenueBillionEur: row.revenueBillionEur,
+		deficitBillionEur: -row.balanceBillionEur,
+		deficitGdpPct: -row.balanceGdpPct,
 	};
 }
 
@@ -50,18 +50,18 @@ export function explainerValues(
 ): PlaceholderValues {
 	const current = yearBalance(years, data.year);
 	const previous = yearBalance(years, data.year - 1);
-	const p = data.simulateur;
-	const employee = lireCotisations(
-		data.securiteSociale.tauxCotisations.salariales,
+	const p = data.simulator;
+	const employee = readCotisations(
+		data.socialSecurity.cotisationRates.employee,
 	);
-	const employer = lireCotisations(
-		data.securiteSociale.tauxCotisations.patronales,
+	const employer = readCotisations(
+		data.socialSecurity.cotisationRates.employer,
 	);
-	const reference = simuler(SALARY_RANGE.initial, employee, employer, p);
-	const totalLevies = data.prelevementsObligatoires.total_milliards_eur;
-	const maladie = findOrThrow(
-		data.securiteSociale.branches,
-		(b) => b.branche === "Maladie",
+	const reference = simulate(SALARY_RANGE.initial, employee, employer, p);
+	const totalLevies = data.compulsoryLevies.totalBillionEur;
+	const healthBranch = findOrThrow(
+		data.socialSecurity.branches,
+		(b) => b.branch === "Maladie",
 		"Maladie",
 	);
 	return {
@@ -71,22 +71,22 @@ export function explainerValues(
 		previousDeficitPct: formatPct(previous.deficitGdpPct),
 		deficit: formatMd(current.deficitBillionEur),
 		deficitPct: formatPct(current.deficitGdpPct),
-		totalSpending: formatMd(data.vueGlobale.depenses_totales_milliards_eur),
-		spendingGdpPct: formatPct(data.vueGlobale.depenses_pib_pct),
+		totalSpending: formatMd(data.overview.totalSpendingBillionEur),
+		spendingGdpPct: formatPct(data.overview.spendingGdpPct),
 		totalLevies: formatMd(totalLevies),
 		totalRevenue: formatMd(current.revenueBillionEur),
 		otherRevenue: formatMd(current.revenueBillionEur - totalLevies),
-		ondam: formatMd(maladie.depenses_milliards_eur),
-		employeeRate: formatNombre(tauxSousLePass(employee, p), 0),
-		csgCrdsRate: formatNombre(
-			tauxSousLePass(
-				employee.filter((c) => c.poste === "csg"),
+		ondam: formatMd(healthBranch.spendingBillionEur),
+		employeeRate: formatNumber(rateBelowPass(employee, p), 0),
+		csgCrdsRate: formatNumber(
+			rateBelowPass(
+				employee.filter((c) => c.destination === "csg"),
 				p,
 			),
 		),
-		employerRateBeforeRelief: formatNombre(tauxSousLePass(employer, p), 0),
-		employerRateAfterRelief: formatNombre(
-			(reference.cotisationsPatronales / reference.brut) * 100,
+		employerRateBeforeRelief: formatNumber(rateBelowPass(employer, p), 0),
+		employerRateAfterRelief: formatNumber(
+			(reference.employerCotisations / reference.gross) * 100,
 			0,
 		),
 		referenceSalary: formatEur(SALARY_RANGE.initial),

@@ -2,17 +2,17 @@ import { describe, expect, it } from "vitest";
 import { findOrThrow, lookupOrThrow, requireHttpsUrl } from "./guards";
 
 describe("findOrThrow", () => {
-	const list = [{ categorie: "État" }, { categorie: "Sécurité sociale" }];
+	const list = [{ category: "État" }, { category: "Sécurité sociale" }];
 
 	it("rend l'entrée trouvée", () => {
-		expect(findOrThrow(list, (r) => r.categorie === "État", "État")).toBe(
+		expect(findOrThrow(list, (r) => r.category === "État", "État")).toBe(
 			list[0],
 		);
 	});
 
 	it("casse sur une entrée renommée au lieu de rendre 0", () => {
 		expect(() =>
-			findOrThrow(list, (r) => r.categorie === "Etat", "État"),
+			findOrThrow(list, (r) => r.category === "Etat", "État"),
 		).toThrow("Donnée absente du JSON : État");
 	});
 });

@@ -15,14 +15,16 @@ entièrement piloté par la donnée, **aucun chiffre en dur**, la note d'actuali
   administrations publiques depuis 1959, dette depuis 1978.
 - `data/budget-2024.json` et `data/gdp-sectors.json` sont historiques et ne se périment pas.
 
-**Règle de cohérence** : les tuiles d'en-tête calculent le déficit en milliards et par habitant à
-partir de `context.pib_milliards_eur` et `context.population`. Choisir un PIB cohérent avec le
-dernier ratio dette sur PIB publié par l'INSEE (PIB implicite = dette ÷ ratio), sinon les
-pourcentages affichés divergent des chiffres officiels.
+**Règle de cohérence** : le déficit des tuiles d'en-tête, du circuit et de la FAQ se lit dans la
+ligne de l'année des séries longues (objectif de la loi de finances), jamais comme un produit
+taux × PIB. Le PIB implicite de la dette (dette ÷ dernier ratio INSEE) n'est pas le PIB annuel
+de la loi de finances, et les mélanger décale les montants affichés des chiffres officiels. Les
+textes de la FAQ et du glossaire citent leurs chiffres par des marques `{nom}`, remplies par
+`lib/explainer.ts` : un total ne s'y recopie pas à la main.
 
 **Pièges de périmètre**, tous rencontrés :
 - Les missions budgétaires en crédits de paiement sont « y compris pensions ». L'écart est massif sur
-  la Défense. La part retraites (`dont_pensions_milliards_eur`) n'est pas dans la loi de finances : elle
+  la Défense. La part retraites (`pensionsBillionEur`) n'est pas dans la loi de finances : elle
   se lit dans les PAP, ligne « Contributions d'équilibre au CAS Pensions », programme par programme.
   Pour Recherche et enseignement supérieur elle est sous-estimée, les universités la payant sur leurs
   subventions, hors titre 2.
@@ -52,7 +54,7 @@ TypeScript is strict-mode by default; minimize `any` and keep components typed v
 
 ## Testing Guidelines
 
-A static site with no backend owes no test suite (`docs/next-guidelines.md`). The exception is a calculation the page shows as a result: it lives in `lib/` as a pure function with a colocated `*.test.ts`, like the salary simulator in `lib/simulateur.ts`.
+A static site with no backend owes no test suite (`docs/next-guidelines.md`). The exception is a calculation the page shows as a result: it lives in `lib/` as a pure function with a colocated `*.test.ts`, like the salary simulator in `lib/simulator.ts`.
 
 ## Commit & Pull Request Guidelines
 

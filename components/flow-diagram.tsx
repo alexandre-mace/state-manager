@@ -53,19 +53,22 @@ function FlowBox({
 }
 
 export interface FlowDiagramData {
-	prelevements: { impots: number; cotisations: number; csgCrds: number };
-	etat: { total: number; depenses: { label: string; amount: number }[] };
-	secu: {
+	levies: { taxes: number; cotisations: number; csgCrds: number };
+	state: { total: number; spending: { label: string; amount: number }[] };
+	socialSecurity: {
 		total: number;
 		branchesTotal: number;
-		depenses: { label: string; amount: number }[];
+		spending: { label: string; amount: number }[];
 	};
-	collectivites: {
+	localAuthorities: {
 		total: number;
-		depenses: { label: string; amount: number }[];
+		spending: { label: string; amount: number }[];
 	};
-	autresOrganismes: { total: number; description: string };
-	transferts: { etatCollectivites: number; taxesAffecteesSecu: number };
+	otherBodies: { total: number; description: string };
+	transfers: {
+		stateToLocalAuthorities: number;
+		earmarkedTaxesToSocialSecurity: number;
+	};
 	deficit: number;
 	year: number;
 }
@@ -96,17 +99,17 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 				<div className="grid grid-cols-3 gap-2 sm:gap-3">
 					<FlowBox
 						label="Impôts et taxes"
-						amount={data.prelevements.impots}
+						amount={data.levies.taxes}
 						color="var(--chart-1)"
 					/>
 					<FlowBox
 						label="Cotisations sociales"
-						amount={data.prelevements.cotisations}
+						amount={data.levies.cotisations}
 						color="var(--chart-2)"
 					/>
 					<FlowBox
 						label="CSG-CRDS"
-						amount={data.prelevements.csgCrds}
+						amount={data.levies.csgCrds}
 						color="var(--chart-3)"
 					/>
 				</div>
@@ -118,7 +121,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					<div className="space-y-2">
 						<FlowBox
 							label="État"
-							amount={data.etat.total}
+							amount={data.state.total}
 							color="var(--chart-1)"
 						/>
 						<div className="text-xs text-muted-foreground text-center">
@@ -128,7 +131,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					<div className="space-y-2">
 						<FlowBox
 							label="Sécurité sociale"
-							amount={data.secu.total}
+							amount={data.socialSecurity.total}
 							color="var(--chart-2)"
 						/>
 						<div className="text-xs text-muted-foreground text-center">
@@ -138,7 +141,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					<div className="space-y-2">
 						<FlowBox
 							label="Collectivités"
-							amount={data.collectivites.total}
+							amount={data.localAuthorities.total}
 							color="var(--chart-3)"
 						/>
 						<div className="text-xs text-muted-foreground text-center">
@@ -152,7 +155,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					+ <strong>Autres organismes publics</strong> (universités, hôpitaux,
 					agences) :{" "}
 					<span className="font-mono">
-						{formatMd(data.autresOrganismes.total, 0)}
+						{formatMd(data.otherBodies.total, 0)}
 					</span>
 					<span>, financés par les trois administrations ci-dessus</span>
 				</div>
@@ -167,7 +170,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 							<span className="h-2 w-2 rounded-full bg-[var(--chart-1)]" />
 							État → Collectivités :{" "}
 							<span className="font-mono">
-								{formatMd(data.transferts.etatCollectivites, 0)}
+								{formatMd(data.transfers.stateToLocalAuthorities, 0)}
 							</span>{" "}
 							(dotations)
 						</div>
@@ -175,7 +178,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 							<span className="h-2 w-2 rounded-full bg-[var(--chart-2)]" />
 							Taxes affectées → Sécu :{" "}
 							<span className="font-mono">
-								{formatMd(data.transferts.taxesAffecteesSecu, 0)}
+								{formatMd(data.transfers.earmarkedTaxesToSocialSecurity, 0)}
 							</span>{" "}
 							(part de TVA, tabac, alcool...)
 						</div>
@@ -196,7 +199,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 								hors retraites des agents
 							</div>
 						</div>
-						{data.etat.depenses.map((d) => (
+						{data.state.spending.map((d) => (
 							<FlowBox
 								key={d.label}
 								label={d.label}
@@ -216,7 +219,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 								par branche
 							</div>
 						</div>
-						{data.secu.depenses.map((d) => (
+						{data.socialSecurity.spending.map((d) => (
 							<FlowBox
 								key={d.label}
 								label={d.label}
@@ -233,7 +236,7 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 						>
 							Dépenses Collectivités
 						</div>
-						{data.collectivites.depenses.map((d) => (
+						{data.localAuthorities.spending.map((d) => (
 							<FlowBox
 								key={d.label}
 								label={d.label}
@@ -262,11 +265,13 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 					agents ; les branches de la Sécurité sociale sont prises chacune sur
 					son propre périmètre (loi de financement) et totalisent{" "}
 					<span className="font-mono">
-						{formatMd(data.secu.branchesTotal, 0)}
+						{formatMd(data.socialSecurity.branchesTotal, 0)}
 					</span>
 					, à ne pas comparer aux{" "}
-					<span className="font-mono">{formatMd(data.secu.total, 0)}</span> de
-					la boîte.
+					<span className="font-mono">
+						{formatMd(data.socialSecurity.total, 0)}
+					</span>{" "}
+					de la boîte.
 				</p>
 
 				{/* Légende déficit */}

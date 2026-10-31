@@ -4,8 +4,8 @@ import { formatMd } from "@/lib/format";
 interface MissionDatum {
 	mission: string;
 	description: string;
-	amount_milliards_eur: number;
-	pensions_milliards_eur: number;
+	amountBillionEur: number;
+	pensionsBillionEur: number;
 }
 
 interface TopMissionsChartProps {
@@ -15,7 +15,7 @@ interface TopMissionsChartProps {
 // Liste en HTML plutôt qu'un graphique : les libellés longs restent lisibles sur mobile
 // et les montants s'affichent sans survol.
 export function TopMissionsChart({ data }: TopMissionsChartProps) {
-	const max = Math.max(...data.map((d) => d.amount_milliards_eur));
+	const max = Math.max(...data.map((d) => d.amountBillionEur));
 
 	return (
 		<Card className="h-full">
@@ -35,14 +35,13 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
 				</div>
 				<ul className="space-y-4">
 					{data.map((d) => {
-						const horsPensions =
-							d.amount_milliards_eur - d.pensions_milliards_eur;
+						const excludingPensions = d.amountBillionEur - d.pensionsBillionEur;
 						return (
 							<li key={d.mission} className="space-y-1.5">
 								<div className="flex items-baseline justify-between gap-3">
 									<span className="text-sm font-medium">{d.mission}</span>
 									<span className="shrink-0 font-mono text-sm">
-										{formatMd(d.amount_milliards_eur, 1, 1)}
+										{formatMd(d.amountBillionEur, 1, 1)}
 									</span>
 								</div>
 								<div
@@ -51,23 +50,23 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
 								>
 									<div
 										className="bg-chart-2"
-										style={{ width: `${(horsPensions / max) * 100}%` }}
+										style={{ width: `${(excludingPensions / max) * 100}%` }}
 									/>
 									<div
 										className="bg-chart-2/35"
 										style={{
-											width: `${(d.pensions_milliards_eur / max) * 100}%`,
+											width: `${(d.pensionsBillionEur / max) * 100}%`,
 										}}
 									/>
 								</div>
 								<p className="text-xs text-muted-foreground">
 									{d.description}.
-									{d.pensions_milliards_eur > 0 && (
+									{d.pensionsBillionEur > 0 && (
 										<>
 											{" "}
-											Dont {formatMd(d.pensions_milliards_eur, 1, 1)} de
-											retraites des agents, soit {formatMd(horsPensions, 1, 1)}{" "}
-											hors retraites.
+											Dont {formatMd(d.pensionsBillionEur, 1, 1)} de retraites
+											des agents, soit {formatMd(excludingPensions, 1, 1)} hors
+											retraites.
 										</>
 									)}
 								</p>

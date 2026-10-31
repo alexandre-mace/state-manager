@@ -8,12 +8,12 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { formatMd, formatNombre } from "@/lib/format";
+import { formatMd, formatNumber } from "@/lib/format";
 
 type SpendingDatum = {
-	categorie: string;
-	depenses_milliards_eur: number;
-	part_pct: number;
+	category: string;
+	spendingBillionEur: number;
+	sharePct: number;
 	description: string;
 };
 
@@ -30,13 +30,10 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 		// Clé sans espace ni accent : ChartContainer en fait une variable CSS
 		data.map((d, index) => [
 			`slice${index}`,
-			{ label: d.categorie, color: sliceColor(index) },
+			{ label: d.category, color: sliceColor(index) },
 		]),
 	);
-	const total = data.reduce(
-		(sum, item) => sum + item.depenses_milliards_eur,
-		0,
-	);
+	const total = data.reduce((sum, item) => sum + item.spendingBillionEur, 0);
 
 	return (
 		<ChartContainer
@@ -62,7 +59,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 				/>
 				<Pie
 					data={data}
-					dataKey="depenses_milliards_eur"
+					dataKey="spendingBillionEur"
 					nameKey="categorie"
 					innerRadius={70}
 					outerRadius={110}
@@ -70,7 +67,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 					stroke="var(--background)"
 				>
 					{data.map((entry, index) => (
-						<Cell key={entry.categorie} fill={sliceColor(index)} />
+						<Cell key={entry.category} fill={sliceColor(index)} />
 					))}
 					<Label
 						content={({ viewBox }) => {
@@ -87,7 +84,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 											y={viewBox.cy}
 											className="fill-foreground text-2xl font-bold"
 										>
-											{formatNombre(total)}
+											{formatNumber(total)}
 										</tspan>
 										<tspan
 											x={viewBox.cx}

@@ -23,9 +23,9 @@ describe("calculs de la page", () => {
 
 	it("trouve le dernier excédent, ou rien", () => {
 		const years = [
-			{ annee: 1973, deficit_pib_pct: 0.4 },
-			{ annee: 1974, deficit_pib_pct: 0.1 },
-			{ annee: 1975, deficit_pib_pct: -2.5 },
+			{ year: 1973, balanceGdpPct: 0.4 },
+			{ year: 1974, balanceGdpPct: 0.1 },
+			{ year: 1975, balanceGdpPct: -2.5 },
 		];
 		expect(lastSurplusYear(years)).toBe(1974);
 		expect(lastSurplusYear(years.slice(2))).toBeUndefined();
