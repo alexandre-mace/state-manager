@@ -23,8 +23,11 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextLink } from "@/components/ui/text-link";
-import evolutionData from "@/data/evolution-finances.json";
-import financeData from "@/data/finances-publiques-2026.json";
+import {
+	publicFinances2026 as financeData,
+	type Source,
+} from "@/lib/data/public-finances-2026";
+import { publicFinanceHistory as evolutionData } from "@/lib/data/public-finances-history";
 import {
 	explainerValues,
 	fillPlaceholders,
@@ -43,7 +46,7 @@ import {
 	formatPct,
 } from "@/lib/format";
 import { findOrThrow, requireHttpsUrl } from "@/lib/guards";
-import { rateBelowPass, readCotisations } from "@/lib/simulator";
+import { rateBelowPass } from "@/lib/simulator";
 
 const TABLE_OF_CONTENTS = [
 	{ id: "breakdown", label: "Pour 1\u202f000\u00a0€" },
@@ -57,8 +60,6 @@ const TABLE_OF_CONTENTS = [
 	{ id: "explainer", label: "Comprendre" },
 	{ id: "sources", label: "Sources" },
 ];
-
-type Source = { label: string; url: string };
 
 function SourceNote({ sources }: { sources: Source[] }) {
 	return (
@@ -95,12 +96,8 @@ export default function Home() {
 		explainer,
 	} = financeData;
 
-	const employeeCotisations = readCotisations(
-		socialSecurity.cotisationRates.employee,
-	);
-	const employerCotisations = readCotisations(
-		socialSecurity.cotisationRates.employer,
-	);
+	const employeeCotisations = socialSecurity.cotisationRates.employee;
+	const employerCotisations = socialSecurity.cotisationRates.employer;
 
 	const stateCategory = findOrThrow(
 		overview.breakdown,
@@ -135,7 +132,7 @@ export default function Home() {
 	const evolutionHistory = evolutionData.years;
 	const lastSurplus = lastSurplusYear(evolutionHistory);
 
-	// Données du circuit, tirées du JSON
+	// Données du circuit
 	const cotisationsBillionEur = findOrThrow(
 		compulsoryLevies.breakdown,
 		(r) => r.type === "Cotisations sociales",

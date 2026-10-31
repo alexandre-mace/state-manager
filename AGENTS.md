@@ -10,10 +10,14 @@ Tableau de bord pédagogique statique sur les finances publiques françaises. `a
 entièrement piloté par la donnée, **aucun chiffre en dur**, la note d'actualité venant de
 `context.note`.
 
-- `data/finances-publiques-2026.json` : le fichier principal.
-- `data/evolution-finances.json` : les séries longues, dépenses, recettes et solde des
-  administrations publiques depuis 1959, dette depuis 1978.
-- `data/budget-2024.json` et `data/gdp-sectors.json` sont historiques et ne se périment pas.
+Les données sont du TypeScript typé dans `lib/data/`, un fichier par source, chacun ouvert par
+un en-tête qui dit d'où viennent les chiffres et à quelle date (next-guidelines §5). Elles sont
+saisies à la main : pas de script `pnpm data`, mettre à jour l'en-tête avec les chiffres.
+
+- `lib/data/public-finances-2026.ts` : le fichier principal, l'année en cours.
+- `lib/data/public-finances-history.ts` : les séries longues, dépenses, recettes et solde des
+  administrations publiques depuis 1959 (la dette depuis 1978 est dans le fichier principal).
+- `lib/data/budget-2024.ts` et `lib/data/gdp-sectors.ts` sont historiques et ne se périment pas.
 
 **Règle de cohérence** : le déficit des tuiles d'en-tête, du circuit et de la FAQ se lit dans la
 ligne de l'année des séries longues (objectif de la loi de finances), jamais comme un produit

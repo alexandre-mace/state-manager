@@ -10,7 +10,6 @@
 		"includes": [
 			"**",
 			"!**/next-env.d.ts",
-			"!!**/data",
 			"!!**/docs",
 			"!**/app/shadcn-tailwind.css"
 		]

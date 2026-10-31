@@ -13,7 +13,7 @@ describe("findOrThrow", () => {
 	it("casse sur une entrée renommée au lieu de rendre 0", () => {
 		expect(() =>
 			findOrThrow(list, (r) => r.category === "Etat", "État"),
-		).toThrow("Donnée absente du JSON : État");
+		).toThrow("Donnée absente : État");
 	});
 });
 

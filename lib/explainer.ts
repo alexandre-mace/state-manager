@@ -1,13 +1,8 @@
-import type evolutionData from "../data/evolution-finances.json";
-import type financeData from "../data/finances-publiques-2026.json";
+import type { PublicFinances2026 } from "./data/public-finances-2026";
+import type { PublicFinanceYear } from "./data/public-finances-history";
 import { formatEur, formatMd, formatNumber, formatPct } from "./format";
 import { findOrThrow } from "./guards";
-import {
-	rateBelowPass,
-	readCotisations,
-	SALARY_RANGE,
-	simulate,
-} from "./simulator";
+import { rateBelowPass, SALARY_RANGE, simulate } from "./simulator";
 
 // Les textes de la FAQ et du glossaire citent des totaux et des taux : ils les lisent dans les
 // données par des marques {nom}, au lieu de recopier des chiffres qui dériveraient à la
@@ -30,11 +25,8 @@ export function fillPlaceholders(
 	});
 }
 
-type FinanceData = typeof financeData;
-type EvolutionYear = (typeof evolutionData)["years"][number];
-
 // Déficit de l'année : une ligne des séries longues, où le solde est négatif
-export function yearBalance(years: EvolutionYear[], year: number) {
+export function yearBalance(years: PublicFinanceYear[], year: number) {
 	const row = findOrThrow(years, (y) => y.year === year, `Année ${year}`);
 	return {
 		year,
@@ -45,18 +37,14 @@ export function yearBalance(years: EvolutionYear[], year: number) {
 }
 
 export function explainerValues(
-	data: FinanceData,
-	years: EvolutionYear[],
+	data: PublicFinances2026,
+	years: PublicFinanceYear[],
 ): PlaceholderValues {
 	const current = yearBalance(years, data.year);
 	const previous = yearBalance(years, data.year - 1);
 	const p = data.simulator;
-	const employee = readCotisations(
-		data.socialSecurity.cotisationRates.employee,
-	);
-	const employer = readCotisations(
-		data.socialSecurity.cotisationRates.employer,
-	);
+	const employee = data.socialSecurity.cotisationRates.employee;
+	const employer = data.socialSecurity.cotisationRates.employer;
 	const reference = simulate(SALARY_RANGE.initial, employee, employer, p);
 	const totalLevies = data.compulsoryLevies.totalBillionEur;
 	const healthBranch = findOrThrow(

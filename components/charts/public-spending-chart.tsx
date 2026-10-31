@@ -21,7 +21,7 @@ interface PublicSpendingChartProps {
 	data: SpendingDatum[];
 }
 
-// Une couleur par catégorie, dans l'ordre du JSON : aucun libellé recopié ici, une catégorie
+// Une couleur par catégorie, dans l'ordre des données : aucun libellé recopié ici, une catégorie
 // renommée garde sa couleur
 const sliceColor = (index: number) => `var(--chart-${index + 1})`;
 

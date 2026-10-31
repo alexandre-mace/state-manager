@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import evolution from "../data/evolution-finances.json";
-import data from "../data/finances-publiques-2026.json";
+import { publicFinances2026 as data } from "./data/public-finances-2026";
+import { publicFinanceHistory as evolution } from "./data/public-finances-history";
 import { explainerValues, fillPlaceholders, yearBalance } from "./explainer";
 
 const values = explainerValues(data, evolution.years);

@@ -1,19 +1,18 @@
 import { describe, expect, it } from "vitest";
-import data from "../data/finances-publiques-2026.json";
+import { publicFinances2026 as data } from "./data/public-finances-2026";
 import { formatEur, formatNumber, formatPct } from "./format";
 import {
 	assiette,
 	computeIncomeTax,
 	rateBelowPass,
-	readCotisations,
 	rgduCoefficient,
 	type SimulatorParameters,
 	simulate,
 } from "./simulator";
 
 const p: SimulatorParameters = data.simulator;
-const employee = readCotisations(data.socialSecurity.cotisationRates.employee);
-const employer = readCotisations(data.socialSecurity.cotisationRates.employer);
+const employee = data.socialSecurity.cotisationRates.employee;
+const employer = data.socialSecurity.cotisationRates.employer;
 const pass = p.annualPassEur;
 
 describe("réduction générale dégressive unique", () => {
@@ -117,7 +116,7 @@ describe("simulation complète", () => {
 	});
 });
 
-describe("textes du JSON", () => {
+describe("textes des données", () => {
 	// Les libellés recopient des paramètres : s'ils divergent, la page se contredit
 	const rates = data.socialSecurity.cotisationRates;
 	const labels = [...rates.employee, ...rates.employer].map((c) => c.label);
@@ -138,23 +137,5 @@ describe("textes du JSON", () => {
 		expect(
 			labels.some((l) => l.includes(`${p.passCeilings.unemployment} PASS`)),
 		).toBe(true);
-	});
-});
-
-describe("lecture du JSON", () => {
-	it("refuse une assiette inconnue", () => {
-		expect(() =>
-			readCotisations([
-				{ key: "x", assiette: "plafonee", destination: "pension" },
-			]),
-		).toThrow("Assiette inconnue");
-	});
-
-	it("refuse une destination inconnue", () => {
-		expect(() =>
-			readCotisations([
-				{ key: "x", assiette: "total", destination: "retraites" },
-			]),
-		).toThrow("Destination inconnue pour x : retraites");
 	});
 });

@@ -202,39 +202,6 @@ export function rateBelowPass(
 		);
 }
 
-const ASSIETTES: Assiette[] = [
-	"total",
-	"tranche1",
-	"tranche2",
-	"tranches12",
-	"unemploymentCeiling",
-	"csg",
-];
-const DESTINATIONS: Destination[] = [
-	"pension",
-	"health",
-	"unemployment",
-	"family",
-	"other",
-	"csg",
-];
-
-// Les données typent assiette et destination en simple chaîne : une faute de frappe y
-// casserait le calcul sans bruit, d'où la vérification au chargement
-export function readCotisations(
-	rows: { key: string; assiette: string; destination: string }[],
-): Cotisation[] {
-	for (const row of rows) {
-		if (!ASSIETTES.includes(row.assiette as Assiette))
-			throw new Error(`Assiette inconnue pour ${row.key} : ${row.assiette}`);
-		if (!DESTINATIONS.includes(row.destination as Destination))
-			throw new Error(
-				`Destination inconnue pour ${row.key} : ${row.destination}`,
-			);
-	}
-	return rows as Cotisation[];
-}
-
 // Bornes et position de départ du curseur : des constantes d'interface, pas des paramètres
 // réglementaires. Le salaire de départ sert aussi d'exemple à la FAQ.
 export const SALARY_RANGE = {

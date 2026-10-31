@@ -1,4 +1,4 @@
-import financeData from "@/data/finances-publiques-2026.json";
+import { publicFinances2026 as financeData } from "@/lib/data/public-finances-2026";
 
 // Titre et accroche partagés par les métadonnées et l'image de partage
 export const siteTitle = `Finances publiques françaises ${financeData.year}`;
