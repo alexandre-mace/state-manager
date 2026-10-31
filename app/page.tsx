@@ -367,14 +367,19 @@ export default function Home() {
 				{/* Pour 1 000€ de dépenses publiques */}
 				<section id="breakdown" className="scroll-mt-16 space-y-6">
 					<ThousandEuroBreakdown
+						description={spendingByFunction.description}
 						items={spendingByFunction.items}
 						baseBillionEur={spendingByFunction.baseBillionEur}
+						source={spendingByFunction.source}
 					/>
 				</section>
 
 				{/* Ce que financent les dépenses publiques */}
 				<section id="services" className="scroll-mt-16 space-y-6">
-					<CitizenReturn services={citizenReturn.services} />
+					<CitizenReturn
+						description={citizenReturn.description}
+						services={citizenReturn.services}
+					/>
 				</section>
 
 				{/* Vue globale */}

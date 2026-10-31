@@ -152,12 +152,12 @@ export function FlowDiagram({ data }: { data: FlowDiagramData }) {
 
 				{/* Autres organismes */}
 				<div className="rounded-lg border border-border bg-muted/30 p-3 text-center text-xs text-muted-foreground">
-					+ <strong>Autres organismes publics</strong> (universités, hôpitaux,
-					agences) :{" "}
+					+ <strong>Autres organismes publics</strong> :{" "}
 					<span className="font-mono">
 						{formatMd(data.otherBodies.total, 0)}
 					</span>
 					<span>, financés par les trois administrations ci-dessus</span>
+					<span className="mt-1 block">{data.otherBodies.description}</span>
 				</div>
 
 				{/* Transferts */}

@@ -1113,10 +1113,10 @@ export const publicFinances2026: PublicFinances2026 = {
 	},
 	spendingByFunction: {
 		description:
-			"Pour 1 000 € de dépenses publiques, voici comment ils sont répartis (ventilation fonctionnelle COFOG)",
+			"Ventilation fonctionnelle (classification COFOG) de chaque tranche de 1 000 € dépensés par les administrations publiques",
 		baseBillionEur: 1722,
 		source:
-			"Proportions basées sur la classification COFOG 2024 (FIPECO/INSEE)",
+			"proportions de la classification fonctionnelle COFOG 2024 (FIPECO, INSEE)",
 		items: [
 			{
 				label: "Retraites",
@@ -1201,7 +1201,7 @@ export const publicFinances2026: PublicFinances2026 = {
 	},
 	citizenReturn: {
 		description:
-			"Ce que les dépenses publiques financent concrètement pour chaque citoyen",
+			"Les services et prestations concrets dont bénéficient les citoyens",
 		services: [
 			{
 				service: "Éducation",

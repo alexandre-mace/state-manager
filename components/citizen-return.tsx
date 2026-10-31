@@ -36,19 +36,18 @@ interface Service {
 }
 
 interface CitizenReturnProps {
+	description: string;
 	services: Service[];
 }
 
-export function CitizenReturn({ services }: CitizenReturnProps) {
+export function CitizenReturn({ description, services }: CitizenReturnProps) {
 	return (
 		<Card>
 			<CardHeader>
 				<CardTitle>
 					<h2>Ce que financent les dépenses publiques</h2>
 				</CardTitle>
-				<CardDescription>
-					Les services et prestations concrets dont bénéficient les citoyens
-				</CardDescription>
+				<CardDescription>{description}</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

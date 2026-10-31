@@ -46,13 +46,17 @@ interface SpendingItem {
 }
 
 interface ThousandEuroBreakdownProps {
+	description: string;
 	items: SpendingItem[];
 	baseBillionEur: number;
+	source: string;
 }
 
 export function ThousandEuroBreakdown({
+	description,
 	items,
 	baseBillionEur,
+	source,
 }: ThousandEuroBreakdownProps) {
 	const sorted = [...items].sort((a, b) => b.amountEur - a.amountEur);
 	const total = sorted.reduce((sum, p) => sum + p.amountEur, 0) || 1;
@@ -63,10 +67,7 @@ export function ThousandEuroBreakdown({
 				<CardTitle>
 					<h2>Pour 1&#8239;000&nbsp;€ de dépenses publiques</h2>
 				</CardTitle>
-				<CardDescription>
-					Ventilation fonctionnelle (classification COFOG) de chaque tranche de
-					1&#8239;000&nbsp;€ dépensés par les administrations publiques
-				</CardDescription>
+				<CardDescription>{description}</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-3">
 				{sorted.map((item) => {
@@ -96,6 +97,7 @@ export function ThousandEuroBreakdown({
 					Total : {formatEur(sorted.reduce((sum, p) => sum + p.amountEur, 0))},
 					calculé à partir des dépenses totales de {formatMd(baseBillionEur)}
 				</p>
+				<p className="text-xs text-muted-foreground">Source : {source}</p>
 			</CardContent>
 		</Card>
 	);
