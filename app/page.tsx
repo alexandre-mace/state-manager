@@ -835,7 +835,7 @@ export default function Home() {
 													<p className="text-xs text-muted-foreground">
 														{r.description}
 													</p>
-													{"note" in r && r.note && (
+													{r.note && (
 														<p className="text-xs text-muted-foreground">
 															{r.note}
 														</p>

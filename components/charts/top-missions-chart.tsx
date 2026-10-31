@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { barWidthPct } from "@/lib/finances";
 import { formatMd } from "@/lib/format";
 
 interface MissionDatum {
@@ -15,7 +16,7 @@ interface TopMissionsChartProps {
 // Liste en HTML plutôt qu'un graphique : les libellés longs restent lisibles sur mobile
 // et les montants s'affichent sans survol.
 export function TopMissionsChart({ data }: TopMissionsChartProps) {
-	const max = Math.max(...data.map((d) => d.amountBillionEur));
+	const amounts = data.map((d) => d.amountBillionEur);
 
 	return (
 		<Card className="h-full">
@@ -50,12 +51,14 @@ export function TopMissionsChart({ data }: TopMissionsChartProps) {
 								>
 									<div
 										className="bg-chart-2"
-										style={{ width: `${(excludingPensions / max) * 100}%` }}
+										style={{
+											width: `${barWidthPct(excludingPensions, amounts)}%`,
+										}}
 									/>
 									<div
 										className="bg-chart-2/35"
 										style={{
-											width: `${(d.pensionsBillionEur / max) * 100}%`,
+											width: `${barWidthPct(d.pensionsBillionEur, amounts)}%`,
 										}}
 									/>
 								</div>

@@ -9,6 +9,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
+import type { PublicFinances2026 } from "@/lib/data/public-finances-2026";
 import { formatEur, formatPct } from "@/lib/format";
 import {
 	type Cotisation,
@@ -18,13 +19,8 @@ import {
 	simulate,
 } from "@/lib/simulator";
 
-export interface SimulatorData extends SimulatorParameters {
-	benchmarks: {
-		averagePension: string;
-		healthReimbursement: string;
-		unemploymentDuration: string;
-	};
-}
+export type SimulatorData = SimulatorParameters &
+	Pick<PublicFinances2026["simulator"], "benchmarks">;
 
 interface SalarySimulatorProps {
 	employee: Cotisation[];
