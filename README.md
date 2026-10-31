@@ -2,8 +2,9 @@
 
 Tableau de bord pédagogique et statique sur les finances publiques françaises, en ligne sur
 [state.alexandremace.fr](https://state.alexandremace.fr). Toute la page est pilotée par
-`data/finances-publiques-2026.json` ; d'où viennent les chiffres et leurs pièges de périmètre
-sont décrits dans `AGENTS.md`.
+`data/finances-publiques-2026.json`, pour l'année en cours, et `data/evolution-finances.json`,
+pour les séries longues ; d'où viennent les chiffres et leurs pièges de périmètre sont décrits
+dans `AGENTS.md`.
 
 ```bash
 pnpm install

@@ -9,6 +9,14 @@ export function findOrThrow<T>(
 	return entry;
 }
 
+// Un lien lu dans le JSON ne sort que vers une page https : une URL javascript: serait une
+// exécution, et la CSP autorise les scripts en ligne
+export function requireHttpsUrl(url: string): string {
+	if (new URL(url).protocol !== "https:")
+		throw new Error(`Lien non https dans le JSON : ${url}`);
+	return url;
+}
+
 // Une clé renommée dans le JSON (une icône, par exemple) casse le build au lieu de disparaître
 export function lookupOrThrow<T>(
 	record: Record<string, T>,

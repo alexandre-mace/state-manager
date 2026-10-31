@@ -8,6 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { formatEur, formatPct } from "@/lib/format";
 import {
 	type Cotisation,
@@ -72,19 +73,25 @@ export function SalarySimulator({
 			<CardContent className="space-y-6">
 				{/* Input */}
 				<div className="space-y-2">
-					<label htmlFor="salaire-brut-annuel" className="text-sm font-medium">
+					<div id="salaire-brut-annuel" className="text-sm font-medium">
 						Salaire brut annuel : {formatEur(salaireBrutAnnuel)}
-					</label>
-					<input
-						id="salaire-brut-annuel"
-						type="range"
+					</div>
+					{/* Valeur en tableau : le Slider du kit dessine une poignée par valeur */}
+					<Slider
+						aria-labelledby="salaire-brut-annuel"
 						min={SALARY_RANGE.min}
 						max={SALARY_RANGE.max}
 						step={SALARY_RANGE.step}
-						value={salaireBrutAnnuel}
-						onChange={(e) => setSalaireBrutAnnuel(Number(e.target.value))}
-						aria-valuetext={formatEur(salaireBrutAnnuel)}
-						className="w-full accent-primary"
+						value={[salaireBrutAnnuel]}
+						onValueChange={(value) =>
+							setSalaireBrutAnnuel(Array.isArray(value) ? value[0] : value)
+						}
+						locale="fr-FR"
+						format={{
+							style: "currency",
+							currency: "EUR",
+							maximumFractionDigits: 0,
+						}}
 					/>
 					<div className="flex justify-between text-xs text-muted-foreground">
 						<span>{formatEur(SALARY_RANGE.min)}</span>

@@ -10,6 +10,7 @@ import { TopMissionsChart } from "@/components/charts/top-missions-chart";
 import { CitizenReturn } from "@/components/citizen-return";
 import { EuropeanComparison } from "@/components/european-comparison";
 import { FlowDiagram, type FlowDiagramData } from "@/components/flow-diagram";
+import { LinkCard } from "@/components/link-card";
 import { SalarySimulator } from "@/components/salary-simulator";
 import { ThousandEuroBreakdown } from "@/components/thousand-euro-breakdown";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +22,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TextLink } from "@/components/ui/text-link";
 import evolutionData from "@/data/evolution-finances.json";
 import financeData from "@/data/finances-publiques-2026.json";
 import {
@@ -40,7 +42,7 @@ import {
 	formatNombre,
 	formatPct,
 } from "@/lib/format";
-import { findOrThrow } from "@/lib/guards";
+import { findOrThrow, requireHttpsUrl } from "@/lib/guards";
 import { lireCotisations, tauxSousLePass } from "@/lib/simulateur";
 
 const SOMMAIRE = [
@@ -65,14 +67,13 @@ function SourceNote({ sources }: { sources: Source[] }) {
 			{sources.map((source, i) => (
 				<span key={source.url}>
 					{i > 0 && " ; "}
-					<a
-						href={source.url}
+					<TextLink
+						href={requireHttpsUrl(source.url)}
 						target="_blank"
-						rel="noreferrer"
-						className="underline underline-offset-2 hover:text-foreground"
+						rel="noopener noreferrer"
 					>
 						{source.libelle}
-					</a>
+					</TextLink>
 				</span>
 			))}
 		</p>
@@ -373,7 +374,7 @@ export default function Home() {
 				<section id="repartition" className="scroll-mt-16 space-y-6">
 					<ThousandEuroBreakdown
 						postes={destinationDepenses.postes}
-						baseMiliardsEur={destinationDepenses.base_milliards_eur}
+						baseBillionEur={destinationDepenses.base_milliards_eur}
 					/>
 				</section>
 
@@ -1047,18 +1048,18 @@ export default function Home() {
 					<h2 className="text-lg font-semibold">Sources des données</h2>
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 						{Object.entries(financeData.sources).map(([key, source]) => (
-							<a
+							<LinkCard
 								key={key}
-								href={source.url}
-								target="_blank"
-								rel="noreferrer"
-								className="block rounded-lg border border-border bg-card p-4 text-sm transition-colors hover:border-primary/40"
+								href={requireHttpsUrl(source.url)}
+								external
+								padding="sm"
+								className="pr-10 text-sm"
 							>
 								<span className="font-medium">{source.libelle}</span>
 								<span className="mt-1 block text-xs text-muted-foreground">
 									{new URL(source.url).hostname}
 								</span>
-							</a>
+							</LinkCard>
 						))}
 					</div>
 				</section>

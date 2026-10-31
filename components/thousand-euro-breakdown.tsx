@@ -47,12 +47,12 @@ interface Poste {
 
 interface ThousandEuroBreakdownProps {
 	postes: Poste[];
-	baseMiliardsEur?: number;
+	baseBillionEur: number;
 }
 
 export function ThousandEuroBreakdown({
 	postes,
-	baseMiliardsEur,
+	baseBillionEur,
 }: ThousandEuroBreakdownProps) {
 	const sorted = [...postes].sort((a, b) => b.montant_eur - a.montant_eur);
 	const total = sorted.reduce((sum, p) => sum + p.montant_eur, 0) || 1;
@@ -94,9 +94,7 @@ export function ThousandEuroBreakdown({
 				})}
 				<p className="pt-2 text-xs text-muted-foreground">
 					Total : {formatEur(sorted.reduce((sum, p) => sum + p.montant_eur, 0))}
-					{baseMiliardsEur
-						? `, calculé à partir des dépenses totales de ${formatMd(baseMiliardsEur)}`
-						: ""}
+					, calculé à partir des dépenses totales de {formatMd(baseBillionEur)}
 				</p>
 			</CardContent>
 		</Card>
