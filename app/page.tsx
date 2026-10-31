@@ -442,7 +442,7 @@ export default function Home() {
 							</TabsList>
 
 							{/* Budget de l'État */}
-							<TabsContent value="etat" className="space-y-6 pt-4">
+							<TabsContent value="etat" keepMounted className="space-y-6 pt-4">
 								<Card className="bg-muted/30">
 									<CardContent>
 										<p className="text-sm">
@@ -553,7 +553,7 @@ export default function Home() {
 							</TabsContent>
 
 							{/* Sécurité Sociale */}
-							<TabsContent value="secu" className="space-y-6 pt-4">
+							<TabsContent value="secu" keepMounted className="space-y-6 pt-4">
 								<Card className="bg-muted/30">
 									<CardContent>
 										<p className="text-sm">{securiteSociale.description}</p>
@@ -727,7 +727,11 @@ export default function Home() {
 							</TabsContent>
 
 							{/* Collectivités locales */}
-							<TabsContent value="collectivites" className="space-y-6 pt-4">
+							<TabsContent
+								value="collectivites"
+								keepMounted
+								className="space-y-6 pt-4"
+							>
 								<Card className="bg-muted/30">
 									<CardContent>
 										<p className="text-sm">
