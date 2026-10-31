@@ -60,7 +60,7 @@ export function PublicSpendingChart({ data }: PublicSpendingChartProps) {
 				<Pie
 					data={data}
 					dataKey="spendingBillionEur"
-					nameKey="categorie"
+					nameKey="category"
 					innerRadius={70}
 					outerRadius={110}
 					strokeWidth={2}

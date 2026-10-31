@@ -26,7 +26,6 @@ type EvolutionDatum = {
 	balanceGdpPct: number;
 	revenueBillionEur?: number;
 	spendingBillionEur?: number;
-	deficit_milliards_eur?: number;
 	note?: string;
 	// Événement à marquer d'une ligne verticale sur le graphique
 	marker?: string;
@@ -82,31 +81,31 @@ export function EvolutionChart({
 					<linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
 						<stop
 							offset="5%"
-							stopColor="var(--color-recettes_pib_pct)"
+							stopColor="var(--color-revenueGdpPct)"
 							stopOpacity={0.3}
 						/>
 						<stop
 							offset="95%"
-							stopColor="var(--color-recettes_pib_pct)"
+							stopColor="var(--color-revenueGdpPct)"
 							stopOpacity={0}
 						/>
 					</linearGradient>
 					<linearGradient id="spendingGradient" x1="0" y1="0" x2="0" y2="1">
 						<stop
 							offset="5%"
-							stopColor="var(--color-depenses_pib_pct)"
+							stopColor="var(--color-spendingGdpPct)"
 							stopOpacity={0.3}
 						/>
 						<stop
 							offset="95%"
-							stopColor="var(--color-depenses_pib_pct)"
+							stopColor="var(--color-spendingGdpPct)"
 							stopOpacity={0}
 						/>
 					</linearGradient>
 				</defs>
 				<CartesianGrid strokeDasharray="3 3" vertical={false} />
 				<XAxis
-					dataKey="annee"
+					dataKey="year"
 					tick={{ fontSize: 12 }}
 					tickLine={false}
 					axisLine={false}
@@ -184,14 +183,14 @@ export function EvolutionChart({
 				<Area
 					type="monotone"
 					dataKey="spendingGdpPct"
-					stroke="var(--color-depenses_pib_pct)"
+					stroke="var(--color-spendingGdpPct)"
 					fill="url(#spendingGradient)"
 					strokeWidth={2}
 				/>
 				<Area
 					type="monotone"
 					dataKey="revenueGdpPct"
-					stroke="var(--color-recettes_pib_pct)"
+					stroke="var(--color-revenueGdpPct)"
 					fill="url(#revenueGradient)"
 					strokeWidth={2}
 				/>
@@ -229,7 +228,7 @@ export function DeficitChart({
 			>
 				<CartesianGrid strokeDasharray="3 3" vertical={false} />
 				<XAxis
-					dataKey="annee"
+					dataKey="year"
 					tick={{ fontSize: 12 }}
 					tickLine={false}
 					axisLine={false}
@@ -267,7 +266,7 @@ export function DeficitChart({
 						fill: "var(--destructive)",
 					}}
 				/>
-				<Bar dataKey="balanceGdpPct" fill="var(--color-deficit_pib_pct)" />
+				<Bar dataKey="balanceGdpPct" fill="var(--color-balanceGdpPct)" />
 			</ComposedChart>
 		</ChartContainer>
 	);

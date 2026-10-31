@@ -49,7 +49,7 @@ export function SocialSecurityBranchesChart({
 				/>
 				<YAxis
 					type="category"
-					dataKey="branche"
+					dataKey="branch"
 					tick={{ fontSize: 12 }}
 					width={95}
 					tickLine={false}
@@ -70,7 +70,7 @@ export function SocialSecurityBranchesChart({
 				/>
 				<Bar
 					dataKey="spendingBillionEur"
-					fill="var(--color-depenses_milliards_eur)"
+					fill="var(--color-spendingBillionEur)"
 					radius={[0, 6, 6, 0]}
 				/>
 			</BarChart>

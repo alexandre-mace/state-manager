@@ -43,19 +43,19 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
 					<linearGradient id="debtGradient" x1="0" y1="0" x2="0" y2="1">
 						<stop
 							offset="5%"
-							stopColor="var(--color-pib_pct)"
+							stopColor="var(--color-gdpPct)"
 							stopOpacity={0.3}
 						/>
 						<stop
 							offset="95%"
-							stopColor="var(--color-pib_pct)"
+							stopColor="var(--color-gdpPct)"
 							stopOpacity={0}
 						/>
 					</linearGradient>
 				</defs>
 				<CartesianGrid strokeDasharray="3 3" vertical={false} />
 				<XAxis
-					dataKey="annee"
+					dataKey="year"
 					tick={{ fontSize: 12 }}
 					tickLine={false}
 					axisLine={false}
@@ -89,7 +89,7 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
 				<Area
 					type="monotone"
 					dataKey="gdpPct"
-					stroke="var(--color-pib_pct)"
+					stroke="var(--color-gdpPct)"
 					fill="url(#debtGradient)"
 					strokeWidth={2}
 				/>
