@@ -5,7 +5,7 @@ import { explainerValues, fillPlaceholders, yearBalance } from "./explainer";
 
 const values = explainerValues(data, evolution.years);
 
-describe("marques des texts", () => {
+describe("marques des textes", () => {
 	it("remplace chaque marque par sa valeur", () => {
 		expect(fillPlaceholders("{a} et {b}", { a: "1", b: "2" })).toBe("1 et 2");
 	});

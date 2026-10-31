@@ -128,7 +128,7 @@ export function EvolutionChart({
 									name === "revenueGdpPct"
 										? chartConfig.revenueGdpPct.label
 										: chartConfig.spendingGdpPct.label;
-								const milliards =
+								const billionEur =
 									name === "revenueGdpPct"
 										? item?.payload?.revenueBillionEur
 										: item?.payload?.spendingBillionEur;
@@ -137,7 +137,9 @@ export function EvolutionChart({
 										<span>{label}</span>
 										<span className="font-mono">
 											{formatPct(Number(value))}
-											{milliards != null ? ` (${formatMd(milliards, 0)})` : ""}
+											{billionEur != null
+												? ` (${formatMd(billionEur, 0)})`
+												: ""}
 										</span>
 									</div>
 								);

@@ -515,22 +515,22 @@ export default function Home() {
 										</div>
 										<Card>
 											<CardContent className="space-y-3">
-												{stateBudget.taxRevenue.mainTaxes.map((impot) => (
+												{stateBudget.taxRevenue.mainTaxes.map((tax) => (
 													<div
-														key={impot.label}
+														key={tax.label}
 														className="space-y-1 border-b border-border pb-3 last:border-0"
 													>
 														<div className="flex justify-between items-baseline">
-															<span className="font-medium">{impot.label}</span>
+															<span className="font-medium">{tax.label}</span>
 															<span className="font-mono text-sm">
-																{formatMd(impot.amountBillionEur)}
+																{formatMd(tax.amountBillionEur)}
 															</span>
 														</div>
 														<p className="text-xs text-muted-foreground">
-															{impot.description}
+															{tax.description}
 														</p>
 														<p className="text-xs text-primary">
-															Qui paye : {impot.whoPays}
+															Qui paye : {tax.whoPays}
 														</p>
 													</div>
 												))}

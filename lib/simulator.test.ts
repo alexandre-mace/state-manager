@@ -84,7 +84,7 @@ describe("simulation complète", () => {
 		);
 	});
 
-	it("efface presque toutes les cotisations employer au SMIC", () => {
+	it("efface presque toutes les cotisations patronales au SMIC", () => {
 		const s = simulate(21_876.4, employee, employer, p);
 		expect(s.relief).toBeCloseTo(21_876.4 * 0.4021, 2);
 		expect(s.employerCotisations / s.gross).toBeLessThan(0.02);
@@ -110,7 +110,7 @@ describe("simulation complète", () => {
 	});
 
 	it("donne des taux sous le PASS cohérents avec les tableaux officiels", () => {
-		// Salarié : 11,31 points sur le gross, plus 9,7 points de CSG-CRDS sur 98,25 % du gross
+		// Salarié : 11,31 points sur le brut, plus 9,7 points de CSG-CRDS sur 98,25 % du brut
 		expect(rateBelowPass(employee, p)).toBeCloseTo(11.31 + 9.7 * 0.9825, 6);
 		expect(rateBelowPass(employer, p)).toBeCloseTo(42.05, 6);
 	});
