@@ -121,9 +121,12 @@ export function EvolutionChart({
 				<ChartTooltip
 					content={
 						<ChartTooltipContent
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
 							formatter={(value, name, item) => {
 								const label =
-									name === "recettes_pib_pct" ? "Recettes" : "Dépenses";
+									name === "recettes_pib_pct"
+										? chartConfig.recettes_pib_pct.label
+										: chartConfig.depenses_pib_pct.label;
 								const milliards =
 									name === "recettes_pib_pct"
 										? item?.payload?.recettes_milliards_eur
@@ -228,7 +231,19 @@ export function DeficitChart({ data }: EvolutionChartProps) {
 					ticks={ticks}
 					domain={[ticks[0], ticks[ticks.length - 1]]}
 				/>
-				<ChartTooltip content={<ChartTooltipContent />} />
+				<ChartTooltip
+					content={
+						<ChartTooltipContent
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
+							formatter={(value) => (
+								<div className="flex justify-between gap-4">
+									<span>{chartConfigDeficit.deficit_pib_pct.label}</span>
+									<span className="font-mono">{formatPct(Number(value))}</span>
+								</div>
+							)}
+						/>
+					}
+				/>
 				<ReferenceLine y={0} stroke="var(--muted-foreground)" strokeWidth={1} />
 				<ReferenceLine
 					y={-3}

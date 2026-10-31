@@ -71,9 +71,10 @@ export function DebtEvolutionChart({ data }: DebtEvolutionChartProps) {
 				<ChartTooltip
 					content={
 						<ChartTooltipContent
+							labelFormatter={(_, payload) => payload?.[0]?.payload?.annee}
 							formatter={(value, _name, item) => (
 								<div className="flex justify-between gap-4">
-									<span>Dette publique</span>
+									<span>{chartConfig.pib_pct.label}</span>
 									<span className="font-mono">
 										{`${formatPct(Number(value))} du PIB`}
 										{item?.payload?.montant_milliards_eur != null

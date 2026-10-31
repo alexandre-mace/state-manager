@@ -37,7 +37,7 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
 				title="Dépenses de la Sécurité sociale par branche, en milliards d'euros"
 				data={data}
 				layout="vertical"
-				margin={{ top: 12, right: 16, left: 100, bottom: 4 }}
+				margin={{ top: 12, right: 16, left: 0, bottom: 4 }}
 			>
 				<CartesianGrid strokeDasharray="3 3" horizontal={false} />
 				<XAxis
@@ -55,7 +55,16 @@ export function SecuBranchesChart({ data }: SecuBranchesChartProps) {
 				/>
 				<ChartTooltip
 					cursor={{ fill: "var(--muted)", fillOpacity: 0.5 }}
-					content={<ChartTooltipContent />}
+					content={
+						<ChartTooltipContent
+							formatter={(value) => (
+								<div className="flex justify-between gap-4">
+									<span>{chartConfig.depenses_milliards_eur.label}</span>
+									<span className="font-mono">{formatMd(Number(value))}</span>
+								</div>
+							)}
+						/>
+					}
 				/>
 				<Bar
 					dataKey="depenses_milliards_eur"

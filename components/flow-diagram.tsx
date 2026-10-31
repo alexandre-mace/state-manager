@@ -41,7 +41,10 @@ function FlowBox({
 	return (
 		<div
 			className={`min-w-0 rounded-lg border-2 p-2 text-center hyphens-auto break-words sm:p-3 ${small ? "text-xs" : "text-xs sm:text-sm"}`}
-			style={{ borderColor: color, backgroundColor: `${color}15` }}
+			style={{
+				borderColor: color,
+				backgroundColor: `color-mix(in oklch, ${color} 8%, transparent)`,
+			}}
 		>
 			<div className="font-medium">{label}</div>
 			<div className="font-mono font-semibold">{formatMd(amount, 0)}</div>
